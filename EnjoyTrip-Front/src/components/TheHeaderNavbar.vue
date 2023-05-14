@@ -2,7 +2,7 @@
   <div>
     <nav
       class="navbar navbar-expand-lg navbar-dark"
-      style="background-color: #eaeaea; padding: 0% 10% 0% 10%"
+      style="background-color: #d5e2f5; padding: 0% 10% 0% 10%"
     >
       <router-link :to="{ name: 'main' }" class="navbar-brand">
         <img
@@ -37,7 +37,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'house' }" class="nav-link">
+            <router-link :to="{ name: 'spot' }" class="nav-link">
               <i
                 class="bi bi-house-fill"
                 style="font-size: 2rem; animation: fade"
@@ -81,7 +81,7 @@
               공지사항
             </router-link>
           </li>
-          <li class="nav-item">
+          <!-- <li class="nav-item">
             <router-link :to="{ name: 'todo' }" class="nav-link">
               <i
                 class="bi bi-calendar-check"
@@ -89,7 +89,7 @@
               ></i>
               TodoList
             </router-link>
-          </li>
+          </li> -->
         </ul>
 
         <!-- after login -->
@@ -161,6 +161,7 @@ export default {
       this.userLogout(this.userInfo.userid);
       sessionStorage.removeItem("access-token");
       sessionStorage.removeItem("refresh-token");
+      sessionStorage.removeItem("vuex");
       if (this.$route.path !== "/") this.$router.push({ name: "main" });
     },
   },

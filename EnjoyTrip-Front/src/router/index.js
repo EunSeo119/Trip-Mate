@@ -110,6 +110,16 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/spot",
+    name: "spot",
+    component: () => import("@/views/SpotView"),
+  },
+  {
+    path: "/spotDetail",
+    name: "spotDetail",
+    component: () => import("@/views/SpotDetailView"),
+  },
 ];
 
 const router = new VueRouter({

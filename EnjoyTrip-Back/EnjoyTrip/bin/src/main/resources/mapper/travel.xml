@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.model.mapper.TravelMapper">
+
+    <select id="selectGetAll" resultType="travelInfo">
+        select title,
+               addr1,
+               travel_info_id,
+               first_image
+        from travel_info
+        order by readcount desc
+    </select>
+
+    <select id="selectGugun" resultType="Gugun">
+        select gugun_code, gugun_name
+        from gugun
+        where sido_code = #{sidoCode}
+        order by gugun_code
+    </select>
+
+    <select id="selectBySidoCode" resultType="Gugun" parameterType="int">
+        select gugun_code, gugun_name
+        from gugun
+        where sido_code = #{sidoCode}
+        order by gugun_code
+    </select>
+
+    <select id="selectBySidoCodeGugunCode" resultType="TravelInfo">
+        select title,
+        addr1,
+        travel_info_id ,
+        first_image
+        from travel_info
+        <if test="sidoCode != null">
+            where sido_code = #{sidoCode}
+        </if>
+        <if test="gugunCode != null">
+            and gugun_code = #{gugunCode}
+        </if>
+        <if test="travelTypeId != null">
+            and travel_type_id = #{travelTypeId}
+        </if>
+        order by readcount desc
+    </select>
+
+
+    <select id="selectTravelStatus" resultType="TravelStatus">
+        select travel_status_id,
+               user_id,
+               travel_info_id,
+               `like`,
+               star
+        from travel_status
+        where user_id = #{userId}
+          and travel_info_id = #{travelInfoId}
+    </select>
+
+
+    <insert id="insertLike" parameterType="TravelStatus">
+        insert into travel_status(user_id, travel_info_id, `like`, star)
+        values (#{userId}, #{travelInfoId}, 1, 0.0)
+    </insert>
+
+    <insert id="insertStar" parameterType="TravelStatus">
+        insert into travel_status(user_id, travel_info_id, `like`, star)
+        values (#{userId}, #{travelInfoId}, #{like}, #{star})
+    </insert>
+
+    <update id="updateLike">
+        update travel_status set `like` =
+        <if test="like == 0">
+            1
+        </if>
+        <if test="like != 0">
+            0
+        </if>
+        where travel_Info_id = #{travelInfoId} and user_id = #{userId}
+    </update>
+
+    <update id="updateStar" parameterType="TravelStatus">
+        update travel_status
+        set star = #{star, jdbcType=DOUBLE}
+        where travel_info_id = #{travelInfoId}
+          and user_id = #{userId}
+    </update>
+</mapper>

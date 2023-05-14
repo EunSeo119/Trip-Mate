@@ -1,8 +1,8 @@
 <template>
   <b-container class="bv-example-row mt-3 text-center">
-    <h3 class="underline-green">
-      <b-icon icon="instagram"></b-icon> 인별그램 Service
-    </h3>
+    <!-- <h3 class="underline-green">
+      <b-icon icon="heart"></b-icon> HotPlace Service
+    </h3> -->
     <b-row>
       <b-col></b-col>
       <b-col cols="10">
@@ -11,13 +11,13 @@
           text-variant="dark"
           border-variant="dark"
         >
-          <template #header>SSAFY 인별그램</template>
+          <template #header>HOT PLACE</template>
 
-          <template #lead> 홍보용 인별그램. </template>
+          <template #lead> 핫 플레이스 사진들 </template>
 
           <hr class="my-4" />
 
-          <p>좋은사진 많이 올려주세요.</p>
+          <p>좋아요 많은 순, 리뷰 많은 순</p>
         </b-jumbotron>
       </b-col>
       <b-col></b-col>

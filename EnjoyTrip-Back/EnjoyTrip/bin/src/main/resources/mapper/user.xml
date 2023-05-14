@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.enjoytrip.model.mapper.UserMapper">
+
+    <select id="selectUserLogin" resultType="user" parameterType="User">
+        select user_id, name
+        from user
+        where user_id = #{userId}
+          and password = #{password}
+    </select>
+
+    <insert id="insertUser" parameterType="User">
+        insert into user(user_id, password, name, email)
+        values (#{userId}, #{password}, #{name}, #{email})
+    </insert>
+
+    <select id="selectUserList" resultType="user">
+        select user_id, password, name, email
+        from user
+    </select>
+
+    <select id="selectDetailUser" resultType="map" parameterType="string">
+        select u.user_id, u.name, u.email, s.sido_name
+        from user u
+                 join sido s
+                      on u.sido_code = s.sido_code
+        where user_id = #{userId}
+    </select>
+</mapper>
