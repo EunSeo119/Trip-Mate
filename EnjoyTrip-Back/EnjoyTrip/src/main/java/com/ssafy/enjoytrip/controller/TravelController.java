@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.ssafy.enjoytrip.model.Gugun;
 import com.ssafy.enjoytrip.model.TravelInfo;
 import com.ssafy.enjoytrip.model.TravelStatus;
-import com.ssafy.enjoytrip.model.Service.TravelService;
+import com.ssafy.enjoytrip.model.service.TravelService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

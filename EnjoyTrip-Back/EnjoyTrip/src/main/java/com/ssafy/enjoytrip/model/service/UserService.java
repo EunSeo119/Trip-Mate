@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.model.Service;
+package com.ssafy.enjoytrip.model.service;
 
 import com.ssafy.enjoytrip.model.User;
 
@@ -7,7 +7,10 @@ import java.util.List;
 import java.util.Map;
 
 public interface UserService {
-    User login(User user) throws Exception;
+	
+	User login(User user) throws Exception;
+	User userInfo(String userId) throws Exception;
+//    User login(User user) throws Exception;
 
     void join(User user);
 

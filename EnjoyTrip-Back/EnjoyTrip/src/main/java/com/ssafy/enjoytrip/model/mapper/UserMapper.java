@@ -9,6 +9,10 @@ import java.util.Map;
 
 @Mapper
 public interface UserMapper {
+	
+	public User login(User user) throws SQLException;
+	public User userInfo(String userId) throws SQLException;
+	
     User selectUserLogin(User user) throws SQLException;
 
     void insertUser(User user);

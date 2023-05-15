@@ -6,12 +6,10 @@
     </div>
     <form class="login-form" @submit.prevent="confirm">
       <div class="form-group">
-        <label class="input-title font-weight-bold text-success" for="userid"
-          >아이디</label
-        >
+        <label class="input-title font-weight-bold text-success" for="userid">아이디</label>
         <input
-          id="userid"
-          v-model="user.userid"
+          id="userId"
+          v-model="user.userId"
           class="form-control input-item"
           required
           placeholder="아이디를 입력해주세요"
@@ -19,26 +17,19 @@
         />
       </div>
       <div class="form-group">
-        <label class="input-title font-weight-bold text-success" for="userpwd"
-          >비밀번호</label
-        >
+        <label class="input-title font-weight-bold text-success" for="userpwd">비밀번호</label>
         <input
           type="password"
-          id="userpwd"
+          id="password"
           class="form-control input-item"
-          v-model="user.userpwd"
+          v-model="user.password"
           required
           placeholder="비밀번호를 입력해주세요"
           @keyup.enter="confirm"
         />
       </div>
       <div class="form-group text-center">
-        <button
-          type="submit"
-          class="btn btn-success font-weight-bold btn-login"
-        >
-          로그인
-        </button>
+        <button type="submit" class="btn btn-success font-weight-bold btn-login">로그인</button>
       </div>
     </form>
     <div class="login-links">
@@ -49,11 +40,7 @@
         >회원가입</router-link
       >
     </div>
-    <div
-      v-if="isLoginError"
-      class="alert alert-danger mt-3 text-center"
-      role="alert"
-    >
+    <div v-if="isLoginError" class="alert alert-danger mt-3 text-center" role="alert">
       아이디 또는 비밀번호를 확인하세요.
     </div>
   </div>
@@ -128,8 +115,8 @@ export default {
   data() {
     return {
       user: {
-        userid: null,
-        userpwd: null,
+        userId: null,
+        password: null,
       },
     };
   },
@@ -141,7 +128,7 @@ export default {
     async confirm() {
       await this.userConfirm(this.user);
       let token = sessionStorage.getItem("access-token");
-      // console.log("1. confirm() token >> " + token);
+      console.log("1. confirm() token >> " + token);
       if (this.isLogin) {
         await this.getUserInfo(token);
         // console.log("4. confirm() userInfo :: ", this.userInfo);

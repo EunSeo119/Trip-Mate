@@ -1,4 +1,4 @@
-package com.ssafy.enjoytrip.model.Service;
+package com.ssafy.enjoytrip.model.service;
 
 import com.ssafy.enjoytrip.model.Gugun;
 import com.ssafy.enjoytrip.model.TravelInfo;

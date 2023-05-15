@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.model.Plan;
-import com.ssafy.enjoytrip.model.Service.PlanService;
+import com.ssafy.enjoytrip.model.service.PlanService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
