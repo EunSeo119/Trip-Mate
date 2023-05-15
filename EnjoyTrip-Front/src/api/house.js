@@ -8,7 +8,8 @@ function sidoList(success, fail) {
 }
 
 function gugunList(params, success, fail) {
-  api.get(`/map/gugun`, { params: params }).then(success).catch(fail);
+  const sidoCode = params.sido;
+  api.get(`/travel/list/gugun/${sidoCode}`,).then(success).catch(fail);
 }
 
 function houseList(params, success, fail) {
