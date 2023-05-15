@@ -37,7 +37,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'spot' }" class="nav-link">
+            <router-link :to="{ name: 'house' }" class="nav-link">
               <i
                 class="bi bi-house-fill"
                 style="font-size: 2rem; animation: fade"
@@ -46,7 +46,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'house' }" class="nav-link">
+            <router-link :to="{ name: 'spot' }" class="nav-link">
               <i
                 class="bi bi-house-fill"
                 style="font-size: 2rem; animation: fade"

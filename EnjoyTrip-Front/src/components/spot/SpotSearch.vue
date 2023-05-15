@@ -2,7 +2,7 @@
   <section id="spot_search" class="pb-0" data-aos="zoom-in-up">
     <div class="container">
       <div class="section-header">
-        <h2>여행지 검색</h2>
+        <h2>여행 계획</h2>
         <p>지역별 여행지들을 검색하고 관심가는 여행지에 좋아요를 남겨보세요</p>
       </div>
 
@@ -24,12 +24,7 @@
           ></b-form-select>
         </div>
         <div class="form-group col-md-2">
-          <button
-            type="button"
-            id="list-btn"
-            class="btn btn-default"
-            @click="searchSpot"
-          >
+          <button type="button" id="list-btn" class="btn btn-default" @click="searchSpot">
             조회하기
           </button>
         </div>
