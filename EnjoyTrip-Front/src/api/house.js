@@ -1,7 +1,7 @@
-import { apiInstance, houseInstance } from "./index.js";
+import { apiInstance } from "./index.js";
 
 const api = apiInstance();
-const house = houseInstance();
+// const house = houseInstance();
 
 function sidoList(success, fail) {
   api.get(`/map/sido`).then(success).catch(fail);
@@ -9,11 +9,13 @@ function sidoList(success, fail) {
 
 function gugunList(params, success, fail) {
   const sidoCode = params.sido;
-  api.get(`/travel/list/gugun/${sidoCode}`,).then(success).catch(fail);
+  api.get(`/travel/list/gugun/${sidoCode}`).then(success).catch(fail);
 }
 
 function houseList(params, success, fail) {
-  house.get(``, { params: params }).then(success).catch(fail);
+  const sidoCode = params.sido;
+  const gugunCode = params.gugun;
+  api.get(`/travel/list/gugun/${sidoCode}/${gugunCode}`).then(success).catch(fail);
 }
 
 export { sidoList, gugunList, houseList };

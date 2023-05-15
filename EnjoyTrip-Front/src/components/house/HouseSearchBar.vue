@@ -4,7 +4,12 @@
       <b-form-select v-model="sidoCode" :options="sidos" @change="gugunList"></b-form-select>
     </b-col>
     <b-col class="sm-3">
-      <b-form-select v-model="gugunCode" :options="guguns" @change="searchApt"></b-form-select>
+      <b-form-select v-model="gugunCode" :options="guguns"></b-form-select>
+    </b-col>
+    <b-col class="sm-3">
+      <button type="button" id="list-btn" class="btn btn-default" @click="searchHouse">
+        조회하기
+      </button>
     </b-col>
   </b-row>
 </template>
@@ -19,7 +24,6 @@ export default {
   data() {
     return {
       sidoCode: null,
-      selectedSido: null,
       gugunCode: null,
     };
   },
@@ -36,10 +40,12 @@ export default {
     gugunList() {
       console.log(this.sidoCode);
       this.gugunCode = null;
+      this.CLEAR_GUGUN_LIST();
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
-    searchApt() {
-      if (this.gugunCode) this.getHouseList(this.gugunCode);
+    searchHouse() {
+      if (this.sidoCode && this.gugunCode)
+        this.getHouseList(this.sidoCode, this.gugunCode);
     },
   },
 };

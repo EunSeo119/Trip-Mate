@@ -41,7 +41,9 @@ const houseStore = {
     // },
     SET_GUGUN_LIST(state, guguns) {
       guguns.forEach((gugun) => {
+        console.log(gugun)
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
+        // console.log(state.guguns);
       });
     },
     SET_HOUSE_LIST(state, houses) {
@@ -74,12 +76,10 @@ const houseStore = {
         }
       );
     },
-    getHouseList: ({ commit }, gugunCode) => {
-      const SERVICE_KEY = process.env.VUE_APP_APT_DEAL_API_KEY;
+    getHouseList: ({ commit }, sidoCode, gugunCode) => {
       const params = {
-        LAWD_CD: gugunCode,
-        DEAL_YMD: "202207",
-        serviceKey: decodeURIComponent(SERVICE_KEY),
+        sido : sidoCode,
+        gugun : gugunCode
       };
       houseList(
         params,
