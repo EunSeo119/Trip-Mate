@@ -41,8 +41,8 @@ public class UserServiceImpl implements UserService {
 	}
     
     @Override
-    public void join(User user) {
-        userMapper.insertUser(user);
+    public boolean join(User user) throws SQLException {
+        return userMapper.insertUser(user) == 1;
     }
 
     @Override
