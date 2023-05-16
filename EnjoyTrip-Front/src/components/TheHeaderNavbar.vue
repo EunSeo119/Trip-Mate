@@ -34,8 +34,8 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'house' }" class="nav-link">
-              <i class="bi bi-house-fill" style="font-size: 2rem; animation: fade"></i>
+            <router-link :to="{ name: 'travel' }" class="nav-link">
+              <i class="bi bi-travel-fill" style="font-size: 2rem; animation: fade"></i>
               여행지 검색
             </router-link>
           </li>

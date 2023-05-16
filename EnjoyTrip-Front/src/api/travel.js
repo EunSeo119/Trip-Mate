@@ -1,0 +1,35 @@
+import { apiInstance } from "./index.js";
+
+const api = apiInstance();
+// const travel = travelInstance();
+
+function sidoList(success, fail) {
+  api.get(`/map/sido`).then(success).catch(fail);
+}
+
+function gugunList(params, success, fail) {
+  const sidoCode = params.sido;
+  api.get(`/travel/list/gugun/${sidoCode}`).then(success).catch(fail);
+}
+
+function travelListBySido(params, success, fail) {
+  const sidoCode = params.sido;
+  api.get(`/travel/list/${sidoCode}`).then(success).catch(fail);
+}
+
+function travelListByGugun(params, success, fail) {
+  const sidoCode = params.sido;
+  const gugunCode = params.gugun;
+  console.log(sidoCode, gugunCode);
+  api.get(`/travel/list/${sidoCode}/${gugunCode}`).then(success).catch(fail);
+}
+
+function travelListByType (params, success, fail) {
+  const sidoCode = params.sido;
+  const gugunCode = params.gugun;
+  const typeCode = params.type;
+  console.log(sidoCode, gugunCode, typeCode);
+  api.get(`/travel/list/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType };
