@@ -7,13 +7,22 @@
         :house="house"
       />  
     </div>
-    <b-pagination
+    <!-- <b-pagination
       v-model="currentPage"
       :total-rows="houses.length"
       :per-page="perPage"
       aria-controls="house-list"
       class="mt-3 pagination-m justify-content-center custom-pagination"
-    ></b-pagination>
+    ></b-pagination> -->
+     <paginate
+        :page-count="pageCount"
+        :click-handler="goToPage"
+        :prev-text="'<'"
+        :next-text="'>'"
+        :container-class="'pagination'"
+        :page-class="'page-item'"
+        class = "justify-content-center"
+      ></paginate>
   </b-container>
   <b-container v-else class="bv-example-row mt-3">
     <b-row>
@@ -25,6 +34,7 @@
 <script>
 import HouseListItem from "@/components/house/HouseListItem";
 import { mapState } from "vuex";
+import Paginate from 'vuejs-paginate'
 
 const houseStore = "houseStore";
 
@@ -32,41 +42,62 @@ export default {
   name: "HouseList",
   components: {
     HouseListItem,
+    Paginate,
   },
   data() {
     return {
-      currentPage: 1,
-      perPage: 8,
+      currentPage: 1, // Current page number
+      itemsPerPage: 8, // Number of items to display per page
     };
   },
   computed: {
     ...mapState(houseStore, ["houses"]),
-    // houses() {
-    //   return this.$store.state.houses;
-    // },
     paginatedHouses() {
-      const start = (this.currentPage - 1) * this.perPage;
-      const end = start + this.perPage;
-      return this.houses.slice(start, end);
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      return this.houses.slice(startIndex, endIndex);
+    },
+    pageCount() {
+      return Math.ceil(this.houses.length / this.itemsPerPage);
+    },
+  },
+  methods: {
+     goToPage(page) {
+      this.currentPage = page;
     },
   },
 };
 </script>
 
-<style scoped>
-.grid-main{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-}
-.custom-pagination > li > a {
-  color: red!important;;
-}
-
-.custom-pagination > li.active > a,
-.custom-pagination > li > a:hover
-{
-  color: white;
-  background-color: green!important;
-}
-
+<style>
+  .grid-main{
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+    .pagination {
+        margin:24px;
+    }
+    .pagination li {
+        width:45px;
+        height: 35px;
+        padding:2px 6px;
+        text-align:center;
+        margin:0 3px;
+        border-radius: 6px;
+        border:1px solid #eee;
+        padding-top: 5px;
+    }
+    .pagination li:hover {
+        background: #467cc2;
+    }
+    .page-item a {
+        color: black;
+    }
+    .pagination li.active {
+        background-color : #c2d6f0;
+        color:#fff;
+    }
+    .pagination li.active a {
+        color:#fff;
+    }
 </style>
