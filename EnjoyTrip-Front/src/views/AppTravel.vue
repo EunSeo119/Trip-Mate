@@ -2,25 +2,25 @@
   <b-container class="bv-example-row mt-3 text-center">
     <b-row>
       <b-col>
-        <house-search-bar></house-search-bar>
+        <travel-search-bar></travel-search-bar>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
-        <house-list />
+        <travel-list />
       </b-col>
     </b-row>
   </b-container>
 </template>
 <script>
-import HouseSearchBar from "@/components/house/HouseSearchBar.vue";
-import HouseList from "@/components/house/HouseList.vue";
+import TravelSearchBar from "@/components/travel/TravelSearchBar.vue";
+import TravelList from "@/components/travel/TravelList.vue";
 
 export default {
-  name: "AppHouse",
+  name: "AppTravel",
   components: {
-    HouseSearchBar,
-    HouseList,
+    TravelSearchBar,
+    TravelList,
   },
 };
 </script>

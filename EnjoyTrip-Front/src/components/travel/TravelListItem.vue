@@ -2,13 +2,13 @@
   <!-- Gallery item -->
   <div class="bg-blue rounded shadow-sm child-container">
     <img
-      :src="house.firstImage"
+      :src="travel.firstImage"
       class="img-fluid card-img-top img-height mt-3"
       @error="replaceByDefault"
     />	            
     <div class="p-4">
-      <h5>{{house.title}}</h5>
-      <p class="small text-muted mb-0">{{house.addr1}}</p>
+      <h5>{{travel.title}}</h5>
+      <p class="small text-muted mb-0">{{travel.addr1}}</p>
     </div>
   </div>       
   <!-- End -->
@@ -17,24 +17,24 @@
 <script>
 import { mapActions } from "vuex";
 
-const houseStore = "houseStore";
+const travelStore = "travelStore";
 
 export default {
-  name: "HouseListItem",
+  name: "TravelListItem",
   data() {
     return {
       isColor: false,
     };
   },
   props: {
-    house: Object,
+    travel: Object,
   },
   methods: {
-    ...mapActions(houseStore, ["detailHouse"]),
-    selectHouse() {
-      // console.log("listRow : ", this.house);
-      // this.$store.dispatch("getHouse", this.house);
-      this.detailHouse(this.house);
+    ...mapActions(travelStore, ["detailTravel"]),
+    selectTravel() {
+      // console.log("listRow : ", this.travel);
+      // this.$store.dispatch("getTravel", this.travel);
+      this.detailTravel(this.travel);
     },
     colorChange(flag) {
       this.isColor = flag;

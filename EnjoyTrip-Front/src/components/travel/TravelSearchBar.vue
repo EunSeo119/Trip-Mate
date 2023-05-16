@@ -10,7 +10,7 @@
       <b-form-select v-model="typeCode" :options="types" ></b-form-select>
     </b-col>
     <b-col class="sm-3">
-      <button type="button" id="list-btn" class="btn custom-backgroud" @click="searchHouse" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #c2d6f0;">
+      <button type="button" id="list-btn" class="btn custom-backgroud" @click="searchTravel" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #c2d6f0;">
         조회하기
       </button>
     </b-col>
@@ -20,10 +20,10 @@
 <script>
 import { mapState, mapActions, mapMutations } from "vuex";
 
-const houseStore = "houseStore";
+const travelStore = "travelStore";
 
 export default {
-  name: "HouseSearchBar",
+  name: "TravelSearchBar",
   data() {
     return {
       sidoCode: null,
@@ -32,7 +32,7 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "types", "houses"]),
+    ...mapState(travelStore, ["sidos", "guguns", "types", "travels"]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
@@ -41,8 +41,8 @@ export default {
     this.CLEAR_HOUSES_LIST();
   },
   methods: {
-    ...mapActions(houseStore, ["getSido", "getGugun", "getHouseListBySido", "getHouseListByGugun", "getHouseListByType"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_HOUSES_LIST", "CLEAR_APT_LIST"]),
+    ...mapActions(travelStore, ["getSido", "getGugun", "getTravelListBySido", "getTravelListByGugun", "getTravelListByType"]),
+    ...mapMutations(travelStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_HOUSES_LIST", "CLEAR_APT_LIST"]),
     // 시도에 따라 구군 설정하기
     gugunList() {
       console.log(this.sidoCode);
@@ -51,13 +51,13 @@ export default {
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
     // 관광지 정보 검색하기
-    searchHouse() {
+    searchTravel() {
       if (this.sidoCode && this.gugunCode == null)
-        this.getHouseListBySido(this.sidoCode);
+        this.getTravelListBySido(this.sidoCode);
       else if(this.sidoCode && this.gugunCode && this.typeCode == null)
-        this.getHouseListByGugun({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
+        this.getTravelListByGugun({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
       else{
-        this.getHouseListByType({ sidoCode: this.sidoCode, gugunCode: this.gugunCode,  typeCode: this.typeCode});
+        this.getTravelListByType({ sidoCode: this.sidoCode, gugunCode: this.gugunCode,  typeCode: this.typeCode});
       }
 
     },

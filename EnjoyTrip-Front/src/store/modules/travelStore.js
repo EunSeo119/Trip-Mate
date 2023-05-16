@@ -1,12 +1,12 @@
-import { sidoList, gugunList, houseListBySido, houseListByGugun, houseListByType} from "@/api/house.js";
+import { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType} from "@/api/travel.js";
 
-const houseStore = {
+const travelStore = {
   namespaced: true,
   state: {
     sidos: [{ value: null, text: "선택하세요" },],
     guguns: [{ value: null, text: "선택하세요" }],
     types:[],
-    houses: [],
+    travels: [],
   },
   getters: {},
   mutations: {
@@ -46,8 +46,8 @@ const houseStore = {
                     { value: 39, text: '음식점' },
                     ];
     },
-    CLEAR_HOUSES_LIST(state) {
-      state.houses = [];
+    CLEAR_TRAVELS_LIST(state) {
+      state.travels = [];
     },
     // SET_SIDO_LIST(state, sidos) {
     //   sidos.forEach((sido) => {
@@ -60,12 +60,12 @@ const houseStore = {
         console.log(state.guguns);
       });
     },
-    SET_HOUSE_LIST(state, houses) {
-      state.houses = houses;
-      console.log(state.houses);
+    SET_TRAVEL_LIST(state, travels) {
+      state.travels = travels;
+      console.log(state.travels);
     },
-    // SET_DETAIL_HOUSE(state, house) {
-    //   state.house = house;
+    // SET_DETAIL_TRAVEL(state, travel) {
+    //   state.travel = travel;
     // },
   },
   actions: {
@@ -91,54 +91,54 @@ const houseStore = {
         }
       );
     },
-    getHouseListBySido: ({ commit }, sidoCode) => {
+    getTravelListBySido: ({ commit }, sidoCode) => {
       const params = { sido : sidoCode };
-      houseListBySido(
+      travelListBySido(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data);
+          commit("SET_TRAVEL_LIST", data);
         },
         (error) => {
           console.log(error);
         }
       );
     },
-    getHouseListByGugun: ({ commit }, {sidoCode, gugunCode}) => {
+    getTravelListByGugun: ({ commit }, {sidoCode, gugunCode}) => {
       const params = { 
         sido : sidoCode,
         gugun : gugunCode,
       };
-      houseListByGugun(
+      travelListByGugun(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data);
+          commit("SET_TRAVEL_LIST", data);
         },
         (error) => {
           console.log(error);
         }
       );
     },
-    getHouseListByType: ({ commit }, {sidoCode, gugunCode, typeCode}) => {
+    getTravelListByType: ({ commit }, {sidoCode, gugunCode, typeCode}) => {
       const params = { 
         sido : sidoCode,
         gugun : gugunCode,
         type : typeCode,
       };
-      houseListByType(
+      travelListByType(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data);
+          commit("SET_TRAVEL_LIST", data);
         },
         (error) => {
           console.log(error);
         }
       );
     },
-    detailHouse: ({ commit }, house) => {
-      // 나중에 house.일련번호를 이용하여 API 호출
-      commit("SET_DETAIL_HOUSE", house);
+    detailTravel: ({ commit }, travel) => {
+      // 나중에 travel.일련번호를 이용하여 API 호출
+      commit("SET_DETAIL_TRAVEL", travel);
     },
   },
 };
 
-export default houseStore;
+export default travelStore;

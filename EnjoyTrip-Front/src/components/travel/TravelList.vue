@@ -1,17 +1,17 @@
 <template>
-  <b-container v-if="houses && houses.length != 0" class="bv-example-row mt-3">
+  <b-container v-if="travels && travels.length != 0" class="bv-example-row mt-3">
     <div class = "grid-main">
-      <house-list-item
-        v-for="house in paginatedHouses"
-        :key="house.travelInfoId"
-        :house="house"
+      <travel-list-item
+        v-for="travel in paginatedTravels"
+        :key="travel.travelInfoId"
+        :travel="travel"
       />  
     </div>
     <!-- <b-pagination
       v-model="currentPage"
-      :total-rows="houses.length"
+      :total-rows="travels.length"
       :per-page="perPage"
-      aria-controls="house-list"
+      aria-controls="travel-list"
       class="mt-3 pagination-m justify-content-center custom-pagination"
     ></b-pagination> -->
      <paginate
@@ -32,16 +32,16 @@
 </template>
 
 <script>
-import HouseListItem from "@/components/house/HouseListItem";
+import TravelListItem from "@/components/travel/TravelListItem";
 import { mapState } from "vuex";
 import Paginate from 'vuejs-paginate'
 
-const houseStore = "houseStore";
+const travelStore = "travelStore";
 
 export default {
-  name: "HouseList",
+  name: "TravelList",
   components: {
-    HouseListItem,
+    TravelListItem,
     Paginate,
   },
   data() {
@@ -51,14 +51,14 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["houses"]),
-    paginatedHouses() {
+    ...mapState(travelStore, ["travels"]),
+    paginatedTravels() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
-      return this.houses.slice(startIndex, endIndex);
+      return this.travels.slice(startIndex, endIndex);
     },
     pageCount() {
-      return Math.ceil(this.houses.length / this.itemsPerPage);
+      return Math.ceil(this.travels.length / this.itemsPerPage);
     },
   },
   methods: {
