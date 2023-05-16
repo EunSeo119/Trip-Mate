@@ -12,10 +12,24 @@ function gugunList(params, success, fail) {
   api.get(`/travel/list/gugun/${sidoCode}`).then(success).catch(fail);
 }
 
-function houseList(params, success, fail) {
+function houseListBySido(params, success, fail) {
   const sidoCode = params.sido;
-  const gugunCode = params.gugun;
-  api.get(`/travel/list/gugun/${sidoCode}/${gugunCode}`).then(success).catch(fail);
+  api.get(`/travel/list/${sidoCode}`).then(success).catch(fail);
 }
 
-export { sidoList, gugunList, houseList };
+function houseListByGugun(params, success, fail) {
+  const sidoCode = params.sido;
+  const gugunCode = params.gugun;
+  console.log(sidoCode, gugunCode);
+  api.get(`/travel/list/${sidoCode}/${gugunCode}`).then(success).catch(fail);
+}
+
+function houseListByType (params, success, fail) {
+  const sidoCode = params.sido;
+  const gugunCode = params.gugun;
+  const typeCode = params.type;
+  console.log(sidoCode, gugunCode, typeCode);
+  api.get(`/travel/list/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
+}
+
+export { sidoList, gugunList, houseListBySido, houseListByGugun, houseListByType };

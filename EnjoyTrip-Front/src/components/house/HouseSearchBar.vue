@@ -7,7 +7,10 @@
       <b-form-select v-model="gugunCode" :options="guguns"></b-form-select>
     </b-col>
     <b-col class="sm-3">
-      <button type="button" id="list-btn" class="btn btn-default" @click="searchHouse">
+      <b-form-select v-model="typeCode" :options="types" ></b-form-select>
+    </b-col>
+    <b-col class="sm-3">
+      <button type="button" id="list-btn" class="btn custom-backgroud" @click="searchHouse" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #c2d6f0;">
         조회하기
       </button>
     </b-col>
@@ -25,30 +28,49 @@ export default {
     return {
       sidoCode: null,
       gugunCode: null,
+      typeCode: null,
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos", "guguns", "houses"]),
+    ...mapState(houseStore, ["sidos", "guguns", "types", "houses"]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
+    this.CLEAR_TYPE_LIST();
+    this.CLEAR_HOUSES_LIST();
   },
   methods: {
-    ...mapActions(houseStore, ["getSido", "getGugun", "getHouseList"]),
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_APT_LIST"]),
+    ...mapActions(houseStore, ["getSido", "getGugun", "getHouseListBySido", "getHouseListByGugun", "getHouseListByType"]),
+    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_HOUSES_LIST", "CLEAR_APT_LIST"]),
+    // 시도에 따라 구군 설정하기
     gugunList() {
       console.log(this.sidoCode);
       this.gugunCode = null;
       this.CLEAR_GUGUN_LIST();
       if (this.sidoCode) this.getGugun(this.sidoCode);
     },
+    // 관광지 정보 검색하기
     searchHouse() {
-      if (this.sidoCode && this.gugunCode)
-        this.getHouseList(this.sidoCode, this.gugunCode);
+      if (this.sidoCode && this.gugunCode == null)
+        this.getHouseListBySido(this.sidoCode);
+      else if(this.sidoCode && this.gugunCode && this.typeCode == null)
+        this.getHouseListByGugun({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
+      else{
+        this.getHouseListByType({ sidoCode: this.sidoCode, gugunCode: this.gugunCode,  typeCode: this.typeCode});
+      }
+
+    },
+    changeButtonColor(event) {
+      event.target.style.backgroundColor = '#c2d6f0'; 
+    },
+    resetButtonColor(event) {
+      event.target.style.backgroundColor = '#fff';
     },
   },
 };
 </script>
 
-<style></style>
+<style>
+
+</style>

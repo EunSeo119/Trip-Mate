@@ -1,16 +1,17 @@
 <template>
-  <b-row
-    class="m-2"
-    @click="selectHouse"
-    @mouseover="colorChange(true)"
-    @mouseout="colorChange(false)"
-    :class="{ 'mouse-over-bgcolor': isColor }"
-  >
-    <b-col cols="2" class="text-center align-self-center">
-      <b-img thumbnail src="https://picsum.photos/250/250/?image=58" alt="Image 1"></b-img>
-    </b-col>
-    <b-col cols="10" class="align-self-center"> [{{ house.일련번호 }}] {{ house.아파트 }} </b-col>
-  </b-row>
+  <!-- Gallery item -->
+  <div class="bg-blue rounded shadow-sm child-container">
+    <img
+      :src="house.firstImage"
+      class="img-fluid card-img-top img-height mt-3"
+      @error="replaceByDefault"
+    />	            
+    <div class="p-4">
+      <h5>{{house.title}}</h5>
+      <p class="small text-muted mb-0">{{house.addr1}}</p>
+    </div>
+  </div>       
+  <!-- End -->
 </template>
 
 <script>
@@ -38,11 +39,27 @@ export default {
     colorChange(flag) {
       this.isColor = flag;
     },
+    replaceByDefault(e) {
+      e.target.src = require("@/assets/NoImage.png");
+    }
   },
 };
 </script>
 
 <style scoped>
+.child-container{
+  margin-right: 20px;
+  margin-bottom: 20px;
+  border: solid 2px;
+  border-color: #c2d6f0;
+}
+.img-height{
+  max-width: 90%;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 5%; 
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
 .apt {
   width: 50px;
 }

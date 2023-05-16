@@ -1,12 +1,12 @@
-import { sidoList, gugunList, houseList } from "@/api/house.js";
+import { sidoList, gugunList, houseListBySido, houseListByGugun, houseListByType} from "@/api/house.js";
 
 const houseStore = {
   namespaced: true,
   state: {
     sidos: [{ value: null, text: "선택하세요" },],
     guguns: [{ value: null, text: "선택하세요" }],
+    types:[],
     houses: [],
-    house: null,
   },
   getters: {},
   mutations: {
@@ -34,6 +34,21 @@ const houseStore = {
     CLEAR_GUGUN_LIST(state) {
       state.guguns = [{ value: null, text: "선택하세요" }];
     },
+    CLEAR_TYPE_LIST(state) {
+      state.types = [{ value: null, text: "선택하세요" },
+                    { value: 12, text: '관광지' },
+                    { value: 14, text: '문화시설' },
+                    { value: 15, text: '축제공연행사' },
+                    { value: 25, text: '여행코스' },
+                    { value: 28, text: '레포츠' },
+                    { value: 32, text: '숙박' },
+                    { value: 38, text: '쇼핑' },
+                    { value: 39, text: '음식점' },
+                    ];
+    },
+    CLEAR_HOUSES_LIST(state) {
+      state.houses = [];
+    },
     // SET_SIDO_LIST(state, sidos) {
     //   sidos.forEach((sido) => {
     //     state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
@@ -41,17 +56,17 @@ const houseStore = {
     // },
     SET_GUGUN_LIST(state, guguns) {
       guguns.forEach((gugun) => {
-        console.log(gugun)
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
-        // console.log(state.guguns);
+        console.log(state.guguns);
       });
     },
     SET_HOUSE_LIST(state, houses) {
       state.houses = houses;
+      console.log(state.houses);
     },
-    SET_DETAIL_HOUSE(state, house) {
-      state.house = house;
-    },
+    // SET_DETAIL_HOUSE(state, house) {
+    //   state.house = house;
+    // },
   },
   actions: {
     getSido: ({ commit }) => {
@@ -76,15 +91,43 @@ const houseStore = {
         }
       );
     },
-    getHouseList: ({ commit }, sidoCode, gugunCode) => {
-      const params = {
-        sido : sidoCode,
-        gugun : gugunCode
-      };
-      houseList(
+    getHouseListBySido: ({ commit }, sidoCode) => {
+      const params = { sido : sidoCode };
+      houseListBySido(
         params,
         ({ data }) => {
-          commit("SET_HOUSE_LIST", data.response.body.items.item);
+          commit("SET_HOUSE_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseListByGugun: ({ commit }, {sidoCode, gugunCode}) => {
+      const params = { 
+        sido : sidoCode,
+        gugun : gugunCode,
+      };
+      houseListByGugun(
+        params,
+        ({ data }) => {
+          commit("SET_HOUSE_LIST", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getHouseListByType: ({ commit }, {sidoCode, gugunCode, typeCode}) => {
+      const params = { 
+        sido : sidoCode,
+        gugun : gugunCode,
+        type : typeCode,
+      };
+      houseListByType(
+        params,
+        ({ data }) => {
+          commit("SET_HOUSE_LIST", data);
         },
         (error) => {
           console.log(error);
