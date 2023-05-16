@@ -43,28 +43,6 @@ public class UserController {
 	
 	@Autowired
     private UserService userService;
-
-//    public UserController(UserService userService) {
-//        this.userService = userService;
-//    }
-
-//    @GetMapping("login")
-//    public String login() {
-//        return "user/login";
-//    }
-//
-//    @PostMapping("login")
-//    public ResponseEntity<?> login(@RequestBody User user, Model model) throws Exception {
-//        System.out.println(user);
-//        User login = userService.login(user);
-//
-//        if (login != null) {
-//            return new ResponseEntity<>(login, HttpStatus.OK);
-//        } else {
-//            model.addAttribute("msg", "아이디 또는 비밀번호를 확인 후 다시 로그인하세요.");
-//            return new ResponseEntity<>(model, HttpStatus.OK);
-//        }
-//    }
 	
 	@ApiOperation(value = "로그인", notes = "Access-token과 로그인 결과 메세지를 반환한다.", response = Map.class)
 	@PostMapping("/login")
@@ -125,15 +103,14 @@ public class UserController {
 		return new ResponseEntity<Map<String, Object>>(resultMap, status);
 	}
 
-    //    @GetMapping(value = "/join")
-//    public String join() {
-//        return "user/join";
-//    }
-//
-    @PostMapping("join")
-    public ResponseEntity<?> join(@RequestBody User user) throws Exception {
-        userService.join(user);
-        return new ResponseEntity<>(user, HttpStatus.OK);
+    @PostMapping("/join")
+    public ResponseEntity<String> join(@RequestBody User user) throws Exception {
+    	logger.debug("join - 호출");
+    	if(userService.join(user)) {
+    		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    	}
+        
+    	return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 
     @GetMapping("logout")

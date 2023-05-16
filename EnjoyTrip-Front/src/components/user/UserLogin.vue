@@ -45,6 +45,41 @@
     </div>
   </div>
 </template>
+
+<script>
+import { mapState, mapActions } from "vuex";
+
+const memberStore = "memberStore";
+
+export default {
+  name: "UserLogin",
+  data() {
+    return {
+      user: {
+        userId: null,
+        password: null,
+      },
+    };
+  },
+  computed: {
+    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
+    async confirm() {
+      await this.userConfirm(this.user);
+      let token = sessionStorage.getItem("access-token");
+      console.log("1. confirm() token >> " + token);
+      if (this.isLogin) {
+        await this.getUserInfo(token);
+        // console.log("4. confirm() userInfo :: ", this.userInfo);
+        this.$router.push({ name: "main" });
+      }
+    },
+  },
+};
+</script>
+
 <style scoped>
 .login-container {
   max-width: 450px;
@@ -105,36 +140,3 @@
   color: #467cc2 !important;
 }
 </style>
-<script>
-import { mapState, mapActions } from "vuex";
-
-const memberStore = "memberStore";
-
-export default {
-  name: "UserLogin",
-  data() {
-    return {
-      user: {
-        userId: null,
-        password: null,
-      },
-    };
-  },
-  computed: {
-    ...mapState(memberStore, ["isLogin", "isLoginError", "userInfo"]),
-  },
-  methods: {
-    ...mapActions(memberStore, ["userConfirm", "getUserInfo"]),
-    async confirm() {
-      await this.userConfirm(this.user);
-      let token = sessionStorage.getItem("access-token");
-      console.log("1. confirm() token >> " + token);
-      if (this.isLogin) {
-        await this.getUserInfo(token);
-        // console.log("4. confirm() userInfo :: ", this.userInfo);
-        this.$router.push({ name: "main" });
-      }
-    },
-  },
-};
-</script>

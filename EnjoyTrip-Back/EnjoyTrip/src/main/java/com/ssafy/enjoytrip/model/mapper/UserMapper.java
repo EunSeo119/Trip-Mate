@@ -15,7 +15,7 @@ public interface UserMapper {
 	
     User selectUserLogin(User user) throws SQLException;
 
-    void insertUser(User user);
+    int insertUser(User user) throws SQLException;
 
     List<User> selectUserList();
 

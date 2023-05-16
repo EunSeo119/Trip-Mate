@@ -3,14 +3,12 @@
     <div class="register-title">
       <h3 class="text-primary font-weight-bold">회원가입</h3>
     </div>
-    <form class="register-form" @submit.prevent="register">
+    <form class="register-form">
       <div class="form-group">
-        <label class="input-title font-weight-bold text-primary" for="userid"
-          >아이디</label
-        >
+        <label class="input-title font-weight-bold text-primary" for="userId">아이디</label>
         <input
-          id="userid"
-          v-model="user.userid"
+          id="userId"
+          v-model="user.userId"
           class="form-control input-item"
           required
           placeholder="아이디를 입력해주세요"
@@ -24,38 +22,30 @@
         </button> -->
       </div>
       <div class="form-group">
-        <label class="input-title font-weight-bold text-primary" for="userpwd"
-          >비밀번호</label
-        >
+        <label class="input-title font-weight-bold text-primary" for="password">비밀번호</label>
         <input
           type="password"
-          id="userpwd"
+          id="password"
           class="form-control input-item"
-          v-model="user.userpwd"
+          v-model="user.password"
           required
           placeholder="비밀번호를 입력해주세요"
         />
       </div>
       <div class="form-group">
-        <label
-          class="input-title font-weight-bold text-primary"
-          for="userpwdConfirm"
+        <label class="input-title font-weight-bold text-primary" for="passwordConfirm"
           >비밀번호 확인</label
         >
         <input
           type="password"
-          id="userpwdConfirm"
+          id="passwordConfirm"
           class="form-control input-item"
-          v-model="user.userpwdConfirm"
+          v-model="user.passwordConfirm"
           required
           placeholder="비밀번호를 다시 입력해주세요"
         />
         <div
-          v-if="
-            user.userpwd &&
-            user.userpwdConfirm &&
-            user.userpwd !== user.userpwdConfirm
-          "
+          v-if="user.password && user.passwordConfirm && user.password !== user.passwordConfirm"
           class="alert alert-danger mt-2"
           role="alert"
         >
@@ -63,21 +53,17 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="input-title font-weight-bold text-primary" for="username"
-          >이름</label
-        >
+        <label class="input-title font-weight-bold text-primary" for="name">이름</label>
         <input
-          id="username"
-          v-model="user.username"
+          id="name"
+          v-model="user.name"
           class="form-control input-item"
           required
           placeholder="이름을 입력해주세요"
         />
       </div>
       <div class="form-group">
-        <label class="input-title font-weight-bold text-primary" for="email"
-          >이메일</label
-        >
+        <label class="input-title font-weight-bold text-primary" for="email">이메일</label>
         <input
           type="email"
           id="email"
@@ -88,39 +74,91 @@
         />
       </div>
       <div class="form-group">
-        <label class="input-title font-weight-bold text-primary"
-          >현재 거주 지역</label
-        >
+        <label class="input-title font-weight-bold text-primary">현재 거주 지역</label>
         <b-col class="sm-3">
-          <b-form-select
-            v-model="sidoCode"
-            :options="sidos"
-            @change="gugunList"
-          ></b-form-select>
+          <b-form-select v-model="user.sidoCode" :options="sidos"></b-form-select>
         </b-col>
-        <!-- <input
-          id="favorite-color"
-          v-model="user.favoriteColor"
-          class="form-control input-item"
-          required
-          placeholder="현 거주 지역을 입력해주세요"
-        /> -->
       </div>
       <div class="form-group text-center">
         <button
-          type="submit"
+          type="button"
           class="btn btn-primary font-weight-bold btn-register"
-          :disabled="user.userpwd !== user.userpwdConfirm"
+          :disabled="user.password !== user.passwordConfirm"
+          @click="register"
         >
           회원가입
         </button>
       </div>
     </form>
-    <router-link to="/login" class="text-primary font-weight-bold">
-      로그인
-    </router-link>
+    <router-link to="/login" class="text-primary font-weight-bold"> 로그인 </router-link>
   </div>
 </template>
+
+<script>
+import { apiInstance } from "@/api/index.js";
+import { mapState, mapMutations } from "vuex";
+
+const api = apiInstance();
+
+const houseStore = "houseStore";
+
+export default {
+  name: "UserRegister",
+  data() {
+    return {
+      user: {
+        userId: null,
+        password: null,
+        passwordConfirm: null,
+        name: null,
+        email: null,
+        sidoCode: null,
+      },
+    };
+  },
+  computed: {
+    ...mapState(houseStore, ["sidos"]),
+  },
+  created() {
+    this.CLEAR_SIDO_LIST();
+  },
+  methods: {
+    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST"]),
+    register() {
+      // 비동기
+      // alert("회원가입 하러가자!!!!");
+      let user = {
+        userId: this.user.userId,
+        password: this.user.password,
+        name: this.user.name,
+        email: this.user.email,
+        sidoCode: this.user.sidoCode,
+      };
+      // api.post(`/user/join`, user).then(({data}) => {
+      //   let msg = "회원가입 시 문제 발생!!!";
+      //   if(data === "success")
+      //     msg = "회원가입 성공!!!";
+      //   alert(msg);
+      //   this.moveList();
+      // })
+      // let _this = this;
+      console.log(user);
+      api.post(`/user/join`, user).then((response) => {
+        let msg = "회원가입 성공!!!";
+        console.log(response.data);
+        alert(msg);
+        console.log(this.$router);
+        this.$router.push({ name: "login" });
+      });
+    },
+
+    moveList() {
+      console.log("로그인 하러가자!!!");
+      this.$router.push({ path: "/user/login" });
+    },
+  },
+};
+</script>
 
 <style scoped>
 .register-container {
@@ -182,41 +220,3 @@
   color: #467cc2 !important;
 }
 </style>
-
-<script>
-import { mapState, mapActions } from "vuex";
-
-const memberStore = "memberStore";
-
-export default {
-  name: "UserRegister",
-  data() {
-    return {
-      user: {
-        userid: null,
-        userpwd: null,
-        userpwdConfirm: null,
-        username: null,
-        email: null,
-        sidoCode: null,
-      },
-    };
-  },
-  computed: {
-    ...mapState(memberStore, ["isRegistrationError"]),
-  },
-  methods: {
-    ...mapActions(memberStore, ["registerUser", "checkDuplicateId"]),
-    async register() {
-      await this.registerUser(this.user);
-      if (!this.isRegistrationError) {
-        this.$router.push({ name: "login" });
-      }
-    },
-    async checkDuplicateId() {
-      await this.checkDuplicateId(this.user.userid);
-      // Handle duplicate ID check response
-    },
-  },
-};
-</script>

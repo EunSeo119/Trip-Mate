@@ -12,7 +12,7 @@ public interface UserService {
 	User userInfo(String userId) throws Exception;
 //    User login(User user) throws Exception;
 
-    void join(User user);
+    boolean join(User user) throws SQLException;
 
     User findPassword(User map) throws SQLException;
 
