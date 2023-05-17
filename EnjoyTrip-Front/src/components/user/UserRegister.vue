@@ -100,7 +100,7 @@ import { mapState, mapMutations } from "vuex";
 
 const api = apiInstance();
 
-const houseStore = "houseStore";
+const travelStore = "travelStore";
 
 export default {
   name: "UserRegister",
@@ -117,13 +117,13 @@ export default {
     };
   },
   computed: {
-    ...mapState(houseStore, ["sidos"]),
+    ...mapState(travelStore, ["sidos"]),
   },
   created() {
     this.CLEAR_SIDO_LIST();
   },
   methods: {
-    ...mapMutations(houseStore, ["CLEAR_SIDO_LIST"]),
+    ...mapMutations(travelStore, ["CLEAR_SIDO_LIST"]),
     register() {
       // 비동기
       // alert("회원가입 하러가자!!!!");

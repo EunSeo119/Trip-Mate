@@ -29,55 +29,37 @@
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link :to="{ name: 'main' }" class="nav-link">
-              <i
-                class="bi bi-house-door"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-house-door" style="font-size: 2rem; animation: fade"></i>
               홈
             </router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'travel' }" class="nav-link">
-              <i
-                class="bi bi-travel-fill"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-travel-fill" style="font-size: 2rem; animation: fade"></i>
               여행지 검색
             </router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'planview' }" class="nav-link">
-              <i
-                class="bi bi-house-fill"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-house-fill" style="font-size: 2rem; animation: fade"></i>
               여행 계획
             </router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'board' }" class="nav-link">
-              <i
-                class="bi bi-journal"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-journal" style="font-size: 2rem; animation: fade"></i>
               여행지 공유
             </router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'insta' }" class="nav-link">
-              <i
-                class="bi bi-instagram"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-instagram" style="font-size: 2rem; animation: fade"></i>
               핫 플레이스
             </router-link>
           </li>
           <li class="nav-item">
             <router-link :to="{ name: 'board' }" class="nav-link">
-              <i
-                class="bi bi-journal"
-                style="font-size: 2rem; animation: fade"
-              ></i>
+              <i class="bi bi-journal" style="font-size: 2rem; animation: fade"></i>
               공지사항
             </router-link>
           </li>
@@ -100,10 +82,7 @@
             </div>
           </li>
           <li class="nav-item align-self-center">
-            <span
-              class="navbar-text"
-              style="color: #333; font-family: 'Arial', sans-serif"
-            >
+            <span class="navbar-text" style="color: #333; font-family: 'Arial', sans-serif">
               {{ userInfo.username }}({{ userInfo.userId }})님 환영합니다.
             </span>
           </li>
@@ -117,9 +96,7 @@
             </router-link>
           </li>
           <li class="nav-item align-self-center">
-            <a href="#" class="nav-link" @click.prevent="onClickLogout"
-              >로그아웃</a
-            >
+            <a href="#" class="nav-link" @click.prevent="onClickLogout">로그아웃</a>
           </li>
         </ul>
 

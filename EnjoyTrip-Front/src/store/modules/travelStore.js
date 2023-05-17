@@ -1,4 +1,5 @@
 import { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType} from "@/api/travel.js";
+// import { sidoList, gugunList, travelListBySido, travelListByGugun } from "@/api/tourList.js";
 
 const travelStore = {
   namespaced: true,
