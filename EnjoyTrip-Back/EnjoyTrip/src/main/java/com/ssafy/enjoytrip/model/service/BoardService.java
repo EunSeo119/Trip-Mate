@@ -7,7 +7,7 @@ import com.ssafy.enjoytrip.model.Notice;
 public interface BoardService {
 	List<Notice> getNoticeAll() throws Exception;
 	
-	void writeNotice(Notice notice);
+	void writeNotice(Notice notice) throws Exception;
 	
 	Notice getNoticeDetail(int noticeId) throws Exception;
 	

@@ -31,5 +31,9 @@ function travelListByType (params, success, fail) {
   console.log(sidoCode, gugunCode, typeCode);
   api.get(`/travel/list/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
 }
-
+// function travelLike (params, success, fail) {
+//   const travelInfoID = params.id;
+//   console.log(travelInfoID);
+//   // api.get(`/travel/status/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
+// }
 export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType };

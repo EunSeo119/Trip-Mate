@@ -1,17 +1,18 @@
 import { apiInstance } from "./index.js";
+import axios from 'axios';
 
 const api = apiInstance();
 
 function listArticle(param, success, fail) {
-  api.get(`/board`, { params: param }).then(success).catch(fail);
+  api.get(`/board/list`, { params: param }).then(success).catch(fail);
 }
 
-function writeArticle(article, success, fail) {
-  api.post(`/board`, JSON.stringify(article)).then(success).catch(fail);
+function writeArticle(formData, success, fail) {
+  axios.post('http://localhost:9999/board/regist', formData).then(success).catch(fail);
 }
 
 function getArticle(articleno, success, fail) {
-  api.get(`/board/${articleno}`).then(success).catch(fail);
+  api.get(`/board/detail/${articleno}`).then(success).catch(fail);
 }
 
 function modifyArticle(article, success, fail) {

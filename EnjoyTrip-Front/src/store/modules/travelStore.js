@@ -1,4 +1,4 @@
-import { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType} from "@/api/travel.js";
+import { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, travelLike} from "@/api/travel.js";
 
 const travelStore = {
   namespaced: true,
@@ -49,11 +49,6 @@ const travelStore = {
     CLEAR_TRAVELS_LIST(state) {
       state.travels = [];
     },
-    // SET_SIDO_LIST(state, sidos) {
-    //   sidos.forEach((sido) => {
-    //     state.sidos.push({ value: sido.sidoCode, text: sido.sidoName });
-    //   });
-    // },
     SET_GUGUN_LIST(state, guguns) {
       guguns.forEach((gugun) => {
         state.guguns.push({ value: gugun.gugunCode, text: gugun.gugunName });
@@ -64,9 +59,6 @@ const travelStore = {
       state.travels = travels;
       console.log(state.travels);
     },
-    // SET_DETAIL_TRAVEL(state, travel) {
-    //   state.travel = travel;
-    // },
   },
   actions: {
     getSido: ({ commit }) => {
@@ -133,6 +125,18 @@ const travelStore = {
           console.log(error);
         }
       );
+    },
+    likeTravel: ({ commit }, travelInfoId) => {
+      const params = { 
+        id : travelInfoId
+      };
+      travelLike(params)
+      .then(() => {
+        commit('UPDATE_LIKED_TRAVEL', travelInfoId);
+      })
+      .catch(error => {
+        console.error(error);
+      });
     },
     detailTravel: ({ commit }, travel) => {
       // 나중에 travel.일련번호를 이용하여 API 호출

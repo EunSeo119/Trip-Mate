@@ -15,6 +15,8 @@ public interface BoardMapper {
 
 	void insertNotice(Notice notice);
 	
+	void registerFile(Notice notice) throws Exception;
+	
 	Notice selectGetDetail(int noticeId) throws SQLException;
 	
 	void updateViewCount(@Param("noticeId") int noticeId, @Param("viewCount") int viewCount);

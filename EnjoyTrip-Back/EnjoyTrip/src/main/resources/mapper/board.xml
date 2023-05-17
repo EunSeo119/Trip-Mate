@@ -12,6 +12,10 @@
     	insert into notice(title, content, create_date)
     	values (#{title}, #{content}, now())
     </insert>
+    <insert id="registerFile" parameterType="notice">
+		insert into file_info (notice_id, save_folder, original_file, save_file)
+		values(#{noticeId}, #{fileInfo.saveFolder}, #{fileInfo.originalFile}, #{fileInfo.saveFile})
+	</insert>
     
     <select id="selectGetDetail" parameterType="int" resultType="Notice">
     	select notice_id as noticeId, title, content, create_date as createDate, views

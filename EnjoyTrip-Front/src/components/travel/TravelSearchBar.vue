@@ -38,11 +38,11 @@ export default {
     this.CLEAR_SIDO_LIST();
     this.CLEAR_GUGUN_LIST();
     this.CLEAR_TYPE_LIST();
-    this.CLEAR_HOUSES_LIST();
+    this.CLEAR_TRAVELS_LIST();
   },
   methods: {
     ...mapActions(travelStore, ["getSido", "getGugun", "getTravelListBySido", "getTravelListByGugun", "getTravelListByType"]),
-    ...mapMutations(travelStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_HOUSES_LIST", "CLEAR_APT_LIST"]),
+    ...mapMutations(travelStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_TRAVELS_LIST", "CLEAR_APT_LIST"]),
     // 시도에 따라 구군 설정하기
     gugunList() {
       console.log(this.sidoCode);

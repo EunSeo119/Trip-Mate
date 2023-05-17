@@ -1,23 +1,19 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
-      <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+    <b-row align-h="between" class="mt-5">
+      <b-col cols="auto">
+        <h3 style="text-align: left">글목록</h3>
       </b-col>
-    </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-right">
-        <b-button variant="outline-primary" @click="moveWrite()">글쓰기</b-button>
+      <b-col cols="auto">
+        <button class = "btn custom-btn" @click="moveWrite()" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글쓰기</button>
       </b-col>
     </b-row>
     <b-row>
       <b-col>
         <b-table striped hover :items="articles" :fields="fields" @row-clicked="viewArticle">
-          <template #cell(subject)="data">
-            <router-link :to="{ name: 'boardview', params: { articleno: data.item.articleno } }">
-              {{ data.item.subject }}
-            </router-link>
-          </template>
+           <template #cell(createDate)="data">
+              {{ formatDate(data.item.createDate) }}
+            </template>
         </b-table>
       </b-col>
     </b-row>
@@ -33,11 +29,10 @@ export default {
     return {
       articles: [],
       fields: [
-        { key: "articleno", label: "글번호", tdClass: "tdClass" },
-        { key: "subject", label: "제목", tdClass: "tdSubject" },
-        { key: "userid", label: "작성자", tdClass: "tdClass" },
-        { key: "regtime", label: "작성일", tdClass: "tdClass" },
-        { key: "hit", label: "조회수", tdClass: "tdClass" },
+        { key: "noticeId", label: "글번호", tdClass: "tdClass" },
+        { key: "title", label: "제목", tdClass: "tdSubject font-weight-bold text-center" },
+        { key: "createDate", label: "작성일", tdClass: "tdClass" },
+        { key: "views", label: "조회수", tdClass: "tdClass" },
       ],
     };
   },
@@ -52,6 +47,7 @@ export default {
       param,
       ({ data }) => {
         this.articles = data;
+        console.log(this.articles);
       },
       (error) => {
         console.log(error);
@@ -68,6 +64,19 @@ export default {
         params: { articleno: article.articleno },
       });
     },
+    formatDate(date) {
+      const d = new Date(date);
+      const year = d.getFullYear().toString().slice(-2);
+      const month = ("0" + (d.getMonth() + 1)).slice(-2);
+      const day = ("0" + d.getDate()).slice(-2);
+      return `${year}.${month}.${day}`;
+    },
+    changeButtonColor(event) {
+      event.target.style.backgroundColor = '#c2d6f0'; 
+    },
+    resetButtonColor(event) {
+      event.target.style.backgroundColor = '#fff';
+    },
   },
 };
 </script>
@@ -80,5 +89,8 @@ export default {
 .tdSubject {
   width: 300px;
   text-align: left;
+}
+.custom-btn{
+  border: solid 2px #c2d6f0;
 }
 </style>

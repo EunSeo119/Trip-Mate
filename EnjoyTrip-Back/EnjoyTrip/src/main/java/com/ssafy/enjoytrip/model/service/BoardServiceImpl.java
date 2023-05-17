@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.enjoytrip.model.FileInfoDto;
 import com.ssafy.enjoytrip.model.Notice;
 import com.ssafy.enjoytrip.model.mapper.BoardMapper;
 
@@ -22,8 +23,12 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void writeNotice(Notice notice) {
+	public void writeNotice(Notice notice) throws Exception {
 		boardMapper.insertNotice(notice);
+		FileInfoDto fileInfo = notice.getFileInfo();
+		if(fileInfo != null) {
+			boardMapper.registerFile(notice);
+		}
 	}
 
 	@Override
