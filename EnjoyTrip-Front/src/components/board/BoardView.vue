@@ -1,32 +1,39 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
+    <b-row class = "mt-5">
       <b-col>
-        <b-alert show><h3>글보기</h3></b-alert>
+        <h3>글보기</h3>
       </b-col>
     </b-row>
-    <b-row class="mb-1">
-      <b-col class="text-left">
-        <b-button variant="outline-primary" @click="moveList">목록</b-button>
-      </b-col>
-      <b-col class="text-right" v-if="userInfo.userid === article.userid">
-        <b-button variant="outline-info" size="sm" @click="moveModifyArticle" class="mr-2">글수정</b-button>
-        <b-button variant="outline-danger" size="sm" @click="deleteArticle">글삭제</b-button>
-      </b-col>
-    </b-row>
+    <div class="d-flex justify-content-between mb-3">
+      <div>
+        <button class="btn custom-btn" @click="moveList" @mouseover="changeButtonColor" @mouseout="resetButtonColor">목록</button>
+      </div>
+      <div>
+        <button class="btn custom-btn2 mr-2" @click="moveModifyArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글수정</button>
+        <button class="btn custom-btn2" @click="deleteArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글삭제</button>
+      </div>
+    </div>
     <b-row class="mb-1">
       <b-col>
-        <b-card
-          :header-html="`<h3>${article.articleno}.
-          ${article.subject} [${article.hit}]</h3><div><h6>${article.userid}</div><div>${article.regtime}</h6></div>`"
-          class="mb-2"
-          border-variant="dark"
-          no-body
-        >
-          <b-card-body class="text-left">
+        <div class="card mb-2">
+          <div class="card-header">
+            <div class="card-header-title mt-3 mb-3">
+              <h3>{{ article.title }}</h3>
+              <div>
+                <font-awesome-icon :icon="['far', 'calendar']" style="color: #838891;"/>
+                {{ new Date(article.createDate).toLocaleDateString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit' }) }}
+                <span style="margin-right: 10px;"></span>
+                <font-awesome-icon :icon="['far', 'eye']" style="color: #838891;"/>
+                {{ article.views }}
+              </div>
+            </div>
+          </div>
+          <img :src="imageSrc" alt="Image">
+          <div class="card-body text-left">
             <div v-html="message"></div>
-          </b-card-body>
-        </b-card>
+          </div>
+        </div>
       </b-col>
     </b-row>
   </b-container>
@@ -34,7 +41,7 @@
 
 <script>
 // import moment from "moment";
-import { getArticle } from "@/api/board";
+import { getArticle,  } from "@/api/board";
 import { mapState } from "vuex";
 
 const memberStore = "memberStore";
@@ -44,6 +51,7 @@ export default {
   data() {
     return {
       article: {},
+       imageUrl: null,
     };
   },
   computed: {
@@ -54,11 +62,30 @@ export default {
     },
   },
   created() {
-    let param = this.$route.params.articleno;
+    let param = this.$route.params.noticeId;
     getArticle(
       param,
       ({ data }) => {
         this.article = data;
+        console.log(this.article);
+        if (this.article.fileInfo != null){
+        
+            const sfolder = this.article.fileInfo.saveFolder; 
+            const ofile = this.article.fileInfo.originalFile; 
+            const sfile = this.article.fileInfo.saveFile; 
+            const apiUrl = ` http://localhost:9999/download/${sfolder}/${ofile}/${sfile}`; // 이미지를 요청할 API 경로
+
+            // 이미지 요청
+            fetch(apiUrl)
+              .then(response => response.blob())
+              .then(blob => {
+                // Blob을 URL로 변환하여 이미지 표시
+                this.imageUrl = URL.createObjectURL(blob);
+              })
+              .catch(error => {
+                console.error('Failed to load image:', error);
+            });
+        }
       },
       (error) => {
         console.log(error);
@@ -69,7 +96,7 @@ export default {
     moveModifyArticle() {
       this.$router.replace({
         name: "boardmodify",
-        params: { articleno: this.article.articleno },
+        params: { noticeId: this.article.noticeId },
       });
       //   this.$router.push({ path: `/board/modify/${this.article.articleno}` });
     },
@@ -77,13 +104,31 @@ export default {
       if (confirm("정말로 삭제?")) {
         this.$router.replace({
           name: "boarddelete",
-          params: { articleno: this.article.articleno },
+          params: { noticeId: this.article.noticeId },
         });
       }
     },
     moveList() {
       this.$router.push({ name: "boardlist" });
     },
+
+    changeButtonColor(event) {
+      const target = event.target;
+      if (target.classList.contains('custom-btn')) {
+        target.style.backgroundColor = '#c2d6f0';
+      } else if (target.classList.contains('custom-btn2')) {
+        target.style.backgroundColor = '#BCF0B6';
+      }
+    },
+
+    resetButtonColor(event) {
+      const target = event.target;
+      target.style.backgroundColor = '';
+    },
+
+    getImageUrl(fileInfo) {
+      return `/upload/${fileInfo.saveFolder}/${fileInfo.saveFile}`;
+    }
   },
   // filters: {
   //   dateFormat(regtime) {
@@ -93,4 +138,11 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.custom-btn{
+  border: solid 2px #c2d6f0;
+}
+.custom-btn2{
+  border: solid 2px #BCF0B6;
+}
+</style>

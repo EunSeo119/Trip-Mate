@@ -25,6 +25,7 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public void writeNotice(Notice notice) throws Exception {
 		boardMapper.insertNotice(notice);
+		System.out.println(notice.getNoticeId());
 		FileInfoDto fileInfo = notice.getFileInfo();
 		if(fileInfo != null) {
 			boardMapper.registerFile(notice);
@@ -34,6 +35,10 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public Notice getNoticeDetail(int noticeId) throws Exception {
 		Notice notice = boardMapper.selectGetDetail(noticeId);
+		FileInfoDto file = boardMapper.fileInfo(noticeId);
+		if (file != null) {			
+			notice.setFileInfo(file); 
+		}	
 		notice.setViews(notice.getViews()+1);
 		boardMapper.updateViewCount(noticeId, notice.getViews());
 		return notice;

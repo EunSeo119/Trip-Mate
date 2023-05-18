@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
+import com.ssafy.enjoytrip.model.FileInfoDto;
 import com.ssafy.enjoytrip.model.Notice;
 
 @Mapper
@@ -22,4 +23,6 @@ public interface BoardMapper {
 	void updateViewCount(@Param("noticeId") int noticeId, @Param("viewCount") int viewCount);
 	
 	void modifyNotice(Notice notice);
+	
+	FileInfoDto fileInfo(int noticeId) throws Exception;
 }

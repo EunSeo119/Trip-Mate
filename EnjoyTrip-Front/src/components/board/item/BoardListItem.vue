@@ -1,8 +1,8 @@
 <template>
   <b-tr>
-    <b-td>{{ articleno }}</b-td>
+    <b-td>{{ noticeId }}</b-td>
     <b-th class="text-left">
-      <router-link :to="{ name: 'boardview', params: { articleno: articleno } }">{{ title }}</router-link>
+      <router-link :to="{ name: 'boardview', params: { noticeId : noticeId } }">{{ title }}</router-link>
     </b-th>
     <b-td>{{ createDate | dateFormat }}</b-td>
     <b-td>{{ views }}</b-td>

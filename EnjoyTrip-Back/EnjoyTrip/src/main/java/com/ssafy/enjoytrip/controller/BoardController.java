@@ -1,6 +1,10 @@
 package com.ssafy.enjoytrip.controller;
 
 import java.io.File;
+import java.net.URLEncoder;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,8 +16,14 @@ import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.ContentDisposition;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -42,7 +52,7 @@ import io.swagger.annotations.ApiResponses;
 @Api(tags = "공지사항 관리")
 public class BoardController {
 	private final Logger logger = LoggerFactory.getLogger(BoardController.class);
-	private final String UPLOAD_PATH = "/upload";
+	private final String UPLOAD_PATH = "C:\\upload";
 	private ServletContext servletContext;
 	
     private final BoardService boardService;
@@ -86,17 +96,22 @@ public class BoardController {
 			
 			FileInfoDto fileInfoDto = new FileInfoDto();
 			String originalFileName = file.getOriginalFilename();
+
+			logger.debug(" articleNo : {}",originalFileName);
+
 			if (!originalFileName.isEmpty()) {
 				String saveFileName = UUID.randomUUID().toString()
 						+ originalFileName.substring(originalFileName.lastIndexOf('.'));
 				fileInfoDto.setSaveFolder(today);
 				fileInfoDto.setOriginalFile(originalFileName);
 				fileInfoDto.setSaveFile(saveFileName);
-//				file.transferTo(new File(folder, saveFileName));
+				file.transferTo(new File(folder, saveFileName));
 			}
 			notice.setFileInfo(fileInfoDto);
 		}
-
+		logger.debug(notice.getTitle());
+		logger.debug(notice.getTitle());
+		logger.debug(notice.getTitle());
 		boardService.writeNotice(notice);
 		return new ResponseEntity<>(notice, HttpStatus.OK);
 	}
@@ -109,6 +124,31 @@ public class BoardController {
         return new ResponseEntity<>(boardService.getNoticeDetail(noticeId), HttpStatus.OK);
     }
     
+    @ApiOperation(value= "공자사항 상세정보 사진", notes = "공지사항 상세 정보 사진을 리턴합니다.")
+	@ApiResponses({@ApiResponse(code = 200, message = "공지사항상세사진 OK"), @ApiResponse(code = 500, message = "서버에러")})
+	@GetMapping("/download/{sfolder}/{ofile}/{sfile}")
+	public ResponseEntity<Object> download(@PathVariable("sfolder") String sfolder, @PathVariable("ofile") String ofile,
+			@PathVariable("sfile") String sfile) {
+		logger.debug("download file info sfolder : {}, ofile : {}, sfile : {}", sfolder, ofile, sfile);
+		String file = UPLOAD_PATH + File.separator + sfolder + File.separator + sfile;
+
+		try {
+			Path filePath = Paths.get(file);
+			Resource resource = new InputStreamResource(Files.newInputStream(filePath)); // 파일 resource 얻기
+
+			HttpHeaders headers = new HttpHeaders();
+			headers.setContentDisposition(ContentDisposition.builder("attachment").filename(URLEncoder.encode(ofile, "UTF-8").replaceAll("\\+", "%20")).build());
+			headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+			headers.setAccessControlAllowOrigin("*");
+
+			return new ResponseEntity<Object>(resource, headers, HttpStatus.OK);
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ResponseEntity<Object>(null, HttpStatus.CONFLICT);
+		}
+	}
+    
+    
     @ApiOperation(value= "공자사항수정", notes = "공지사항을 수정합니다.")
 	@ApiResponses({@ApiResponse(code = 200, message = "공지사항수정 OK"), @ApiResponse(code = 500, message = "서버에러")})
     @PutMapping("modify")
@@ -116,5 +156,4 @@ public class BoardController {
         boardService.modifyNotice(notice);
         return new ResponseEntity<>(notice, HttpStatus.OK);
     }
-
 }

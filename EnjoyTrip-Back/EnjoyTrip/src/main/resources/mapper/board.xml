@@ -8,7 +8,7 @@
 		from notice
     </select>
     
-    <insert id="insertNotice" parameterType="notice">
+    <insert id="insertNotice" parameterType="notice" useGeneratedKeys="true" keyProperty="noticeId">
     	insert into notice(title, content, create_date)
     	values (#{title}, #{content}, now())
     </insert>
@@ -23,6 +23,12 @@
     	where notice_id = #{noticeId}
     </select>
     
+    <select id="fileInfo" resultType="FileInfoDto">
+		select save_folder, original_file, save_file
+		from file_info
+		where notice_id = #{noticeId}
+	</select>
+    
     <update id="updateViewCount">
     	update notice
     	set views = #{viewCount}
@@ -35,7 +41,5 @@
 		where notice_id = #{noticeId}
 	</update>
     
-    <!-- <resultMap id="updateView">
-    	<association select=""
-    </resultMap> -->
+    
 </mapper>
