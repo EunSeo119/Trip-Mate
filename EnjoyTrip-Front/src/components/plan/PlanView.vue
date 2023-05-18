@@ -3,15 +3,11 @@
     <b-row id="mainrow" class="justify-content-center">
       <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
         <div class="choice">
-          <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3>
+          <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
+          <h3 class="pt-4">""위치에서</h3>
           <h3>ㅇㅇ카테고리에서</h3>
           <div class="search-input">
-            <input
-              type="text"
-              v-model="searchText"
-              placeholder="검색어를 입력하세요"
-              class="form-control"
-            />
+            <input type="text" placeholder="검색어를 입력하세요" class="form-control" />
             <!-- <button class="search-btn" @click="search">검색</button> -->
             <button class="search-btn">검색</button>
           </div>
@@ -39,7 +35,7 @@
                     {{ tour.title }}
                   </b-card-text>
                   <button class="planbtn" @click="addChoice(tour)">
-                    <font-awesome-icon icon="fa-solid fa-circle-plus" style="color: #d5e2f5" />
+                    <i class="fa-solid fa-circle-plus" style="color: #d5e2f5" />
                   </button>
                 </b-col>
               </b-row>
@@ -52,7 +48,9 @@
           <b-container style="padding-top: 30px">
             <!-- <plan-option-bar @makeMarker="makeMapMarkers"></plan-option-bar> -->
             <plan-option-bar></plan-option-bar>
-            <div class="tab-content mt-2" id="mapcontent">
+            <!-- <the-kakao-map :chargers="this.travels"></the-kakao-map> -->
+            <the-kakao-map></the-kakao-map>
+            <!-- <div class="tab-content mt-2" id="mapcontent">
               <div
                 class="tab-pane fade show active"
                 id="tabpane"
@@ -61,15 +59,15 @@
               >
                 <div class="map_wrap">
                   <div id="map" style="width: 100%; height: 700px"></div>
-                  <!-- 지도 확대, 축소 컨트롤 div 입니다 -->
+                  지도 확대, 축소 컨트롤 div 입니다
                   <div class="custom_zoomcontrol radius_border">
-                    <!-- <span @click="zoomIn" -->
+                    <span @click="zoomIn"
                     <span 
                       ><img
                         src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
                         alt="확대"
                     /></span>
-                    <!-- <span @click="zoomOut" -->
+                    <span @click="zoomOut"
                     <span
                       ><img
                         src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
@@ -78,16 +76,11 @@
                   </div>
                 </div>
               </div>
-            </div>
-            <!-- <b-row style="display: flex; justify-content: center"
-              ><b-button size="lg" @click="completePlan()" id="btncomplete"
-                >저장하기</b-button
-              ></b-row
-            > -->
+            </div> -->
           </b-container>
         </b-row>
       </b-col>
-      <b-col md="2" style="padding-top: 10px; max-height: 950px; text-align: center">
+      <b-col md="2" class="shadow" style="padding-top: 10px; max-height: 950px; text-align: center">
         <h3 style="font-weight: bold; padding: 43px 0px 43px 0px">내 계획</h3>
         <!-- <div class="p-3">
           <b-row class="mb-1 justify-content-center"
@@ -126,10 +119,9 @@
                   style="max-width: 13rem; min-width: 15rem"
                 >
                   <button class="planbtn" @click="deleteChoice(choice.name)">
-                    <font-awesome-icon icon="fa-solid fa-circle-minus" style="color: red" />
+                    <i class="fa-solid fa-circle-minus" style="color: red" />
                   </button>
                   <b-card-text>
-                    <!-- <font-awesome-icon icon="fa-solid fa-bed" /> -->
                     {{ choice.name }}
                   </b-card-text>
                 </b-card>
@@ -137,11 +129,41 @@
             </transition-group>
           </draggable>
         </div>
-        <b-row style="display: flex; justify-content: center"
-          ><b-button size="lg" @click="completePlan()" id="btncomplete">저장하기</b-button></b-row
-        >
+        <b-row style="display: flex; justify-content: center">
+          <!-- <b-button size="lg" @click="completePlan()" id="btncomplete">저장하기</b-button> -->
+          <b-button size="lg" @click="showModal" id="btncomplete">저장하기</b-button>
+        </b-row>
       </b-col>
     </b-row>
+    <!-- 모달 -->
+    <b-modal v-model="modalVisible" title="저장하기" hide-footer>
+      <div class="d-flex flex-column align-items-center">
+        <b-form-group label="제목" label-for="title-input">
+          <b-form-input
+            id="title-input"
+            v-model="title"
+            placeholder="제목을 입력하세요"
+          ></b-form-input>
+        </b-form-group>
+        <b-form-group label="내용" label-for="content-input">
+          <b-form-textarea
+            id="content-input"
+            v-model="content"
+            placeholder="내용을 입력하세요"
+          ></b-form-textarea>
+        </b-form-group>
+        <b-form-group label="시작 날짜" label-for="start-date">
+          <b-form-datepicker id="start-date" v-model="startDate" locale="ko"></b-form-datepicker>
+        </b-form-group>
+        <b-form-group label="끝 날짜" label-for="end-date">
+          <b-form-datepicker id="end-date" v-model="endDate" locale="ko"></b-form-datepicker>
+        </b-form-group>
+        <b-form-group>
+          <b-form-checkbox v-model="shared">공유하기</b-form-checkbox>
+        </b-form-group>
+        <b-button @click="savePlan" class="mt-3">저장</b-button>
+      </div>
+    </b-modal>
   </div>
 </template>
 
@@ -150,11 +172,14 @@ import { mapState } from "vuex";
 // import { apiInstance } from "@/api/index.js";
 import draggable from "vuedraggable";
 import PlanOptionBar from "@/components/plan/PlanOptionBar.vue";
+import TheKakaoMap from "@/components/TheKakaoMap.vue";
+// import memberStore from "@/store/modules/memberStore";
+// import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const travelStore = "travelStore";
+const memberStore = "memberStore";
 
 // const api = apiInstance();
-// const memberStore = "memberStore";
 // const tourListStore = "tourListStore";
 
 export default {
@@ -162,14 +187,64 @@ export default {
   data() {
     return {
       myChoices: [],
+      modalVisible: false, // 모달 표시 여부를 관리하는 변수
+      title: "", // 제목을 저장하는 변수
+      content: "", // 내용을 저장하는 변수
+      startDate: null, // 시작 날짜를 저장하는 변수
+      endDate: null, // 마감 날짜를 저장하는 변수
+      shared: false, // 공유 여부를 저장하는 변수
     };
   },
   components: {
     draggable,
     PlanOptionBar,
+    TheKakaoMap,
+    // FontAwesomeIcon,
   },
   computed: {
     ...mapState(travelStore, ["travels"]),
+    ...mapState(memberStore, ["userInfo"]),
+  },
+  methods: {
+    showModal() {
+      // 모달 표시 여부를 true로 설정하여 모달을 엽니다.
+      this.modalVisible = true;
+    },
+    savePlan() {
+      // 저장하기 버튼을 클릭했을 때 실행되는 메소드
+      // 입력된 제목, 내용, 시작 날짜, 마감 날짜, 공유 여부를 사용하여 저장하는 로직을 추가하세요.
+      console.log("제목:", this.title);
+      console.log("내용:", this.content);
+      console.log("시작 날짜:", this.startDate);
+      console.log("마감 날짜:", this.endDate);
+      console.log("공유 여부:", this.shared);
+
+      // 저장 후에는 모달을 닫을 수 있습니다.
+      this.modalVisible = false;
+    },
+    addChoice(tour_info) {
+      console.log(tour_info);
+      let newInfo = {
+        idx: tour_info.travelInfoId,
+        name: tour_info.title,
+        type: tour_info.travelTypeId,
+        imgsrc: tour_info.firstImage,
+        lat: tour_info.latitude,
+        lng: tour_info.longitude,
+        addr: tour_info.addr1,
+      };
+      this.myChoices.push(newInfo);
+    },
+    deleteChoice(delete_name) {
+      let temp = [];
+      for (let i = 0; i < this.myChoices.length; i++) {
+        if (this.myChoices[i].name !== delete_name) {
+          temp.push(this.myChoices[i]);
+        }
+      }
+      // let filtered = this.myChoices.filter((o) => o.name !== delete_name);
+      this.myChoices = temp;
+    },
   },
 };
 

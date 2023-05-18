@@ -3,11 +3,7 @@
     <b-row class="mb-4 text-center justify-content-md-center">
       <!-- <h5>여행계획</h5> -->
       <b-col md="3">
-        <b-form-select
-          v-model="sidoCode"
-          :options="sidos"
-          @change="this.gugunList"
-        ></b-form-select>
+        <b-form-select v-model="sidoCode" :options="sidos" @change="this.gugunList"></b-form-select>
       </b-col>
       <b-col md="3">
         <b-form-select
@@ -48,6 +44,7 @@ export default {
     return {
       sidoCode: null,
       gugunCode: null,
+      typeCode: null,
       tabInit: 0,
     };
   },
@@ -74,6 +71,7 @@ export default {
       "CLEAR_TYPE_LIST",
       "CLEAR_TRAVELS_LIST",
       "CLEAR_APT_LIST",
+      "SET_CONTENT_TYPE_ID",
     ]),
     // 시도에 따라 구군 설정하기
     gugunList() {
@@ -95,6 +93,12 @@ export default {
           typeCode: this.typeCode,
         });
       }
+    },
+    setContentTypeId(inputId) {
+      console.log("실행");
+      this.typeCode = inputId;
+      // this.SET_CONTENT_TYPE_ID(inputId);
+      this.searchTravel();
     },
     async makeList() {
       this.CLEAR_CONTENT_TYPE_ID();
