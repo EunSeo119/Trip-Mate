@@ -1,7 +1,7 @@
 import { apiInstance } from "./index.js";
+import axios from 'axios';
 
 const api = apiInstance();
-// const travel = travelInstance();
 
 function sidoList(success, fail) {
   api.get(`/map/sido`).then(success).catch(fail);
@@ -36,4 +36,8 @@ function travelListByType (params, success, fail) {
 //   console.log(travelInfoID);
 //   // api.get(`/travel/status/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
 // }
-export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType };
+function modifyLike(params, success, fail){
+  console.log(params);
+  axios.put('http://localhost:9999/travel/status/like', params).then(success).catch(fail);
+}
+export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, modifyLike };

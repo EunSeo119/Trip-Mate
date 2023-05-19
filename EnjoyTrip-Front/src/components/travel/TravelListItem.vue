@@ -24,6 +24,8 @@
 
 <script>
 import { mapActions } from "vuex";
+import store from "@/store";
+import { modifyLike } from "@/api/travel";
 
 const travelStore = "travelStore";
 
@@ -40,6 +42,7 @@ export default {
   props: {
     travel: Object,
   },
+
   methods: {
     ...mapActions(travelStore, ["detailTravel", "likeTravel"]),
     selectTravel() {
@@ -61,7 +64,25 @@ export default {
     toggleHeart() {
       this.isHeartFilled = !this.isHeartFilled;
       this.heartIcon = this.isHeartFilled ? ['fas', 'heart'] : ['far', 'heart'];
-      // this.likeTravel(this.travel.travelInfoId);
+      let params = {
+        "travelInfoId": this.travel.travelInfoId,
+        "like" : 1,
+        "userId": store.getters["memberStore/checkUserInfo"].userId,
+      };
+      modifyLike(
+        params,
+        ({ data }) => {
+          let msg = "좋아요 수정 처리시 문제가 발생했습니다.";
+          if (data == "success") {
+            msg = "좋아요 수정이 완료되었습니다.";
+          }
+          console.log(msg);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+      
     },
   },
 };
