@@ -17,7 +17,7 @@ async function tokenRegeneration(user, success, fail) {
 }
 
 async function logout(userid, success, fail) {
-  await api.get(`/user/logout/${userid}`).then(success).catch(fail);
+  await api.get(`/user/logout`).then(success).catch(fail);
 }
 
 export { login, findById, tokenRegeneration, logout };

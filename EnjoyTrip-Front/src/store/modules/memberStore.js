@@ -119,11 +119,12 @@ const memberStore = {
         }
       );
     },
-    async userLogout({ commit }, userid) {
+    async userLogout({ commit }, userInfo) {
       await logout(
-        userid,
+        userInfo,
         ({ data }) => {
-          if (data.message === "success") {
+          console.log(data);
+          if (data == "success") {
             commit("SET_IS_LOGIN", false);
             commit("SET_USER_INFO", null);
             commit("SET_IS_VALID_TOKEN", false);

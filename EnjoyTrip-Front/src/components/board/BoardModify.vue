@@ -1,8 +1,8 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
+    <b-row class = "mt-5">
       <b-col>
-        <b-alert show><h3>글수정</h3></b-alert>
+        <h3>글수정</h3>
       </b-col>
     </b-row>
     <board-input-item type="modify" />

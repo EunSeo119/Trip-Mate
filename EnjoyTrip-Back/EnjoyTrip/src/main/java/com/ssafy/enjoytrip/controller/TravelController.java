@@ -98,7 +98,7 @@ public class TravelController {
             else {
                 return new ResponseEntity<>("좋아요 실패", HttpStatus.BAD_REQUEST);
             }
-        }
+        } 
     }
 
     @PutMapping("status/star")

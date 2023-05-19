@@ -15,6 +15,8 @@ public class Notice {
 	private String createDate;
 	@ApiModelProperty(value = "공지사항 조회수")
 	private int views;
+	@ApiModelProperty(value = "공지사항 첨부파일")
+	private FileInfoDto fileInfo;
 
 	public int getNoticeId() {
 		return noticeId;
@@ -55,5 +57,14 @@ public class Notice {
 	public void setViews(int views) {
 		this.views = views;
 	}
+
+	public FileInfoDto getFileInfo() {
+		return fileInfo;
+	}
+
+	public void setFileInfo(FileInfoDto fileInfo) {
+		this.fileInfo = fileInfo;
+	}
+
 
 }
