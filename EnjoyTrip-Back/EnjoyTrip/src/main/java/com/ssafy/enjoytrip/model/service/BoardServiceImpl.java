@@ -45,8 +45,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void modifyNotice(Notice notice) {
+	public void modifyNotice(Notice notice) throws Exception  {
+		FileInfoDto fileInfo = notice.getFileInfo();
+		if(fileInfo != null) {
+			boardMapper.modifyFile(notice);
+		}
 		boardMapper.modifyNotice(notice);
+	}
+
+	@Override
+	public void deleteNotice(int noticeId) throws Exception {
+		boardMapper.deleteFile(noticeId);
+		boardMapper.deleteNotice(noticeId);
 	}
 
 }

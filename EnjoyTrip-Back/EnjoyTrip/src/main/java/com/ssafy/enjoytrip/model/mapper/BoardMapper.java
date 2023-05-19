@@ -24,5 +24,12 @@ public interface BoardMapper {
 	
 	void modifyNotice(Notice notice);
 	
+	void modifyFile(Notice notice) throws Exception;
+
 	FileInfoDto fileInfo(int noticeId) throws Exception;
+
+	void deleteNotice(@Param("noticeId") int noticeId);
+
+	void deleteFile(@Param("noticeId") int noticeId);
+
 }

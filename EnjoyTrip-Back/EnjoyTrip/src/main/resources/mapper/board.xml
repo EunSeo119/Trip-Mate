@@ -37,9 +37,27 @@
     
     <update id="modifyNotice" parameterType="notice">
 		update notice
-		set title = #{title}, content = #{content}
+		set title = #{title}, 
+			content = #{content}
 		where notice_id = #{noticeId}
 	</update>
+	
+	<update id="modifyFile" parameterType="notice">
+		update file_info
+		set save_folder = #{fileInfo.saveFolder}, 
+			original_file = #{fileInfo.originalFile}, 
+			save_file = #{fileInfo.saveFile}
+		where notice_id = #{noticeId}
+	</update>
+	
+	  <delete id="deleteFile">
+	    DELETE FROM file_info
+	    WHERE notice_id = #{noticeId}
+	</delete>
     
-    
+    <delete id="deleteNotice">
+	    DELETE FROM notice
+	    WHERE notice_id = #{noticeId}
+	</delete>
+	
 </mapper>

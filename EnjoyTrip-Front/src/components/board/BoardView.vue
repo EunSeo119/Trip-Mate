@@ -10,8 +10,8 @@
         <button class="btn custom-btn" @click="moveList" @mouseover="changeButtonColor" @mouseout="resetButtonColor">목록</button>
       </div>
       <div>
-        <button class="btn custom-btn2 mr-2" @click="moveModifyArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글수정</button>
-        <button class="btn custom-btn2" @click="deleteArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글삭제</button>
+        <button v-if="isAdminUser" class="btn custom-btn2 mr-2" @click="moveModifyArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글수정</button>
+        <button v-if="isAdminUser" class="btn custom-btn2" @click="deleteArticle" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글삭제</button>
       </div>
     </div>
     <b-row class="mb-1">
@@ -29,9 +29,12 @@
               </div>
             </div>
           </div>
-          <img :src="imageSrc" alt="Image">
+          <button @click="downloadImage">이미지 다운로드</button>
           <div class="card-body text-left">
-            <div v-html="message"></div>
+            <div class="d-flex justify-content-center align-items-center">
+              <img :src="imageSrc">
+            </div>
+            <div v-html="message" class = "mt-3"></div>
           </div>
         </div>
       </b-col>
@@ -43,6 +46,8 @@
 // import moment from "moment";
 import { getArticle,  } from "@/api/board";
 import { mapState } from "vuex";
+import axios from 'axios';
+import store from "@/store";
 
 const memberStore = "memberStore";
 
@@ -51,7 +56,8 @@ export default {
   data() {
     return {
       article: {},
-       imageUrl: null,
+      url: null,
+      imageSrc: '',
     };
   },
   computed: {
@@ -59,6 +65,14 @@ export default {
     message() {
       if (this.article.content) return this.article.content.split("\n").join("<br>");
       return "";
+    },
+    isAdminUser() {
+      const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+      if (checkUserInfo != null && checkUserInfo.userId == "admin")
+        return 1;
+      else{
+        return 0;
+      }
     },
   },
   created() {
@@ -68,22 +82,20 @@ export default {
       ({ data }) => {
         this.article = data;
         console.log(this.article);
-        if (this.article.fileInfo != null){
-        
-            const sfolder = this.article.fileInfo.saveFolder; 
-            const ofile = this.article.fileInfo.originalFile; 
-            const sfile = this.article.fileInfo.saveFile; 
-            const apiUrl = ` http://localhost:9999/download/${sfolder}/${ofile}/${sfile}`; // 이미지를 요청할 API 경로
+        if(this.article.fileInfo != null){
+          const sfolder = this.article.fileInfo.saveFolder; 
+          const ofile = this.article.fileInfo.originalFile; 
+          const sfile = this.article.fileInfo.saveFile; 
+          // console.log("file!!!", sfolder, ofile, sfile);
 
-            // 이미지 요청
-            fetch(apiUrl)
-              .then(response => response.blob())
-              .then(blob => {
-                // Blob을 URL로 변환하여 이미지 표시
-                this.imageUrl = URL.createObjectURL(blob);
-              })
-              .catch(error => {
-                console.error('Failed to load image:', error);
+          axios.get(`http://localhost:9999/board/download/${sfolder}/${ofile}/${sfile}`, { responseType: 'blob' })
+            .then(response => {
+              console.log("response", response);
+              this.url = window.URL.createObjectURL(new Blob([response.data]));
+              this.imageSrc = this.url;
+            })
+            .catch(error => {
+              console.error(error);
             });
         }
       },
@@ -126,9 +138,14 @@ export default {
       target.style.backgroundColor = '';
     },
 
-    getImageUrl(fileInfo) {
-      return `/upload/${fileInfo.saveFolder}/${fileInfo.saveFile}`;
-    }
+    downloadImage(){      
+      const link = document.createElement('a');
+      link.href = this.url;
+      link.setAttribute('download', this.article.fileInfo.originalFile);
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    },
   },
   // filters: {
   //   dateFormat(regtime) {

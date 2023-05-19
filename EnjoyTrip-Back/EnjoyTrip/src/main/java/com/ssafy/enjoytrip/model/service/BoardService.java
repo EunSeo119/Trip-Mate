@@ -11,5 +11,7 @@ public interface BoardService {
 	
 	Notice getNoticeDetail(int noticeId) throws Exception;
 	
-	void modifyNotice(Notice notice);
+	void modifyNotice(Notice notice) throws Exception;
+
+	void deleteNotice(int noticeId) throws Exception;
 }
