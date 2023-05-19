@@ -51,65 +51,15 @@
             <plan-option-bar></plan-option-bar>
             <!-- <the-kakao-map :chargers="this.travels"></the-kakao-map> -->
             <the-kakao-map></the-kakao-map>
-            <!-- <div class="tab-content mt-2" id="mapcontent">
-              <div
-                class="tab-pane fade show active"
-                id="tabpane"
-                role="tabpanel"
-                aria-labelledby="tabpane"
-              >
-                <div class="map_wrap">
-                  <div id="map" style="width: 100%; height: 700px"></div>
-                  지도 확대, 축소 컨트롤 div 입니다
-                  <div class="custom_zoomcontrol radius_border">
-                    <span @click="zoomIn"
-                    <span 
-                      ><img
-                        src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_plus.png"
-                        alt="확대"
-                    /></span>
-                    <span @click="zoomOut"
-                    <span
-                      ><img
-                        src="https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/ico_minus.png"
-                        alt="축소"
-                    /></span>
-                  </div>
-                </div>
-              </div>
-            </div> -->
           </b-container>
         </b-row>
       </b-col>
       <b-col md="2" class="shadow" style="padding-top: 10px; max-height: 950px; text-align: center">
         <h3 style="font-weight: bold; padding: 43px 0px 43px 0px">내 계획</h3>
-        <!-- <div class="p-3">
-          <b-row class="mb-1 justify-content-center"
-            ><p class="mb-4" v-if="sdate && edate">{{ sdate }} ~ {{ edate }}</p>
-            <b-form-datepicker
-              size="sm"
-              v-model="sdate"
-              placeholder="시작일을 선택해주세요"
-              :min="nowtime"
-              :max="edate"
-              class="mb-1"
-              style="max-width: 200px"
-            ></b-form-datepicker
-          ></b-row>
-          <b-row class="justify-content-center">
-            <b-form-datepicker
-              size="sm"
-              v-model="edate"
-              placeholder="시작일을 선택해주세요"
-              :min="sdate"
-              class="mb-1"
-              style="max-width: 200px"
-            ></b-form-datepicker
-          ></b-row>
-        </div> -->
+
         <hr />
         <div class="scrolldiv">
-      <draggable v-model="myChoices" @end="updatePlanTravels">
+          <draggable v-model="myChoices" @end="updatePlanTravels">
             <transition-group>
               <div
                 v-for="(choice, travelId) in myChoices"
@@ -175,7 +125,6 @@
 <script>
 import { apiInstance } from "@/api/index.js";
 import { mapState } from "vuex";
-// import { apiInstance } from "@/api/index.js";
 import draggable from "vuedraggable";
 import PlanOptionBar from "@/components/plan/PlanOptionBar.vue";
 import TheKakaoMap from "@/components/TheKakaoMap.vue";
@@ -185,9 +134,6 @@ import TheKakaoMap from "@/components/TheKakaoMap.vue";
 const api = apiInstance();
 const travelStore = "travelStore";
 const memberStore = "memberStore";
-
-// const api = apiInstance();
-// const tourListStore = "tourListStore";
 
 export default {
   name: "PlanView",
@@ -218,7 +164,7 @@ export default {
       // 모달 표시 여부를 true로 설정하여 모달을 엽니다.
       this.modalVisible = true;
     },
-     updatePlanTravels() {
+    updatePlanTravels() {
       // 드래그가 완료되었을 때 호출되는 메소드
       this.planTravels = this.myChoices.map((choice) => {
         return {
@@ -274,8 +220,8 @@ export default {
       };
       let planTravel = {
         travelInfoId: tour_info.travelInfoId,
-        title: tour_info.title
-      }
+        title: tour_info.title,
+      };
       this.planTravels.push(planTravel);
       this.myChoices.push(newInfo);
       console.log(this.myChoices);
@@ -294,223 +240,6 @@ export default {
     },
   },
 };
-
-// export default {
-//   name: "PlanView",
-//   components: {
-//     draggable,
-//     PlanOptionBar,
-//   },
-//   computed: {
-//     ...mapState(tourListStore, ["sidoCode", "gugunCode", "contentTypeId", "tourList"]),
-//     ...mapState(memberStore, ["userInfo"]),
-//   },
-//   watch: {
-//     sidoCode: function () {
-//       this.place = this.donames[this.sidoCode];
-//     },
-//     sdate: function () {
-//       this.planInfo.start_date = this.sdate;
-//       // console.log("시작 날짜 선택 : " + this.planInfo.start_date);
-//     },
-//     edate: function () {
-//       this.planInfo.end_date = this.edate;
-//       // console.log("종료 날짜 선택 : " + this.planInfo.end_date);
-//     },
-//   },
-//   data() {
-//     return {
-//       donames: {
-//         1: "서울",
-//         2: "인천",
-//         3: "대전",
-//         4: "대구",
-//         5: "광주",
-//         6: "부산",
-//         7: "울산",
-//         8: "세종시",
-//         31: "경기도",
-//         32: "강원도",
-//         33: "충청북도",
-//         34: "충청남도",
-//         35: "경상북도",
-//         36: "경상남도",
-//         37: "전라북도",
-//         38: "전라남도",
-//         39: "제주도",
-//       },
-//       place: "전체",
-//       nowtime: "2022-11-25",
-//       sdate: "",
-//       edate: "",
-//       planInfo: {
-//         title: "나의 여행 계획 1",
-//         start_date: "",
-//         end_date: "",
-//         user_id: "",
-//         invited_user: "joody",
-//       },
-//       myChoices: [],
-//       places: [],
-//       map: null,
-//       markers: [],
-//       latitude: 0,
-//       longitude: 0,
-//       overlay: null,
-//       msg: "여행 계획 등록 중 문제가 발생하였습니다.",
-//     };
-//   },
-//   mounted() {
-//     window.kakao && window.kakao.maps ? this.initMap() : this.addKakaoMapScript();
-//   },
-//   methods: {
-//     addChoice(tour_info) {
-//       console.log(tour_info);
-//       let newInfo = {
-//         idx: tour_info.idx,
-//         name: tour_info.title,
-//         type: tour_info.contentTypeId,
-//         imgsrc: tour_info.image,
-//         lat: tour_info.mapy,
-//         lng: tour_info.mapx,
-//         addr: tour_info.addr1,
-//       };
-//       this.myChoices.push(newInfo);
-//     },
-//     deleteChoice(delete_name) {
-//       // 여행지 선택 취소
-//       let filtered = this.myChoices.filter((o) => o.name !== delete_name);
-//       this.myChoices = filtered;
-//     },
-//     completePlan() {
-//       // 여행 계획 저장(완성)하기 버튼 클릭 시
-//       let myId = this.userInfo.id;
-//       this.planInfo.user_id = myId;
-
-//       if (this.myChoices.length == 0) alert("추천 장소에서 여행지를 선택해주세요.");
-//       if (this.sdate == "" || this.edate == "") alert("날짜를 선택해주세요");
-//       else {
-//         let idxInfo = [];
-//         this.myChoices.forEach((item) => {
-//           idxInfo.push(item.idx); // 선택한 여행지들의 idx만 담는다.
-//         });
-//         // 나의 여행 계획 정보를 추가
-//         api.post(`/plan/regist`, this.planInfo).then(({ data }) => {
-//           if (data == "fail") {
-//             alert(this.msg);
-//             this.$router.push({ name: "planview" });
-//           } else this.addDetails(idxInfo, myId);
-//         });
-//       }
-//     },
-//     addDetails(idxInfo, myId) {
-//       // 선택한 여행지 목록들을 post
-//       api.post(`/plan/detail/${myId}`, idxInfo).then(({ data }) => {
-//         if (data == "fail") {
-//           alert(this.msg);
-//           this.$router.push({ name: "planview" });
-//         } else {
-//           // 유저가 새로 생성한 계획의 idx가 잘 반환되었으므로 다음 페이지로 전환
-//           // console.log(data + "번 계획 추가 완료");
-//           this.$router.push({ name: "planinfo", params: { planidx: data } });
-//         }
-//       });
-//     },
-//     zoomIn() {
-//       this.map.setLevel(this.map.getLevel() - 1);
-//     },
-//     zoomOut() {
-//       this.map.setLevel(this.map.getLevel() + 1);
-//     },
-//     addKakaoMapScript() {
-//       const script = document.createElement("script");
-//       /* global kakao */
-//       script.onload = () => kakao.maps.load(this.initMap);
-//       script.src =
-//         "http://dapi.kakao.com/v2/maps/sdk.js?autoload=false&appkey=" +
-//         process.env.VUE_APP_KAKAOMAP_KEY;
-//       document.head.appendChild(script);
-//     },
-//     initMap() {
-//       const container = document.getElementById("map");
-//       const options = {
-//         center: new kakao.maps.LatLng(33.450701, 126.570667),
-//         level: 3,
-//       };
-//       this.map = new kakao.maps.Map(container, options);
-//     },
-//     makeMapMarkers() {
-//       // ****** 여러개 마커에 이벤트 등록하기1 ******
-//       this.markers.forEach(function (mark) {
-//         mark.setMap(null);
-//       });
-//       this.markers = [];
-
-//       var positions = [];
-//       this.tourList.forEach((tour) => {
-//         let addr = tour.addr1;
-//         let image;
-//         if (tour.image) image = tour.image;
-//         else image = "/defaultImage.jpg";
-//         let mapx = tour.mapx;
-//         let mapy = tour.mapy;
-//         let tel = tour.tel;
-//         let title = tour.title;
-//         let zipcode = tour.zipcode;
-//         positions.push({
-//           content: `<div class="wrap" style="border-radius: 5px; margin-top: 3%;">
-//         <div class="info" style="border-radius: 5px; background-color: white;">
-//           <div class="title" style=" border-radius: 5px; background-color: #ffdbdb; padding-left:5px; padding-right:5px;">${title}
-//          </div>
-//           <div class="body">
-//             <div>
-//               <b-img :img-src="${image}" width="73" height="70">
-//             </div>
-//             <div class="desc">
-//               <div class="ellipsis">${addr}</div>
-//               <div class="ellipsis">(우) ${zipcode}</div>
-//               <div class="ellipsis">(전화번호) ${tel}</div>
-//             </div>
-//           </div>
-//         </div>
-//       </div>`,
-//           latlng: new kakao.maps.LatLng(mapy, mapx),
-//         });
-//       });
-
-//       for (var i = 0; i < positions.length; i++) {
-//         // 마커를 생성합니다
-//         var marker = new kakao.maps.Marker({
-//           map: this.map, // 마커를 표시할 지도
-//           position: positions[i].latlng, // 마커의 위치
-//         });
-
-//         this.map.setLevel(7);
-//         this.map.setCenter(positions[i].latlng);
-
-//         this.markers.push(marker);
-
-//         // 마커 위에 커스텀오버레이를 표시합니다
-//         // 마커를 중심으로 커스텀 오버레이를 표시하기위해 CSS를 이용해 위치를 설정했습니다
-//         let overlay = new kakao.maps.CustomOverlay({
-//           content: positions[i].content,
-//           map: this.map,
-//           position: marker.getPosition(),
-//         });
-
-//         overlay.setMap(null);
-//         // 마커를 클릭했을 때 커스텀 오버레이를 표시합니다
-//         kakao.maps.event.addListener(marker, "mouseover", () => {
-//           overlay.setMap(this.map);
-//         });
-
-//         kakao.maps.event.addListener(marker, "mouseout", () => {
-//           overlay.setMap(null);
-//         });
-//       }
-//     },
-//   },
-// };
 </script>
 
 <style scoped>

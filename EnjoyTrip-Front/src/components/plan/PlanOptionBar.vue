@@ -29,17 +29,12 @@
 </template>
 
 <script>
-// import TravelSearchBar from "@/components/travel/TravelSearchBar.vue";
 import { mapState, mapActions, mapMutations } from "vuex";
 
-// const tourListStore = "tourListStore";
 const travelStore = "travelStore";
 
 export default {
-  name: "TourListOptinBar",
-  components: {
-    // TravelSearchBar,
-  },
+  name: "PlanListOptinBar",
   data() {
     return {
       sidoCode: null,
@@ -100,98 +95,9 @@ export default {
       // this.SET_CONTENT_TYPE_ID(inputId);
       this.searchTravel();
     },
-    async makeList() {
-      this.CLEAR_CONTENT_TYPE_ID();
-      this.tabInit = 0;
-      this.SET_GUGUN_CODE(this.selectGugunCode);
-      this.CLEAR_TOUR_LIST();
-      this.getTourList();
-    },
   },
 };
-// import { mapState, mapActions, mapMutations } from "vuex";
 
-// const tourListStore = "tourListStore";
-
-// export default {
-//   name: "TourListOptinBar",
-//   data() {
-//     return {
-//       selectSidoCode: "",
-//       selectGugunCode: "",
-//       tabInit: 0,
-//     };
-//   },
-//   computed: {
-//     ...mapState(tourListStore, [
-//       "sidoCode",
-//       "gugunCode",
-//       "contentTypeId",
-//       "sidos",
-//       "guguns",
-//       "mapShow",
-//       "imageShow",
-//       "tourList",
-//     ]),
-//   },
-//   created() {
-//     this.CLEAR_SIDO_CODE();
-//     this.CLEAR_SIDO_LIST();
-//     this.CLEAR_GUGUN_CODE();
-//     this.CLEAR_GUGUN_LIST();
-//     this.CLEAR_CONTENT_TYPE_ID();
-//     this.CLEAR_TOUR_LIST();
-//     this.getSido();
-//   },
-//   watch: {
-//     tourList: function () {
-//       this.makeContents();
-//     },
-//   },
-//   methods: {
-//     ...mapActions(tourListStore, ["getSido", "getGugun", "getTourList"]),
-//     ...mapMutations(tourListStore, [
-//       "CLEAR_SIDO_CODE",
-//       "CLEAR_GUGUN_CODE",
-//       "CLEAR_CONTENT_TYPE_ID",
-//       "CLEAR_SIDO_LIST",
-//       "CLEAR_GUGUN_LIST",
-//       "CLEAR_TOUR_LIST",
-//       "SET_SIDO_CODE",
-//       "SET_GUGUN_CODE",
-//       "SET_CONTENT_TYPE_ID",
-//       "SET_MAP_SHOW",
-//       "SET_IMAGE_SHOW",
-//     ]),
-//     setContentTypeId(inputId) {
-//       // this.contentTypeId = inputId;
-//       this.SET_CONTENT_TYPE_ID(inputId);
-//       this.getTourList();
-//     },
-//     moveChoice() {
-//       this.SET_MAP_SHOW(false);
-//       this.SET_IMAGE_SHOW(false);
-//       this.$router.push({ name: "tour" });
-//     },
-//     makeContents() {
-//       if (this.mapShow && this.tourList.length != 0) this.$emit("makeMarker");
-//       else if (this.imageShow && this.tourList.length != 0)
-//         this.$emit("makeCard");
-//     },
-//     makeGugun() {
-//       this.SET_SIDO_CODE(this.selectSidoCode);
-//       this.CLEAR_GUGUN_LIST();
-//       this.getGugun(this.selectSidoCode);
-//     },
-//     async makeList() {
-//       this.CLEAR_CONTENT_TYPE_ID();
-//       this.tabInit = 0;
-//       this.SET_GUGUN_CODE(this.selectGugunCode);
-//       this.CLEAR_TOUR_LIST();
-//       this.getTourList();
-//     },
-//   },
-// };
 </script>
 
 <style scoped>
