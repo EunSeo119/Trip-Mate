@@ -91,10 +91,10 @@ public class TravelController {
         TravelStatus travelStatus = travelService.getTravelStatus(param);
         if (travelStatus == null) {
             travelService.registLike(param);
-            return new ResponseEntity<>("좋아요 성공", HttpStatus.OK);
+            return new ResponseEntity<>("success", HttpStatus.OK);
         } else {
             if (travelService.updateLike(travelStatus.getUserId(), travelStatus.getTravelInfoId(), travelStatus.getLike()) == 1)
-                return new ResponseEntity<>("좋아요 성공", HttpStatus.OK);
+                return new ResponseEntity<>("success", HttpStatus.OK);
             else {
                 return new ResponseEntity<>("좋아요 실패", HttpStatus.BAD_REQUEST);
             }
