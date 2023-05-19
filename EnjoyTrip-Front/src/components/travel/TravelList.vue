@@ -47,7 +47,7 @@ export default {
   data() {
     return {
       currentPage: 1, // Current page number
-      itemsPerPage: 8, // Number of items to display per page
+      itemsPerPage: 16, // Number of items to display per page
     };
   },
   computed: {

@@ -97,7 +97,7 @@ const routes = [
         component: () => import("@/components/board/BoardView"),
       },
       {
-        path: "modify",
+        path: "modify/:articleno",
         name: "boardmodify",
         beforeEnter: onlyAuthUser,
         component: () => import("@/components/board/BoardModify"),

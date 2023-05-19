@@ -1,12 +1,12 @@
 <template>
   <b-container class="bv-example-row mt-3">
-    <b-row>
+    <b-row class = "mt-5">
       <b-col>
-        <b-alert show><h3>글목록</h3></b-alert>
+        <h3>글목록</h3>
       </b-col>
     </b-row>
     <b-row>
-      <b-col><b-alert show variant="danger">삭제처리중...</b-alert></b-col>
+      <b-col>삭제처리중...</b-col>
     </b-row>
   </b-container>
 </template>
@@ -17,7 +17,7 @@ import { deleteArticle } from "@/api/board";
 export default {
   name: "BoardDelete",
   created() {
-    let param = this.$route.params.articleno;
+    let param = this.$route.params.noticeId;
     deleteArticle(
       param,
       ({ data }) => {

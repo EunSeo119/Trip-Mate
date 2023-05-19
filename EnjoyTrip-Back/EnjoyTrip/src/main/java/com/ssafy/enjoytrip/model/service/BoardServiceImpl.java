@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
+import com.ssafy.enjoytrip.model.FileInfoDto;
 import com.ssafy.enjoytrip.model.Notice;
 import com.ssafy.enjoytrip.model.mapper.BoardMapper;
 
@@ -22,21 +23,40 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public void writeNotice(Notice notice) {
+	public void writeNotice(Notice notice) throws Exception {
 		boardMapper.insertNotice(notice);
+		System.out.println(notice.getNoticeId());
+		FileInfoDto fileInfo = notice.getFileInfo();
+		if(fileInfo != null) {
+			boardMapper.registerFile(notice);
+		}
 	}
 
 	@Override
 	public Notice getNoticeDetail(int noticeId) throws Exception {
 		Notice notice = boardMapper.selectGetDetail(noticeId);
+		FileInfoDto file = boardMapper.fileInfo(noticeId);
+		if (file != null) {			
+			notice.setFileInfo(file); 
+		}	
 		notice.setViews(notice.getViews()+1);
 		boardMapper.updateViewCount(noticeId, notice.getViews());
 		return notice;
 	}
 
 	@Override
-	public void modifyNotice(Notice notice) {
+	public void modifyNotice(Notice notice) throws Exception  {
+		FileInfoDto fileInfo = notice.getFileInfo();
+		if(fileInfo != null) {
+			boardMapper.modifyFile(notice);
+		}
 		boardMapper.modifyNotice(notice);
+	}
+
+	@Override
+	public void deleteNotice(int noticeId) throws Exception {
+		boardMapper.deleteFile(noticeId);
+		boardMapper.deleteNotice(noticeId);
 	}
 
 }
