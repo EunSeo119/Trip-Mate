@@ -36,7 +36,7 @@ public class PlanServiceImpl implements PlanService{
 		}
 //		plan.setPlanTravels(planTravels);
 		System.out.println("여행계획 됨됨됨??????!?!?!?!!3333333");
-		System.out.println(plan.getPlanTravels().get(0).getTravelInfoId());
+//		System.out.println(plan.getPlanTravels().get(0).getTravelInfoId());
 		planMapper.insertPlanTravels(plan.getPlanId(), planTravels);
 	}
 
