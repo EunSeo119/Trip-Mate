@@ -39,8 +39,9 @@
     </insert>
     
     <select id="selectGetAll" resultType="Plan">
-		select plan_id, title, start_date, end_date, image, user_id
+		select plan_id, title, start_date, end_date, image, user_id, views
 		from plan
+		where shared = 1
     </select>
     
     <select id="selectGetDetail" parameterType="int" resultMap="viewPlan">

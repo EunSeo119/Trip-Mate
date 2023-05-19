@@ -46,7 +46,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'board' }" class="nav-link">
+            <router-link :to="{ name: 'share' }" class="nav-link">
               <i class="bi bi-journal" style="font-size: 2rem; animation: fade"></i>
               여행지 공유
             </router-link>
