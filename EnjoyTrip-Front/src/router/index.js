@@ -111,14 +111,17 @@ const routes = [
     ],
   },
   {
-    path: "/spot",
-    name: "spot",
-    component: () => import("@/views/SpotView"),
-  },
-  {
-    path: "/spotDetail",
-    name: "spotDetail",
-    component: () => import("@/views/SpotDetailView"),
+    path: "/plan",
+    name: "plan",
+    beforeEnter: onlyAuthUser,
+    component: () => import("@/views/AppPlan"),
+    children: [
+      {
+        path: "view",
+        name: "planview",
+        component: () => import("@/components/plan/PlanView.vue"),
+      },
+    ],
   },
 ];
 

@@ -40,7 +40,7 @@
             </router-link>
           </li>
           <li class="nav-item">
-            <router-link :to="{ name: 'spot' }" class="nav-link">
+            <router-link :to="{ name: 'planview' }" class="nav-link">
               <i class="bi bi-house-fill" style="font-size: 2rem; animation: fade"></i>
               여행 계획
             </router-link>

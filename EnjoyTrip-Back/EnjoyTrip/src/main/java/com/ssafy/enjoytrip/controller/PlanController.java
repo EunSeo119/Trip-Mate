@@ -2,6 +2,8 @@ package com.ssafy.enjoytrip.controller;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -26,6 +28,7 @@ import io.swagger.annotations.ApiResponses;
 @CrossOrigin("*")
 @Api(tags = "여행계획 관리")
 public class PlanController {
+	public static final Logger logger = LoggerFactory.getLogger(UserController.class);
 	private final PlanService planService;
 
 	public PlanController(PlanService planService) {
@@ -33,9 +36,11 @@ public class PlanController {
 	}
 	
 	@ApiOperation(value= "여행계획등록", notes = "여행계획을 등록합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "공지사항목록 OK"), @ApiResponse(code = 500, message = "서버에러")})
+	@ApiResponses({@ApiResponse(code = 200, message = "여행계획등록 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@PostMapping("regist")
 	public ResponseEntity<?> registPlan(@RequestBody Plan plan) throws Exception {
+		System.out.println("모야 갑자기 왜이럼???????????????");
+		logger.debug("모야 갑자기 왜이럼???????????????");
 		planService.registPlan(plan);
 		return new ResponseEntity<>(plan, HttpStatus.OK);
 	}
@@ -49,7 +54,7 @@ public class PlanController {
     }
 	
 	@ApiOperation(value= "여행계획 상세정보", notes = "여행계획의 상세정보를 리턴합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "공지사항목록 OK"), @ApiResponse(code = 500, message = "서버에러")})
+	@ApiResponses({@ApiResponse(code = 200, message = "여행계획 상세정보 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@GetMapping("/detail/{planId}")
 	public ResponseEntity<Plan> getPlanDetail(@PathVariable("planId") int planId) throws Exception {
 		System.out.println("getPlanDetail");
@@ -57,7 +62,7 @@ public class PlanController {
 	}
 	
 	@ApiOperation(value= "여행계획 삭제", notes = "여행계획을 삭제합니다.")
-	@ApiResponses({@ApiResponse(code = 200, message = "공지사항목록 OK"), @ApiResponse(code = 500, message = "서버에러")})
+	@ApiResponses({@ApiResponse(code = 200, message = "여행계획 삭제 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@DeleteMapping("/delete/{planId}")
 	public ResponseEntity<?> deletePlan(@PathVariable("planId") int planId) throws Exception {
 		System.out.println("deletePlan");
