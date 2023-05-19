@@ -17,10 +17,11 @@
           <b-container class="m-0">
             <b-card
               no-body
-              class="overflow-hidden places"
+              class="overflow-hidden places hover-effect"
               style="max-width: 100%"
-              v-for="(tour, idx) in this.travels"
-              :key="idx"
+              v-for="(tour, travelId) in this.travels"
+              :key="travelId"
+              @click="addChoice(tour)"
             >
               <b-row>
                 <b-col>
@@ -34,9 +35,9 @@
                   <b-card-text id="recommendtitle">
                     {{ tour.title }}
                   </b-card-text>
-                  <button class="planbtn" @click="addChoice(tour)">
-                    <i class="fa-solid fa-circle-plus" style="color: #d5e2f5" />
-                  </button>
+                  <div class="overlay">
+                    <i class="fa-solid fa-circle-plus add-icon"></i>
+                  </div>
                 </b-col>
               </b-row>
             </b-card>
@@ -108,9 +109,13 @@
         </div> -->
         <hr />
         <div class="scrolldiv">
-          <draggable v-model="myChoices">
+      <draggable v-model="myChoices" @end="updatePlanTravels">
             <transition-group>
-              <div v-for="(choice, idx) in myChoices" :key="idx + 0" class="text-align-center">
+              <div
+                v-for="(choice, travelId) in myChoices"
+                :key="travelId + 0"
+                class="text-align-center my-plan-card"
+              >
                 <b-card
                   :img-src="`${choice.imgsrc}`"
                   img-top
@@ -118,8 +123,8 @@
                   class="mb-2 me-3"
                   style="max-width: 13rem; min-width: 15rem"
                 >
-                  <button class="planbtn" @click="deleteChoice(choice.name)">
-                    <i class="fa-solid fa-circle-minus" style="color: red" />
+                  <button class="planbtn delete-btn" @click="deleteChoice(choice.name)">
+                    <i class="fa-solid fa-circle-minus" />
                   </button>
                   <b-card-text>
                     {{ choice.name }}
@@ -168,6 +173,7 @@
 </template>
 
 <script>
+import { apiInstance } from "@/api/index.js";
 import { mapState } from "vuex";
 // import { apiInstance } from "@/api/index.js";
 import draggable from "vuedraggable";
@@ -176,6 +182,7 @@ import TheKakaoMap from "@/components/TheKakaoMap.vue";
 // import memberStore from "@/store/modules/memberStore";
 // import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
+const api = apiInstance();
 const travelStore = "travelStore";
 const memberStore = "memberStore";
 
@@ -186,6 +193,7 @@ export default {
   name: "PlanView",
   data() {
     return {
+      planTravels: [],
       myChoices: [],
       modalVisible: false, // 모달 표시 여부를 관리하는 변수
       title: "", // 제목을 저장하는 변수
@@ -210,6 +218,15 @@ export default {
       // 모달 표시 여부를 true로 설정하여 모달을 엽니다.
       this.modalVisible = true;
     },
+     updatePlanTravels() {
+      // 드래그가 완료되었을 때 호출되는 메소드
+      this.planTravels = this.myChoices.map((choice) => {
+        return {
+          travelInfoId: choice.travelId,
+          title: choice.name,
+        };
+      });
+    },
     savePlan() {
       // 저장하기 버튼을 클릭했을 때 실행되는 메소드
       // 입력된 제목, 내용, 시작 날짜, 마감 날짜, 공유 여부를 사용하여 저장하는 로직을 추가하세요.
@@ -219,13 +236,35 @@ export default {
       console.log("마감 날짜:", this.endDate);
       console.log("공유 여부:", this.shared);
 
-      // 저장 후에는 모달을 닫을 수 있습니다.
-      this.modalVisible = false;
+      let planInfo = {
+        title: this.title,
+        startDate: this.startDate,
+        endDate: this.endDate,
+        description: this.content,
+        userId: this.userInfo.userId,
+        shared: this.shared,
+        planTravels: this.planTravels,
+      };
+      console.log(planInfo);
+      // api.post(`/plan/regist`, planInfo).then(({ data }) => {
+      //   let msg = "여행계획 저장 시 문제 발생!!!";
+      //   if (data === "success") msg = "여행계획 저장 성공!!!";
+      //   alert(msg);
+      //   // 저장 후에는 모달을 닫을 수 있습니다.
+      //   this.modalVisible = false;
+      // });
+      api.post(`/plan/regist`, planInfo).then((response) => {
+        let msg = "여행계획 저장 성공!!!";
+        console.log(response.data);
+        alert(msg);
+        // 저장 후에는 모달을 닫을 수 있습니다.
+        this.modalVisible = false;
+      });
     },
     addChoice(tour_info) {
       console.log(tour_info);
       let newInfo = {
-        idx: tour_info.travelInfoId,
+        travelId: tour_info.travelInfoId,
         name: tour_info.title,
         type: tour_info.travelTypeId,
         imgsrc: tour_info.firstImage,
@@ -233,17 +272,25 @@ export default {
         lng: tour_info.longitude,
         addr: tour_info.addr1,
       };
+      let planTravel = {
+        travelInfoId: tour_info.travelInfoId,
+        title: tour_info.title
+      }
+      this.planTravels.push(planTravel);
       this.myChoices.push(newInfo);
+      console.log(this.myChoices);
     },
     deleteChoice(delete_name) {
-      let temp = [];
-      for (let i = 0; i < this.myChoices.length; i++) {
-        if (this.myChoices[i].name !== delete_name) {
-          temp.push(this.myChoices[i]);
-        }
-      }
-      // let filtered = this.myChoices.filter((o) => o.name !== delete_name);
-      this.myChoices = temp;
+      // let temp = [];
+      // for (let i = 0; i < this.myChoices.length; i++) {
+      //   if (this.myChoices[i].name !== delete_name) {
+      //     temp.push(this.myChoices[i]);
+      //   }
+      // }
+      // this.myChoices = temp;
+      // console.log(this.myChoices);
+      this.myChoices = this.myChoices.filter((choice) => choice.name !== delete_name);
+      this.updatePlanTravels();
     },
   },
 };
@@ -483,6 +530,41 @@ export default {
 .places {
   min-width: 120px;
   margin: 20px 20px 10px 0;
+  position: relative; /* add this */
+}
+
+/* Add these classes */
+.hover-effect:hover {
+  filter: brightness(0.8);
+  cursor: pointer;
+}
+
+.overlay {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+  transition: 0.5s ease;
+  background-color: #008cba;
+}
+
+.hover-effect:hover .overlay {
+  opacity: 0.7;
+}
+
+.add-icon {
+  color: white;
+  font-size: 50px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  -ms-transform: translate(-50%, -50%);
+  text-align: center;
 }
 .choice > * {
   /* font-family: "Noto Sans KR", sans-serif; */
@@ -644,5 +726,33 @@ export default {
 
 .search-btn:hover {
   background-color: #c2d6f0;
+}
+
+.my-plan-card {
+  position: relative;
+}
+
+.my-plan-card:hover {
+  filter: brightness(80%);
+}
+
+.my-plan-card:hover .delete-btn {
+  display: block;
+}
+
+.delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: none;
+  background-color: rgba(255, 0, 0, 0.5); /* you can adjust color as needed */
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
 }
 </style>

@@ -21,6 +21,8 @@ public class Plan {
 	private String image;
 	@ApiModelProperty(value = "여행계획 작성자")
 	private String userId;
+	@ApiModelProperty(value = "여행계획 공유여부")
+	private boolean shared;
 	@ApiModelProperty(value = "여행계획 여행지 리스트")
 	private List<PlanTravel> planTravels;
 
@@ -86,6 +88,14 @@ public class Plan {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public boolean isShared() {
+		return shared;
+	}
+
+	public void setShared(boolean shared) {
+		this.shared = shared;
 	}
 
 }
