@@ -2,7 +2,7 @@
   <b-container class="bv-example-row mt-3">
     <div style="display: flex; justify-content: space-between; align-items: center;" class="mt-5">
       <h3 style="text-align: center; flex-grow: 1;">글목록</h3>
-      <button class="btn custom-btn" @click="moveWrite()" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글쓰기</button>
+      <button v-if="isAdminUser" class="btn custom-btn" @click="moveWrite()" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글쓰기</button>
     </div>
     <b-row>
       <b-col class="mt-2">
@@ -18,6 +18,7 @@
 
 <script>
 import { listArticle } from "@/api/board";
+import store from "@/store";
 
 export default {
   name: "BoardList",
@@ -31,6 +32,16 @@ export default {
         { key: "views", label: "조회수", tdClass: "tdClass" },
       ],
     };
+  },
+  computed: {
+    isAdminUser() {
+      const checkUserInfo = store.getters["memberStore/checkUserInfo"];
+      if (checkUserInfo != null && checkUserInfo.userId == "admin")
+        return 1;
+      else{
+        return 0;
+      }
+    },
   },
   created() {
     let param = {
@@ -93,7 +104,7 @@ export default {
   width: 300px;
   text-align: left;
 }
-.custom-btn2{
+.custom-btn{
   border: solid 2px #c2d6f0;
 }
 </style>

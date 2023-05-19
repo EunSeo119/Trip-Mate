@@ -63,15 +63,6 @@
               공지사항
             </router-link>
           </li>
-          <!-- <li class="nav-item">
-            <router-link :to="{ name: 'todo' }" class="nav-link">
-              <i
-                class="bi bi-calendar-check"
-                style="font-size: 2rem; animation: fade"
-              ></i>
-              TodoList
-            </router-link>
-          </li> -->
         </ul>
 
         <!-- after login -->
@@ -96,7 +87,7 @@
             </router-link>
           </li>
           <li class="nav-item align-self-center">
-            <a href="#" class="nav-link" @click.prevent="onClickLogout">로그아웃</a>
+            <a class="nav-link" @click.prevent="onClickLogout">로그아웃</a>
           </li>
         </ul>
 
@@ -134,8 +125,8 @@ export default {
   methods: {
     ...mapActions(memberStore, ["userLogout"]),
     onClickLogout() {
-      console.log(this.userInfo.userid);
-      this.userLogout(this.userInfo.userid);
+      console.log(this.userInfo);
+      this.userLogout(this.userInfo);
       sessionStorage.removeItem("access-token");
       sessionStorage.removeItem("refresh-token");
       sessionStorage.removeItem("vuex");

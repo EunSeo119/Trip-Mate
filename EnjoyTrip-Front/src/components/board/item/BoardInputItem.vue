@@ -7,6 +7,7 @@
             id="subject"
             v-model="article.title"
             type="text"
+            ref = "title"
             required
             placeholder="제목 입력..."
           ></b-form-input>
@@ -21,15 +22,16 @@
             id="content"
             v-model="article.content"
             placeholder="내용 입력..."
+            ref = "content"
             rows="10"
             max-rows="15"
           ></b-form-textarea>
         </b-form-group>
         <div class="d-flex justify-content-between mb-1">
           <div>
-            <button type="submit" class="btn custom-btn2 m-1" v-if="this.type === 'register'" @mouseover="changeButtonColor" @mouseout="resetButtonColor">글작성</button>
-            <button type="submit" class="btn custom-btn2 m-1" v-else @mouseover="changeButtonColor" @mouseout="resetButtonColor">글수정</button>  
-            <button type="reset" class="btn custom-btn2 m-1" @mouseover="changeButtonColor" @mouseout="resetButtonColor">초기화</button>
+            <button type="submit" class="btn custom-btn2 m-1" v-if="this.type === 'register'" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #BCF0B6;">글작성</button>
+            <button type="submit" class="btn custom-btn2 m-1" v-else @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #BCF0B6;">글수정</button>  
+            <button type="reset" class="btn custom-btn2 m-1" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #BCF0B6;">초기화</button>
           </div>
           <div>
             <button class="btn custom-btn" @click="moveList" @mouseover="changeButtonColor" @mouseout="resetButtonColor">목록</button>
@@ -52,6 +54,7 @@ export default {
         title: "",
         content: "",
       },
+
       isUserid: false,
     };
   },
@@ -65,13 +68,13 @@ export default {
         param,
         ({ data }) => {
           this.article = data;
+          console.log("here~~", this.article.noticeId);
         },
         (error) => {
           console.log(error);
         }
       );
       this.isUserid = true;
-      console.log("here",this.article);
     }
   },
   methods: {
@@ -90,8 +93,8 @@ export default {
 
       let err = true;
       let msg = "";
-      // err && !this.article.subject && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
-      // err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
+      err && !this.article.title && ((msg = "제목 입력해주세요"), (err = false), this.$refs.title.focus());
+      err && !this.article.content && ((msg = "내용 입력해주세요"), (err = false), this.$refs.content.focus());
 
       if (!err) alert(msg);
       else this.type === "register" ? this.registArticle() : this.modifyArticle();
@@ -101,7 +104,8 @@ export default {
       this.article.noticeId = 0;
       this.article.title = "";
       this.article.content = "";
-      this.moveList();
+      this.$refs.file.value = null;
+      
     },
     registArticle() {
       let formData = new FormData();
@@ -112,6 +116,7 @@ export default {
       writeArticle(
         formData,
         ({ data }) => {
+          console.log("data", data)
           let msg = "등록 처리시 문제가 발생했습니다.";
           if (data === "success") {
             msg = "등록이 완료되었습니다";
@@ -126,10 +131,10 @@ export default {
     },
     modifyArticle() {
       let formData = new FormData();
-      formData.append("title", this.article.subject);
+      formData.append("noticeId", this.article.noticeId);
+      formData.append("title", this.article.title);
       formData.append("content", this.article.content);
       formData.append("file", this.$refs.file.files[0]);
-
       modifyArticle(
         formData,
         ({ data }) => {
