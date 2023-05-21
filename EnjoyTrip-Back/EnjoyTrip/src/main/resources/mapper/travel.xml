@@ -8,7 +8,9 @@
         select title,
                addr1,
                travel_info_id,
-               first_image
+               first_image,
+               latitude,
+               longitude
         from travel_info
         order by readcount desc
     </select>
@@ -31,7 +33,9 @@
         select title,
         addr1,
         travel_info_id ,
-        first_image
+        first_image,
+        latitude,
+        longitude
         from travel_info
         <if test="sidoCode != null">
             where sido_code = #{sidoCode}

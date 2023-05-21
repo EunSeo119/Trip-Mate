@@ -29,7 +29,7 @@ public class TravelServiceImpl implements TravelService {
 
     @Override
     public List<TravelInfo> getTravel(Integer sidoCode, Integer gugunCode, Integer travelTypeId) throws Exception {
-        return travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId);
+        return travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId).subList(0, 30);
     }
 
     @Override
