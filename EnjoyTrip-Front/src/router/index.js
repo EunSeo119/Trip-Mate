@@ -123,6 +123,19 @@ const routes = [
       },
     ],
   },
+  {
+    path: "/share",
+    name: "share",
+    component: () => import("@/views/AppShare"),
+    redirect: "/share/list",
+    children: [
+      {
+        path: "list",
+        name: "sharelist",
+        component: () => import("@/components/share/ShareList"),
+      },
+    ],
+  },
 ];
 
 const router = new VueRouter({

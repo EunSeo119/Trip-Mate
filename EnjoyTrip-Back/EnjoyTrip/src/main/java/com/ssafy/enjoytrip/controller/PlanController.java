@@ -39,8 +39,6 @@ public class PlanController {
 	@ApiResponses({@ApiResponse(code = 200, message = "여행계획등록 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@PostMapping("regist")
 	public ResponseEntity<?> registPlan(@RequestBody Plan plan) throws Exception {
-		System.out.println("모야 갑자기 왜이럼???????????????");
-		logger.debug("모야 갑자기 왜이럼???????????????");
 		planService.registPlan(plan);
 		return new ResponseEntity<>(plan, HttpStatus.OK);
 	}
