@@ -23,8 +23,8 @@
 	</resultMap>
 
 	<insert id="insertPlan" parameterType="plan">
-    	insert into plan(title, start_date, end_date, description, image, user_id, shared)
-    	values (#{title}, #{startDate}, #{endDate}, #{description}, #{image}, #{userId}, #{shared})
+    	insert into plan(title, start_date, end_date, description, image, user_id, shared, create_date)
+    	values (#{title}, #{startDate}, #{endDate}, #{description}, #{image}, #{userId}, #{shared}, now())
     	<selectKey resultType="int" keyProperty="planId" order="AFTER">
 	        SELECT LAST_INSERT_ID()
 	    </selectKey>
@@ -39,7 +39,7 @@
     </insert>
     
     <select id="selectGetAll" resultType="Plan">
-		select plan_id, title, start_date, end_date, image, user_id, views
+		select plan_id, title, start_date, end_date, image, user_id, views, create_date
 		from plan
 		where shared = 1
     </select>
@@ -60,5 +60,11 @@
 		delete from plan
 		where plan_id = #{planId}
 	</delete>
+	
+	<update id="updateViewCount">
+    	update plan
+    	set views = #{viewCount}
+    	where plan_id = #{planId}
+    </update>
     
 </mapper>

@@ -1,7 +1,9 @@
 package com.ssafy.enjoytrip.model.service;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 
@@ -39,7 +41,17 @@ public class PlanServiceImpl implements PlanService{
 
 	@Override
 	public Plan getPlanDetail(int planId) throws Exception {
-		return planMapper.selectGetDetail(planId);
+//		return planMapper.selectGetDetail(planId);
+		Plan plan = planMapper.selectGetDetail(planId);
+		List<PlanTravel> sortedTravels = plan.getPlanTravels()
+		        .stream()
+		        .sorted(Comparator.comparingInt(PlanTravel::getNo))
+		        .collect(Collectors.toList());
+		    plan.setPlanTravels(sortedTravels);
+		plan.setViews(plan.getViews()+1);
+		planMapper.updateViewCount(planId, plan.getViews());
+//		System.out.println(plan.getPlanTravels().get(0).getNo());
+		return plan;
 	}
 
 	@Override

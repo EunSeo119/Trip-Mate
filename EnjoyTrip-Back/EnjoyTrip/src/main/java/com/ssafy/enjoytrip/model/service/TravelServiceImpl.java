@@ -6,6 +6,7 @@ import com.ssafy.enjoytrip.model.TravelStatus;
 import com.ssafy.enjoytrip.model.mapper.TravelMapper;
 import org.springframework.stereotype.Service;
 
+import java.sql.SQLException;
 import java.util.List;
 
 @Service
@@ -57,4 +58,13 @@ public class TravelServiceImpl implements TravelService {
         System.out.println(travelStatus.getStar());
         return travelMapper.updateStar(travelStatus);
     }
+
+	@Override
+	public TravelInfo getTravelDetail(int travelInfoId) throws SQLException {
+		System.out.println("이거 찍힘?"+travelInfoId);
+		TravelInfo t = travelMapper.selectGetDetail(travelInfoId);
+		System.out.println("이거 나옴?" + t.getTitle());
+		return t;
+//		return travelMapper.selectGetDetail(travelInfoId);
+	}
 }

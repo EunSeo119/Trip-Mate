@@ -20,4 +20,6 @@ public interface PlanMapper {
 	Plan selectGetDetail(int planId) throws SQLException;
 	
 	void deletePlan(int planId) throws SQLException;
+
+	void updateViewCount(@Param("planId") int planId, @Param("viewCount") int viewCount);
 }
