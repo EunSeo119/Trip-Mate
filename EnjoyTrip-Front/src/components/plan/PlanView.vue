@@ -1,13 +1,21 @@
 <template>
   <div id="main">
     <b-row id="mainrow" class="justify-content-center">
-      <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
+      <b-col
+        md="2"
+        class="shadow p-3 bg-body rounded text-center"
+        style="height: 868px"
+      >
         <div class="choice">
           <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
           <h3 class="pt-4">""위치에서</h3>
           <h3>ㅇㅇ카테고리에서</h3>
           <div class="search-input">
-            <input type="text" placeholder="검색어를 입력하세요" class="form-control" />
+            <input
+              type="text"
+              placeholder="검색어를 입력하세요"
+              class="form-control"
+            />
             <!-- <button class="search-btn" @click="search">검색</button> -->
             <button class="search-btn">검색</button>
           </div>
@@ -22,6 +30,8 @@
               v-for="(tour, travelId) in this.travels"
               :key="travelId"
               @click="addChoice(tour)"
+              @mouseover="mouseOverMarker(tour.title)"
+              @mouseout="mouseOutMarker(tour.title)"
             >
               <b-row>
                 <b-col>
@@ -50,11 +60,19 @@
             <!-- <plan-option-bar @makeMarker="makeMapMarkers"></plan-option-bar> -->
             <plan-option-bar></plan-option-bar>
             <!-- <the-kakao-map :chargers="this.travels"></the-kakao-map> -->
-            <the-kakao-map></the-kakao-map>
+            <the-kakao-map
+              :travels="this.travels"
+              :planTravels="this.planTravels"
+              ref="kakao_map"
+            ></the-kakao-map>
           </b-container>
         </b-row>
       </b-col>
-      <b-col md="2" class="shadow" style="padding-top: 10px; max-height: 950px; text-align: center">
+      <b-col
+        md="2"
+        class="shadow"
+        style="padding-top: 10px; max-height: 950px; text-align: center"
+      >
         <h3 style="font-weight: bold; padding: 43px 0px 43px 0px">내 계획</h3>
 
         <hr />
@@ -73,7 +91,10 @@
                   class="mb-2 me-3"
                   style="max-width: 13rem; min-width: 15rem"
                 >
-                  <button class="planbtn delete-btn" @click="deleteChoice(choice.name)">
+                  <button
+                    class="planbtn delete-btn"
+                    @click="deleteChoice(choice.name)"
+                  >
                     <i class="fa-solid fa-circle-minus" />
                   </button>
                   <b-card-text>
@@ -86,7 +107,9 @@
         </div>
         <b-row style="display: flex; justify-content: center">
           <!-- <b-button size="lg" @click="completePlan()" id="btncomplete">저장하기</b-button> -->
-          <b-button size="lg" @click="showModal" id="btncomplete">저장하기</b-button>
+          <b-button size="lg" @click="showModal" id="btncomplete"
+            >저장하기</b-button
+          >
         </b-row>
       </b-col>
     </b-row>
@@ -108,10 +131,18 @@
           ></b-form-textarea>
         </b-form-group>
         <b-form-group label="시작 날짜" label-for="start-date">
-          <b-form-datepicker id="start-date" v-model="startDate" locale="ko"></b-form-datepicker>
+          <b-form-datepicker
+            id="start-date"
+            v-model="startDate"
+            locale="ko"
+          ></b-form-datepicker>
         </b-form-group>
         <b-form-group label="끝 날짜" label-for="end-date">
-          <b-form-datepicker id="end-date" v-model="endDate" locale="ko"></b-form-datepicker>
+          <b-form-datepicker
+            id="end-date"
+            v-model="endDate"
+            locale="ko"
+          ></b-form-datepicker>
         </b-form-group>
         <b-form-group>
           <b-form-checkbox v-model="shared">공유하기</b-form-checkbox>
@@ -170,6 +201,8 @@ export default {
         return {
           travelInfoId: choice.travelId,
           title: choice.name,
+          lat: choice.lat,
+          lng: choice.lng,
         };
       });
     },
@@ -221,10 +254,20 @@ export default {
       let planTravel = {
         travelInfoId: tour_info.travelInfoId,
         title: tour_info.title,
+        lat: tour_info.latitude,
+        lng: tour_info.longitude,
       };
       this.planTravels.push(planTravel);
       this.myChoices.push(newInfo);
       console.log(this.myChoices);
+    },
+    mouseOverMarker(tour_name) {
+      console.log("이름 나옴?" + tour_name);
+      this.$refs.kakao_map.hoverMarker(tour_name);
+    },
+    mouseOutMarker(tour_name) {
+      console.log("나옴나옴 나옴?????");
+      this.$refs.kakao_map.hoverOutMarker(tour_name);
     },
     deleteChoice(delete_name) {
       // let temp = [];
@@ -235,7 +278,9 @@ export default {
       // }
       // this.myChoices = temp;
       // console.log(this.myChoices);
-      this.myChoices = this.myChoices.filter((choice) => choice.name !== delete_name);
+      this.myChoices = this.myChoices.filter(
+        (choice) => choice.name !== delete_name
+      );
       this.updatePlanTravels();
     },
   },
