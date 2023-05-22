@@ -89,4 +89,10 @@
         where travel_info_id = #{travelInfoId}
           and user_id = #{userId}
     </update>
+    
+    <select id="selectGetDetail" parameterType="int" resultType="TravelInfo">
+    	select title, addr1, first_image, travel_type_id
+    	from travel_info
+    	where travel_info_id = #{travelInfoId}
+    </select>
 </mapper>

@@ -121,6 +121,12 @@ const routes = [
         name: "planview",
         component: () => import("@/components/plan/PlanView.vue"),
       },
+      {
+        path: "delete/:planId",
+        name: "plandelete",
+        beforeEnter: onlyAuthUser,
+        component: () => import("@/components/plan/PlanDelete"),
+      },
     ],
   },
   {
@@ -134,6 +140,18 @@ const routes = [
         name: "sharelist",
         component: () => import("@/components/share/ShareList"),
       },
+      {
+        path: "view/:planId",
+        name: "shareview",
+        // beforeEnter: onlyAuthUser,
+        component: () => import("@/components/share/ShareView"),
+      },
+      // {
+      //   path: "cancel/:planId",
+      //   name: "sharecancel",
+      //   beforeEnter: onlyAuthUser,
+      //   component: () => import("@/components/share/ShareCancel"),
+      // },
     ],
   },
 ];

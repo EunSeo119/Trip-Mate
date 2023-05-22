@@ -11,9 +11,9 @@ function listPlan(param, success, fail) {
 //   axios.post('http://localhost:9999/board/regist', formData).then(success).catch(fail);
 // }
 
-// function getArticle(noticeId, success, fail) {
-//   api.get(`/board/detail/${noticeId}`).then(success).catch(fail);
-// }
+function getPlan(planId, success, fail) {
+  api.get(`/plan/detail/${planId}`).then(success).catch(fail);
+}
 // function getArticleImg(article, success, fail) {
 //   api.get(`/board/detailImg/${article.saveFolder}/${article.originalFile}/${article.saveFile}`).then(success).catch(fail);
 // }
@@ -25,4 +25,4 @@ function listPlan(param, success, fail) {
 //   api.delete(`/board/${noticeId}`).then(success).catch(fail);
 // }
 
-export { listPlan };
+export { listPlan, getPlan };

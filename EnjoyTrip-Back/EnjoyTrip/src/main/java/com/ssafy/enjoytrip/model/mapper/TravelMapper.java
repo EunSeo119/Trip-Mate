@@ -26,4 +26,6 @@ public interface TravelMapper {
     int updateStar(TravelStatus travelStatus);
 
     List<Gugun> selectGugun(@Param("sidoCode") int sidoCode);
+
+    TravelInfo selectGetDetail(int travelInfoId) throws SQLException;
 }

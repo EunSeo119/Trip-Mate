@@ -20,11 +20,32 @@
 		<result column="plan_id" property="planId"/>
 		<result column="travel_info_id" property="travelInfoId"/>
 		<result column="no" property="no"/>
+		<association property="travelInfo" resultMap="viewTravelInfo"/>
+	</resultMap>
+	
+	<resultMap type="travelInfo" id="viewTravelInfo">
+		<result column="title" property="title"/>
+		<result column="addr1" property="addr1"/>
+		<result column="first_image" property="firstImage"/>
+		<result column="travel_type_id" property="travelTypeId"/>
 	</resultMap>
 
+    <select id="selectGetDetail" parameterType="int" resultMap="viewPlan">
+    	select *
+    	from plan p
+    	where plan_id = #{planId}
+    </select>
+    
+	<select id="planTravelList" resultMap="viewPlanTravel">
+		select pt.plan_id, pt.travel_info_id, pt.no, ti.title, ti.addr1, ti.first_image, ti.travel_type_id
+		from plan_travel pt
+		join travel_info ti on pt.travel_info_id = ti.travel_info_id
+		where plan_id = #{planId}
+	</select>
+	
 	<insert id="insertPlan" parameterType="plan">
-    	insert into plan(title, start_date, end_date, description, image, user_id, shared)
-    	values (#{title}, #{startDate}, #{endDate}, #{description}, #{image}, #{userId}, #{shared})
+    	insert into plan(title, start_date, end_date, description, image, user_id, shared, create_date)
+    	values (#{title}, #{startDate}, #{endDate}, #{description}, #{image}, #{userId}, #{shared}, now())
     	<selectKey resultType="int" keyProperty="planId" order="AFTER">
 	        SELECT LAST_INSERT_ID()
 	    </selectKey>
@@ -39,26 +60,20 @@
     </insert>
     
     <select id="selectGetAll" resultType="Plan">
-		select plan_id, title, start_date, end_date, image, user_id, views
+		select plan_id, title, start_date, end_date, image, user_id, views, create_date
 		from plan
 		where shared = 1
     </select>
     
-    <select id="selectGetDetail" parameterType="int" resultMap="viewPlan">
-    	select *
-    	from plan p
-    	where plan_id = #{planId}
-    </select>
-    
-	<select id="planTravelList" resultMap="viewPlanTravel">
-		select plan_id, travel_info_id, no
-		from plan_travel
-		where plan_id = #{planId}
-	</select>
-	
 	<delete id="deletePlan" parameterType="int">
 		delete from plan
 		where plan_id = #{planId}
 	</delete>
+	
+	<update id="updateViewCount">
+    	update plan
+    	set views = #{viewCount}
+    	where plan_id = #{planId}
+    </update>
     
 </mapper>

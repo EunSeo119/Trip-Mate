@@ -11,6 +11,8 @@ public class PlanTravel {
 	private int travelInfoId;
 	@ApiModelProperty(value = "여행지의 순서")
 	private int no;
+	@ApiModelProperty(value = "여행지 정보")
+	private TravelInfo travelInfo;
 
 	public int getPlanId() {
 		return planId;
@@ -34,6 +36,14 @@ public class PlanTravel {
 
 	public void setNo(int no) {
 		this.no = no;
+	}
+
+	public TravelInfo getTravelInfo() {
+		return travelInfo;
+	}
+
+	public void setTravelInfo(TravelInfo travelInfo) {
+		this.travelInfo = travelInfo;
 	}
 
 }

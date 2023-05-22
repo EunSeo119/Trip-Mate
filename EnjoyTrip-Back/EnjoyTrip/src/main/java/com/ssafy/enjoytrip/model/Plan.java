@@ -25,6 +25,8 @@ public class Plan {
 	private boolean shared;
 	@ApiModelProperty(value = "여행계획 조회수")
 	private int views;
+	@ApiModelProperty(value = "여행계획 작성일")
+	private String createDate;
 	@ApiModelProperty(value = "여행계획 여행지 리스트")
 	private List<PlanTravel> planTravels;
 
@@ -106,6 +108,14 @@ public class Plan {
 
 	public void setViews(int views) {
 		this.views = views;
+	}
+
+	public String getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(String createDate) {
+		this.createDate = createDate;
 	}
 
 }

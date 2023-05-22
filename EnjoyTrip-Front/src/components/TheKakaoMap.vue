@@ -205,10 +205,9 @@ export default {
         // console.log("이름2" + marker.getTitle());
         if (marker.getTitle() == name) {
           // 마커 이미지를 생성합니다
-          const imgSrc =
-            "https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/markerStar.png";
+          const imgSrc = require("@/assets/starMarker.png");
           // 마커 이미지의 이미지 크기 입니다
-          const imgSize = new kakao.maps.Size(24, 35);
+          const imgSize = new kakao.maps.Size(45, 50);
           const markerImage = new kakao.maps.MarkerImage(imgSrc, imgSize);
 
           marker.setImage(markerImage);
@@ -246,8 +245,7 @@ export default {
 
       // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
       if (walkkTime > 60) {
-        walkHour =
-          '<span class="number">' + Math.floor(walkkTime / 60) + "</span>시간 ";
+        walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + "</span>시간 ";
       }
       walkMin = '<span class="number">' + (walkkTime % 60) + "</span>분";
 
@@ -258,8 +256,7 @@ export default {
 
       // 계산한 자동차 시간이 60분 보다 크면 시간으로 표출합니다
       if (carTime > 60) {
-        carHour =
-          '<span class="number">' + Math.floor(carTime / 60) + "</span>시간 ";
+        carHour = '<span class="number">' + Math.floor(carTime / 60) + "</span>시간 ";
       }
       carMin = '<span class="number">' + (carTime % 60) + "</span>분";
 
