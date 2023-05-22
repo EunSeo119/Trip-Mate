@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -129,5 +130,14 @@ public class UserController {
     public ResponseEntity<?> userList() {
         List<User> list = userService.userList();
         return new ResponseEntity<>(list, HttpStatus.OK);
+    }
+    
+    @PutMapping("modify")
+    public ResponseEntity<String> modifyUser(@RequestBody User user) throws Exception{
+    	logger.debug(user.getUserId());
+    	if(userService.modify(user)) {
+    		return new ResponseEntity<String>(SUCCESS, HttpStatus.OK);
+    	}
+    	return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
 }

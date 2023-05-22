@@ -59,4 +59,9 @@ public class UserServiceImpl implements UserService {
     public Map<String, Object> selectUserDetail(String userId) {
         return userMapper.selectDetailUser(userId);
     }
+
+	@Override
+	public boolean modify(User user) throws SQLException {
+		return userMapper.modifyUser(user) == 1;
+	}
 }

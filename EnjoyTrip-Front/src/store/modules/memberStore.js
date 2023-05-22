@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout } from "@/api/member";
+import { login, findById, tokenRegeneration, logout, updateUserById } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -9,6 +9,7 @@ const memberStore = {
     isLoginError: false,
     userInfo: null,
     isValidToken: false,
+    userLike: null,
   },
   getters: {
     checkUserInfo: function (state) {
@@ -130,6 +131,27 @@ const memberStore = {
             commit("SET_IS_VALID_TOKEN", false);
           } else {
             console.log("유저 정보 없음!!!!");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    updateUser: ({ commit }, userInfo) => {
+      const params = { 
+        name: userInfo.name,
+        userId: userInfo.userId,
+        password: userInfo.password,
+        email: userInfo.email,
+        sidoCode: userInfo.sidoCode,
+      };
+      updateUserById(
+        params,
+        ({ data }) => {
+          console.log(commit);
+          if (data == "success") {
+            alert("회원정보가 성공적으로 수정되었습니다.");
           }
         },
         (error) => {

@@ -19,4 +19,6 @@ public interface UserService {
     List<User> userList();
 
     Map<String, Object> selectUserDetail(String user);
+    
+	boolean modify(User user) throws SQLException;
 }

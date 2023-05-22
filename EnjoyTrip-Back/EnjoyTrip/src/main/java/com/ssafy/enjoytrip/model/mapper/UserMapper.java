@@ -11,6 +11,7 @@ import java.util.Map;
 public interface UserMapper {
 	
 	public User login(User user) throws SQLException;
+	
 	public User userInfo(String userId) throws SQLException;
 	
     User selectUserLogin(User user) throws SQLException;
@@ -20,4 +21,6 @@ public interface UserMapper {
     List<User> selectUserList();
 
     Map<String, Object> selectDetailUser(String user);
+    
+	int modifyUser(User user) throws SQLException;
 }
