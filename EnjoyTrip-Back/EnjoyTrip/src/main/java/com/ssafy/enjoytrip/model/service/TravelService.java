@@ -4,6 +4,7 @@ import com.ssafy.enjoytrip.model.Gugun;
 import com.ssafy.enjoytrip.model.TravelInfo;
 import com.ssafy.enjoytrip.model.TravelStatus;
 
+import java.sql.SQLException;
 import java.util.List;
 
 public interface TravelService {
@@ -22,4 +23,6 @@ public interface TravelService {
     void registStar(TravelStatus travelStatus);
 
     int updateStar(TravelStatus travelStatus);
+
+    TravelInfo getTravelDetail(int travelInfoId) throws SQLException;
 }
