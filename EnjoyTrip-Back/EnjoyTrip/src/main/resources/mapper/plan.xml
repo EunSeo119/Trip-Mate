@@ -24,6 +24,7 @@
 	</resultMap>
 	
 	<resultMap type="travelInfo" id="viewTravelInfo">
+		<result column="travel_info_id" property="travelInfoId"/>
 		<result column="title" property="title"/>
 		<result column="addr1" property="addr1"/>
 		<result column="first_image" property="firstImage"/>
@@ -39,7 +40,7 @@
     </select>
     
 	<select id="planTravelList" resultMap="viewPlanTravel">
-		select pt.plan_id, pt.travel_info_id, pt.no, ti.title, ti.addr1, ti.first_image, ti.travel_type_id, ti.latitude, ti.longitude
+		select pt.plan_id, pt.travel_info_id, pt.no, ti.travel_info_id, ti.title, ti.addr1, ti.first_image, ti.travel_type_id, ti.latitude, ti.longitude
 		from plan_travel pt
 		join travel_info ti on pt.travel_info_id = ti.travel_info_id
 		where plan_id = #{planId}

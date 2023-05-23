@@ -1,4 +1,4 @@
-import axios from "axios";
+// import axios from "axios";
 import { apiInstance } from "./index.js";
 
 const api = apiInstance();
