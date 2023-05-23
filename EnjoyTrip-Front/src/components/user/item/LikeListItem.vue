@@ -1,89 +1,36 @@
 <template>
   <!-- Gallery item -->
-  <div class="bg-blue rounded shadow-sm child-container">
+  <div>
+<div class="bg-blue rounded shadow-sm child-container">
       <img
-        :src="travel.firstImage"
+        :src="like.firstImage"
         class="img-fluid card-img-top img-height mt-3"
         @error="replaceByDefault"
-      />     
-    <div class="p-4" style="position: relative;">
-      <font-awesome-icon 
-        :icon="heartIcon"
-        :style="fillHeartIcon"
-        class="heart-icon"
-        @mouseenter="fillHeart"
-        @mouseleave="unfillHeart"
-        @click="toggleHeart"
-      />
-      <h5 style = "text-align: left;">{{travel.title}}</h5>
-      <p class="small text-muted mb-0" style = "text-align: left;">{{travel.addr1}}</p>
-    </div>
-  </div>       
+      />  
+      
+      <h5 style = "text-align: left;">{{like.title}}</h5>
+      <p class="small text-muted mb-0" style = "text-align: left;">{{like.addr1}}</p>
+  </div>
+
+  </div>
+  
   <!-- End -->
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import store from "@/store";
-import { modifyLike } from "@/api/travel";
-
-const travelStore = "travelStore";
 
 export default {
-  name: "TravelListItem",
+  name: "LikeListItem",
   data() {
     return {
-      imageUrl: 'path/to/image.jpg',
-      isHeartFilled: false,
-      heartIcon: ['far', 'heart'],
-      fillHeartIcon: {color: '#de1717'},
+    
     };
   },
   props: {
-    travel: Object,
+    like: Object,
   },
 
   methods: {
-    ...mapActions(travelStore, ["detailTravel", "likeTravel"]),
-    selectTravel() {
-      this.detailTravel(this.travel);
-    },
-    replaceByDefault(e) {
-      e.target.src = require("@/assets/NoImage.png");
-    },
-    fillHeart() {
-      if (!this.isHeartFilled) {
-        this.heartIcon = ['fas', 'heart'];
-      }
-    },
-    unfillHeart() {
-      if (!this.isHeartFilled) {
-        this.heartIcon = ['far', 'heart'];
-      }
-    },
-    toggleHeart() {
-      this.isHeartFilled = !this.isHeartFilled;
-      this.heartIcon = this.isHeartFilled ? ['fas', 'heart'] : ['far', 'heart'];
-      let params = {
-        "travelInfoId": this.travel.travelInfoId,
-        "like" : 1,
-        "userId": store.getters["memberStore/checkUserInfo"].userId,
-      };
-      modifyLike(
-        params,
-        ({ data }) => {
-          let msg = "좋아요 수정 처리시 문제가 발생했습니다.";
-          if (data == "success") {
-            msg = "좋아요 수정이 완료되었습니다.";
-          }
-          console.log(msg);
-        },
-        (error) => {
-          console.log(error);
-        }
-      );
-      
-    },
   },
 };
 </script>

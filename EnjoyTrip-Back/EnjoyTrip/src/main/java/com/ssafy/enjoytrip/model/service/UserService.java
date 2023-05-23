@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.model.service;
 
+import com.ssafy.enjoytrip.model.TravelStatus;
 import com.ssafy.enjoytrip.model.User;
 
 import java.sql.SQLException;
@@ -21,4 +22,6 @@ public interface UserService {
     Map<String, Object> selectUserDetail(String user);
     
 	boolean modify(User user) throws SQLException;
+
+	List<TravelStatus> selectUserLikes(String userId) throws SQLException;
 }

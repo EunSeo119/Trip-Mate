@@ -47,4 +47,11 @@
                       on u.sido_code = s.sido_code
         where user_id = #{userId}
     </select>
+    
+    <select id = "selectLikeUser" resultType="TravelStatus">
+	    select travel_status_id, user_id, travel_info_id, `like`
+        from travel_status
+        where user_id = #{userId} and `like` = 1
+    </select>
+    
 </mapper>

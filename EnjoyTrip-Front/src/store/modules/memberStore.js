@@ -1,6 +1,6 @@
 import jwtDecode from "jwt-decode";
 import router from "@/router";
-import { login, findById, tokenRegeneration, logout, updateUserById } from "@/api/member";
+import { login, findById, tokenRegeneration, logout, updateUserById, likeListById, likeTravelById } from "@/api/member";
 
 const memberStore = {
   namespaced: true,
@@ -10,6 +10,8 @@ const memberStore = {
     userInfo: null,
     isValidToken: false,
     userLike: null,
+    status: [],
+    likes: [],
   },
   getters: {
     checkUserInfo: function (state) {
@@ -32,6 +34,12 @@ const memberStore = {
     SET_USER_INFO: (state, userInfo) => {
       state.isLogin = true;
       state.userInfo = userInfo;
+    },
+    CLEAR_LIKES_LIST(state) {
+      state.likes = [];
+    },
+    addLike(state, travelData) {
+      state.likes.push(travelData);
     },
   },
   actions: {
@@ -152,6 +160,29 @@ const memberStore = {
           console.log(commit);
           if (data == "success") {
             alert("회원정보가 성공적으로 수정되었습니다.");
+          }
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+    },
+    getLikeListById: ({ state }) => {
+      const params = { userId: state.userInfo.userId };
+      likeListById(
+        params,
+        ({ data }) => {
+          for (let i = 0; i < data.length; i++) {            
+            likeTravelById(
+              data[i].travelInfoId,
+              ({ data }) => {
+                state.likes.push(data);
+                console.log("likes를 하나씩 추가", state.likes);
+              },
+              (error) => {
+                console.log(error);
+              }
+            );
           }
         },
         (error) => {

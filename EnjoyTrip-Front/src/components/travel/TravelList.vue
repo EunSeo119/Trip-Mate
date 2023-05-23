@@ -7,13 +7,6 @@
         :travel="travel"
       />  
     </div>
-    <!-- <b-pagination
-      v-model="currentPage"
-      :total-rows="travels.length"
-      :per-page="perPage"
-      aria-controls="travel-list"
-      class="mt-3 pagination-m justify-content-center custom-pagination"
-    ></b-pagination> -->
      <paginate
         :page-count="pageCount"
         :click-handler="goToPage"

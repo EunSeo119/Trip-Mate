@@ -10,10 +10,11 @@
         </div>
         </div>
         <div class = "grid-main">
-            <like-list-item
-            v-for="item in itemList" 
-            :key="item.id"
-            />  
+          <like-list-item
+            v-for="like in likes" 
+            :key="like.travelInfoId"
+            :like="like"
+          />  
         </div>
     </div>
 </template>
@@ -29,7 +30,7 @@ export default {
     LikeListItem,
   },
   computed: {
-    ...mapState(memberStore, ["userInfo"]),
+    ...mapState(memberStore, ["likes"]),
   },
   methods: {
   },

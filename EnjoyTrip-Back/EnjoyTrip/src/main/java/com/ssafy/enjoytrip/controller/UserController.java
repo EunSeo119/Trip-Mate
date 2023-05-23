@@ -140,4 +140,9 @@ public class UserController {
     	}
     	return new ResponseEntity<String>(FAIL, HttpStatus.NO_CONTENT);
     }
+    
+    @GetMapping("like/{userId}")
+    public ResponseEntity<?> mylikes(@PathVariable("userId") String userId) throws Exception {
+        return new ResponseEntity<>(userService.selectUserLikes(userId), HttpStatus.OK);
+    }
 }

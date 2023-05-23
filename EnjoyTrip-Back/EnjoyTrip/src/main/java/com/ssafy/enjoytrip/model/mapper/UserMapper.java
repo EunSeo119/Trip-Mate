@@ -1,5 +1,6 @@
 package com.ssafy.enjoytrip.model.mapper;
 
+import com.ssafy.enjoytrip.model.TravelStatus;
 import com.ssafy.enjoytrip.model.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -23,4 +24,6 @@ public interface UserMapper {
     Map<String, Object> selectDetailUser(String user);
     
 	int modifyUser(User user) throws SQLException;
+
+	public List<TravelStatus> selectLikeUser(String userId) throws SQLException;
 }

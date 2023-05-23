@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
 import UserLikePageVue from './item/UserLikePage.vue';
 import UserModifyPageVue from './item/UserModifyPage.vue';
 
@@ -34,17 +34,19 @@ export default {
       currentPage: 'UserModifyPageVue',
     }
   },
-  methods: {
-    changePage(page) {
-      this.currentPage = page;
-    },
-  },
   components: {
     UserModifyPageVue,
     UserLikePageVue,
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["getLikeListById"]),
+    changePage(page) {
+      this.getLikeListById();
+      this.currentPage = page;
+    },
   },
 };
 </script>

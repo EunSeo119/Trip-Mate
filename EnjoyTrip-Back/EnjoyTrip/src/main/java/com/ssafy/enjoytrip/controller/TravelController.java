@@ -88,7 +88,7 @@ public class TravelController {
     @ApiOperation(value= "여행지 상세정보", notes = "여행지의 상세정보를 리턴합니다.")
 	@ApiResponses({@ApiResponse(code = 200, message = "여행지 상세정보 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@GetMapping("/detail/{travelInfoId}")
-	public ResponseEntity<TravelInfo> getTravelDetail(@PathVariable("travelInfoId") int travelInfoId) throws Exception {
+	public ResponseEntity<TravelInfo> getTravelfDetail(@PathVariable("travelInfoId") int travelInfoId) throws Exception {
 		System.out.println(travelInfoId);
 		return new ResponseEntity<>(travelService.getTravelDetail(travelInfoId), HttpStatus.OK);
 	}
