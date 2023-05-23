@@ -18,7 +18,15 @@
       </div>
       <div>
         <button
-          v-if="isAdminUser"
+          class="btn custom-btn2 mr-2"
+          @click="showMap"
+          @mouseover="changeButtonColor"
+          @mouseout="resetButtonColor"
+        >
+          지도에서 보기
+        </button>
+        <button
+          v-if="isUser"
           class="btn custom-btn2 mr-2"
           @click="moveModifyArticle"
           @mouseover="changeButtonColor"
@@ -27,7 +35,7 @@
           게시물공유취소
         </button>
         <button
-          v-if="isAdminUser"
+          v-if="isUser"
           class="btn custom-btn2"
           @click="deletePlan"
           @mouseover="changeButtonColor"
@@ -48,10 +56,7 @@
               </div>
               <div class="plan-info">
                 <div>
-                  <font-awesome-icon
-                    :icon="['far', 'calendar']"
-                    style="color: #838891"
-                  />
+                  <font-awesome-icon :icon="['far', 'calendar']" style="color: #838891" />
                   {{
                     new Date(plan.createDate).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -61,10 +66,7 @@
                   }}
                 </div>
                 <div>
-                  <font-awesome-icon
-                    :icon="['far', 'eye']"
-                    style="color: #838891"
-                  />
+                  <font-awesome-icon :icon="['far', 'eye']" style="color: #838891" />
                   {{ plan.views }}
                 </div>
               </div>
@@ -80,7 +82,7 @@
             <div class="route-group">
               <div
                 class="route"
-                v-for="(travel, index) in travels"
+                v-for="(travel, index) in stravels"
                 :key="travel.no"
                 :class="index % 2 === 0 ? 'left-route' : 'right-route'"
               >
@@ -109,29 +111,30 @@
 </template>
 <script>
 import { getPlan } from "@/api/share";
-import { mapState } from "vuex";
+import { mapState, mapMutations } from "vuex";
 import store from "@/store";
 
 const memberStore = "memberStore";
+const travelStore = "travelStore";
 
 export default {
   name: "ShareDetail",
   data() {
     return {
       plan: {},
-      travels: [],
+      stravels: [],
     };
   },
   computed: {
+    ...mapState(travelStore, ["travels"]),
     ...mapState(memberStore, ["userInfo"]),
     message() {
-      if (this.plan.description)
-        return this.plan.description.split("\n").join("<br>");
+      if (this.plan.description) return this.plan.description.split("\n").join("<br>");
       return "";
     },
-    isAdminUser() {
+    isUser() {
       const checkUserInfo = store.getters["memberStore/checkUserInfo"];
-      if (checkUserInfo != null && checkUserInfo.userId == "admin") return 1;
+      if (checkUserInfo != null && checkUserInfo.userId == this.plan.userId) return 1;
       else {
         return 0;
       }
@@ -143,9 +146,9 @@ export default {
       param,
       ({ data }) => {
         this.plan = data;
-        this.travels = data.planTravels;
+        this.stravels = data.planTravels;
         console.log(this.plan);
-        console.log("이거" + this.travels[1].title);
+        console.log("이거" + this.stravels[1].title);
       },
       (error) => {
         console.log(error);
@@ -153,6 +156,14 @@ export default {
     );
   },
   methods: {
+    ...mapMutations("travelStore", ["SET_STRAVELS"]),
+    showMap() {
+      this.SET_STRAVELS(this.stravels);
+      this.$router.replace({
+        name: "planview",
+        // params: { shareTravels: this.stravels },
+      });
+    },
     moveModifyArticle() {
       this.$router.replace({
         name: "boardmodify",

@@ -1,21 +1,13 @@
 <template>
   <div id="main">
     <b-row id="mainrow" class="justify-content-center">
-      <b-col
-        md="2"
-        class="shadow p-3 bg-body rounded text-center"
-        style="height: 868px"
-      >
+      <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
         <div class="choice">
           <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
           <h3 class="pt-4">""위치에서</h3>
           <h3>ㅇㅇ카테고리에서</h3>
           <div class="search-input">
-            <input
-              type="text"
-              placeholder="검색어를 입력하세요"
-              class="form-control"
-            />
+            <input type="text" placeholder="검색어를 입력하세요" class="form-control" />
             <!-- <button class="search-btn" @click="search">검색</button> -->
             <button class="search-btn">검색</button>
           </div>
@@ -68,11 +60,7 @@
           </b-container>
         </b-row>
       </b-col>
-      <b-col
-        md="2"
-        class="shadow"
-        style="padding-top: 10px; max-height: 950px; text-align: center"
-      >
+      <b-col md="2" class="shadow" style="padding-top: 10px; max-height: 950px; text-align: center">
         <h3 style="font-weight: bold; padding: 43px 0px 43px 0px">내 계획</h3>
 
         <hr />
@@ -90,11 +78,9 @@
                   img-height="130px"
                   class="mb-2 me-3"
                   style="max-width: 13rem; min-width: 15rem"
+                  @click="mouseClickMarker(choice.lat, choice.lng)"
                 >
-                  <button
-                    class="planbtn delete-btn"
-                    @click="deleteChoice(choice.name)"
-                  >
+                  <button class="planbtn delete-btn" @click="deleteChoice(choice.name)">
                     <i class="fa-solid fa-circle-minus" />
                   </button>
                   <b-card-text>
@@ -107,9 +93,7 @@
         </div>
         <b-row style="display: flex; justify-content: center">
           <!-- <b-button size="lg" @click="completePlan()" id="btncomplete">저장하기</b-button> -->
-          <b-button size="lg" @click="showModal" id="btncomplete"
-            >저장하기</b-button
-          >
+          <b-button size="lg" @click="showModal" id="btncomplete">저장하기</b-button>
         </b-row>
       </b-col>
     </b-row>
@@ -131,18 +115,10 @@
           ></b-form-textarea>
         </b-form-group>
         <b-form-group label="시작 날짜" label-for="start-date">
-          <b-form-datepicker
-            id="start-date"
-            v-model="startDate"
-            locale="ko"
-          ></b-form-datepicker>
+          <b-form-datepicker id="start-date" v-model="startDate" locale="ko"></b-form-datepicker>
         </b-form-group>
         <b-form-group label="끝 날짜" label-for="end-date">
-          <b-form-datepicker
-            id="end-date"
-            v-model="endDate"
-            locale="ko"
-          ></b-form-datepicker>
+          <b-form-datepicker id="end-date" v-model="endDate" locale="ko"></b-form-datepicker>
         </b-form-group>
         <b-form-group>
           <b-form-checkbox v-model="shared">공유하기</b-form-checkbox>
@@ -172,6 +148,7 @@ export default {
     return {
       planTravels: [],
       myChoices: [],
+      // aaa: [],
       modalVisible: false, // 모달 표시 여부를 관리하는 변수
       title: "", // 제목을 저장하는 변수
       content: "", // 내용을 저장하는 변수
@@ -189,6 +166,39 @@ export default {
   computed: {
     ...mapState(travelStore, ["travels"]),
     ...mapState(memberStore, ["userInfo"]),
+    // ...mapGetters("travelStore", ["getStravels"]),
+  },
+  created() {
+    let temp = this.travels;
+    // console.log(this.getStravels[0].travelInfo.title);
+    // let aaa = this.$route.params.shareTravels;
+    // console.log("여기여기여기여기" + aaa[1].title);
+    for (var i = 0; i < temp.length; i++) {
+      let newInfo = {
+        travelId: temp[i].travelInfo.travelInfoId,
+        name: temp[i].travelInfo.title,
+        type: temp[i].travelInfo.travelTypeId,
+        imgsrc: temp[i].travelInfo.firstImage,
+        lat: temp[i].travelInfo.latitude,
+        lng: temp[i].travelInfo.longitude,
+        addr: temp[i].travelInfo.addr1,
+      };
+      let planTravel = {
+        travelInfoId: temp[i].travelInfo.travelInfoId,
+        title: temp[i].travelInfo.title,
+        lat: temp[i].travelInfo.latitude,
+        lng: temp[i].travelInfo.longitude,
+      };
+      this.myChoices.push(newInfo);
+      this.planTravels.push(planTravel);
+      console.log("나나나나나ㅏ나난옴오몽모모모몸ㅁㅁ");
+      console.log(planTravel);
+      // SET_TRAVEL_LIST()
+    }
+    console.log(this.myChoices);
+    console.log("이거이거나옴옴????????????!!!");
+    console.log(this.planTravels);
+    // this.updatePlanTravels();
   },
   methods: {
     showModal() {
@@ -269,6 +279,10 @@ export default {
       console.log("나옴나옴 나옴?????");
       this.$refs.kakao_map.hoverOutMarker(tour_name);
     },
+    mouseClickMarker(lat, lng) {
+      console.log("이름 나옴?" + lat);
+      this.$refs.kakao_map.clickPlan(lat, lng);
+    },
     deleteChoice(delete_name) {
       // let temp = [];
       // for (let i = 0; i < this.myChoices.length; i++) {
@@ -278,9 +292,7 @@ export default {
       // }
       // this.myChoices = temp;
       // console.log(this.myChoices);
-      this.myChoices = this.myChoices.filter(
-        (choice) => choice.name !== delete_name
-      );
+      this.myChoices = this.myChoices.filter((choice) => choice.name !== delete_name);
       this.updatePlanTravels();
     },
   },

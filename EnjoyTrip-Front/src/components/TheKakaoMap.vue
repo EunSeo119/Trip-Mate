@@ -41,6 +41,8 @@ export default {
     },
 
     planTravels() {
+      console.log("여행계획의 정보정보!!!!");
+      console.log(this.planTravels);
       this.planPositions = [];
       this.planTravels.forEach((travel) => {
         let obj = {};
@@ -76,10 +78,20 @@ export default {
     // 맵 출력하기
     loadMap() {
       const container = document.getElementById("map");
-      const options = {
-        center: new window.kakao.maps.LatLng(33.450701, 126.570667),
-        level: 3,
-      };
+      var options = null;
+      console.log("이이이잉거거거걱");
+      // console.log(this.planTravels[0].lat);
+      if (this.planTravels.length === 0) {
+        options = {
+          center: new window.kakao.maps.LatLng(36.355042, 127.29833),
+          level: 3,
+        };
+      } else {
+        options = {
+          center: new window.kakao.maps.LatLng(this.planTravels[0].lat, this.planTravels[0].lng),
+          level: 3,
+        };
+      }
 
       this.map = new window.kakao.maps.Map(container, options);
       //   this.loadMaker();
@@ -216,6 +228,10 @@ export default {
           this.map.panTo(marker.getPosition());
         }
       });
+    },
+    clickPlan(lat, lng) {
+      var moveLatLon = new kakao.maps.LatLng(lat, lng);
+      this.map.panTo(moveLatLon);
     },
     hoverOutMarker(name) {
       this.markers.forEach((marker) => {
