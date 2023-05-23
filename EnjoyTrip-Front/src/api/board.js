@@ -18,7 +18,7 @@ function getArticleImg(article, success, fail) {
   api.get(`/board/detailImg/${article.saveFolder}/${article.originalFile}/${article.saveFile}`).then(success).catch(fail);
 }
 function modifyArticle(formData, success, fail) {
-  api.put('http://192.168.212.64:9999/board/modify', formData).then(success).catch(fail);
+  axios.put('http://192.168.212.64:9999/board/modify', formData).then(success).catch(fail);
 }
 
 function deleteArticle(noticeId, success, fail) {

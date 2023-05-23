@@ -168,6 +168,7 @@ const memberStore = {
       );
     },
     getLikeListById: ({ state }) => {
+      state.likes = [];
       const params = { userId: state.userInfo.userId };
       likeListById(
         params,
@@ -177,7 +178,6 @@ const memberStore = {
               data[i].travelInfoId,
               ({ data }) => {
                 state.likes.push(data);
-                console.log("likes를 하나씩 추가", state.likes);
               },
               (error) => {
                 console.log(error);
