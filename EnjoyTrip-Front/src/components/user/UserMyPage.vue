@@ -1,72 +1,110 @@
 <template>
-  <b-container class="mt-4" v-if="userInfo">
-    <b-row>
-      <b-col>
-        <b-alert variant="secondary" show><h3>내정보</h3></b-alert>
-      </b-col>
-    </b-row>
-    <b-row>
-      <b-col></b-col>
-      <b-col cols="8">
-        <b-jumbotron>
-          <template #header>My Page</template>
-
-          <template #lead> 내 정보 확인페이지입니다. </template>
-
-          <hr class="my-4" />
-
-          <b-container class="mt-4">
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">아이디</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.userid }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">이름</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.username }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">이메일</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.email }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-            <b-row>
-              <b-col cols="2"></b-col>
-              <b-col cols="2" align-self="end">가입일</b-col
-              ><b-col cols="4" align-self="start">{{ userInfo.joindate }}</b-col>
-              <b-col cols="2"></b-col>
-            </b-row>
-          </b-container>
-          <hr class="my-4" />
-
-          <b-button variant="primary" href="#" class="mr-1">정보수정</b-button>
-          <b-button variant="danger" href="#">회원탈퇴</b-button>
-        </b-jumbotron>
-      </b-col>
-      <b-col></b-col>
-    </b-row>
-  </b-container>
+  <div class="wrapper mt-5">
+    <div class="sidebar">
+      <nav class="sidebar-nav">
+        <ul class="nav">
+          <li @click="changePage('UserModifyPageVue')" :class="{ 'sidebar-item-active': currentPage === 'UserModifyPageVue' }" class="sidebar-item">
+            <font-awesome-icon :icon="['far', 'user']" />
+            <span>내 정보</span>
+          </li>
+          <li @click="changePage('UserLikePageVue')" :class="{ 'sidebar-item-active': currentPage === 'UserLikePageVue' }" class="sidebar-item">
+            <font-awesome-icon :icon="['far', 'heart']" />
+            <span>관광지</span>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="content">
+      <component :is="currentPage"></component>
+    </div>
+  </div>
 </template>
 
-
-
-
 <script>
-import { mapState } from "vuex";
+import { mapState, mapActions } from "vuex";
+import UserLikePageVue from './item/UserLikePage.vue';
+import UserModifyPageVue from './item/UserModifyPage.vue';
 
 const memberStore = "memberStore";
 
 export default {
   name: "UserMyPage",
-  components: {},
+  data(){
+    return{
+      currentPage: 'UserModifyPageVue',
+    }
+  },
+  components: {
+    UserModifyPageVue,
+    UserLikePageVue,
+  },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
+  },
+  methods: {
+    ...mapActions(memberStore, ["getLikeListById"]),
+    changePage(page) {
+      this.getLikeListById();
+      this.currentPage = page;
+    },
   },
 };
 </script>
 
-<style></style>
+<style>
+.wrapper {
+  display: flex;
+  justify-content: center;
+  border: 2px solid #c2d6f0;
+  height: 550px;
+  width: 90%;
+  margin-left: 15px;
+}
+.sidebar {
+  flex: 0 0 200px;
+  border-right: 2px solid #c2d6f0;
+}
+.nav{
+  width: 100%;
+}
+.sidebar-item {
+  transition: background-color 0.3s;
+  width: 100%;
+}
+
+.sidebar-item:hover {
+  background-color: #c2d6f0;
+}
+.sidebar-item-active {
+  background-color: #c2d6f0;
+}
+.sidebar-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  cursor: pointer;
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-nav li {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  cursor: pointer;
+}
+
+.sidebar-nav li span {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.content {
+  flex-grow: 1;
+  height: 100%;
+}
+</style>

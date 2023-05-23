@@ -33,6 +33,12 @@
         select user_id, password, name, email
         from user
     </select>
+    
+     <update id="modifyUser" parameterType="User">
+	    UPDATE user
+	    SET email = #{email}, sido_code = #{sidoCode}
+	    WHERE user_id = #{userId} and password = #{password} 
+	  </update>
 
     <select id="selectDetailUser" resultType="map" parameterType="string">
         select u.user_id, u.name, u.email, s.sido_name
@@ -41,4 +47,11 @@
                       on u.sido_code = s.sido_code
         where user_id = #{userId}
     </select>
+    
+    <select id = "selectLikeUser" resultType="TravelStatus">
+	    select travel_status_id, user_id, travel_info_id, `like`
+        from travel_status
+        where user_id = #{userId} and `like` = 1
+    </select>
+    
 </mapper>

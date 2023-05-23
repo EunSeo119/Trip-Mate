@@ -1,4 +1,5 @@
 import { apiInstance } from "./index.js";
+import axios from 'axios';
 
 const api = apiInstance();
 
@@ -19,5 +20,17 @@ async function tokenRegeneration(user, success, fail) {
 async function logout(userid, success, fail) {
   await api.get(`/user/logout`).then(success).catch(fail);
 }
+function updateUserById(params, success, fail) {
+  console.log(params);
+  axios.put('http://localhost:9999/user/modify', params).then(success).catch(fail);
+}
 
-export { login, findById, tokenRegeneration, logout };
+function likeListById(params, success, fail) {
+  const userId = params.userId;
+  api.get(`/user/like/${userId}`).then(success).catch(fail);
+}
+
+function likeTravelById(params, success, fail) {
+  api.get(`/travel/detail/${params}`).then(success).catch(fail);
+}
+export { login, findById, tokenRegeneration, logout, updateUserById, likeListById, likeTravelById };
