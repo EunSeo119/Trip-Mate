@@ -28,11 +28,8 @@ export default {
   },
   created() {
     api.get(`/travel/detail/${this.travel.travelInfoId}`).then((response) => {
-      // let msg = "여행모달 성공!!!";
       console.log("이거??????????????????");
       console.log(response.data);
-      // 여기서 api 호출해서 overview가져오려다 실패..!
-      // alert(msg);
     });
   },
 };

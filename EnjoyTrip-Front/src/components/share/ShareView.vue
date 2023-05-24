@@ -51,12 +51,13 @@
           <div class="card-header">
             <div class="card-header-title mt-3 mb-3">
               <h3>{{ plan.title }}</h3>
-              <div>
-                <h6>{{ plan.userId }}</h6>
+              <div style="display: flex; align-items: center; color: #838891">
+                작성자: {{ plan.userId }}
               </div>
+
               <div class="plan-info">
-                <div>
-                  <font-awesome-icon :icon="['far', 'calendar']" style="color: #838891" />
+                <div style="display: flex; align-items: center;" >
+                  <font-awesome-icon :icon="['far', 'calendar']" style="color: #838891" class="mr-2"/>
                   {{
                     new Date(plan.createDate).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -65,12 +66,12 @@
                     })
                   }}
                 </div>
-                <div>
-                  <font-awesome-icon :icon="['far', 'eye']" style="color: #838891" />
+                <div style="display: flex; align-items: center;" class="ml-3">
+                  <font-awesome-icon :icon="['far', 'eye']" style="color: #838891" class="mr-2"/>
                   {{ plan.views }}
                 </div>
               </div>
-              <div class="card-body text-left">
+              <div class="text-left">
                 <div v-html="message" class="mt-3" style="text-align: center"></div>
               </div>
             </div>
