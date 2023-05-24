@@ -1,10 +1,10 @@
 <template>
   <div>
-    <h3>
+    <!-- <h3>
       <b-icon icon="heart"></b-icon> 여행계획세우기<b-icon
         icon="heart"
       ></b-icon>
-    </h3>
+    </h3> -->
     <router-view></router-view>
   </div>
 </template>

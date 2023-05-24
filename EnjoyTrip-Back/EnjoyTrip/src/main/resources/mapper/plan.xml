@@ -28,6 +28,8 @@
 		<result column="addr1" property="addr1"/>
 		<result column="first_image" property="firstImage"/>
 		<result column="travel_type_id" property="travelTypeId"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
 	</resultMap>
 
     <select id="selectGetDetail" parameterType="int" resultMap="viewPlan">
@@ -37,7 +39,7 @@
     </select>
     
 	<select id="planTravelList" resultMap="viewPlanTravel">
-		select pt.plan_id, pt.travel_info_id, pt.no, ti.title, ti.addr1, ti.first_image, ti.travel_type_id
+		select pt.plan_id, pt.travel_info_id, pt.no, ti.title, ti.addr1, ti.first_image, ti.travel_type_id, ti.latitude, ti.longitude
 		from plan_travel pt
 		join travel_info ti on pt.travel_info_id = ti.travel_info_id
 		where plan_id = #{planId}
