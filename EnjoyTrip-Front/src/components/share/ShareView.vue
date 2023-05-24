@@ -56,8 +56,12 @@
               </div>
 
               <div class="plan-info">
-                <div style="display: flex; align-items: center;" >
-                  <font-awesome-icon :icon="['far', 'calendar']" style="color: #838891" class="mr-2"/>
+                <div style="display: flex; align-items: center">
+                  <font-awesome-icon
+                    :icon="['far', 'calendar']"
+                    style="color: #838891"
+                    class="mr-2"
+                  />
                   {{
                     new Date(plan.createDate).toLocaleDateString("en-US", {
                       year: "numeric",
@@ -66,13 +70,21 @@
                     })
                   }}
                 </div>
-                <div style="display: flex; align-items: center;" class="ml-3">
-                  <font-awesome-icon :icon="['far', 'eye']" style="color: #838891" class="mr-2"/>
+                <div style="display: flex; align-items: center" class="ml-3">
+                  <font-awesome-icon
+                    :icon="['far', 'eye']"
+                    style="color: #838891"
+                    class="mr-2"
+                  />
                   {{ plan.views }}
                 </div>
               </div>
               <div class="text-left">
-                <div v-html="message" class="mt-3" style="text-align: center"></div>
+                <div
+                  v-html="message"
+                  class="mt-3"
+                  style="text-align: center"
+                ></div>
               </div>
             </div>
           </div>
@@ -89,15 +101,24 @@
                       class="timeline"
                       v-for="(travel, index) in stravels"
                       :key="travel.no"
-                      :class="index % 2 === 0 ? 'timeline' : 'timeline-inverted'"
+                      :class="
+                        index % 2 === 0 ? 'timeline' : 'timeline-inverted'
+                      "
                     >
                       <div class="timeline-badge"></div>
-                      <div class="timeline-panel" @click="selectedTravel = travel.travelInfo">
+                      <div
+                        class="timeline-panel"
+                        @click="selectedTravel = travel.travelInfo"
+                      >
                         <div class="timeline-heading">
-                          <h5 class="timeline-title">{{ travel.travelInfo.title }}</h5>
+                          <h5 class="timeline-title">
+                            {{ travel.travelInfo.title }}
+                          </h5>
                           <p class="timeline-meta text-xs">
                             <i class="fas fa-map-marker-alt va-middle mr-5"></i>
-                            <span class="va-middle mr-5">{{ travel.travelInfo.addr1 }}</span>
+                            <span class="va-middle mr-5">{{
+                              travel.travelInfo.addr1
+                            }}</span>
                           </p>
                         </div>
                         <div class="timeline-body">
@@ -156,7 +177,7 @@ const travelStore = "travelStore";
 export default {
   name: "ShareDetail",
   components: {
-    ModalWindow
+    ModalWindow,
   },
   data() {
     return {
@@ -169,12 +190,14 @@ export default {
     ...mapState(travelStore, ["travels"]),
     ...mapState(memberStore, ["userInfo"]),
     message() {
-      if (this.plan.description) return this.plan.description.split("\n").join("<br>");
+      if (this.plan.description)
+        return this.plan.description.split("\n").join("<br>");
       return "";
     },
     isUser() {
       const checkUserInfo = store.getters["memberStore/checkUserInfo"];
-      if (checkUserInfo != null && checkUserInfo.userId == this.plan.userId) return 1;
+      if (checkUserInfo != null && checkUserInfo.userId == this.plan.userId)
+        return 1;
       else {
         return 0;
       }
@@ -244,8 +267,10 @@ body {
   margin-top: 20px;
 }
 .blur {
-  -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
-  box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
+  -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
+    0 0 15px rgba(188, 191, 200, 0.2) !important;
+  box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
+    0 0 15px rgba(188, 191, 200, 0.2) !important;
   margin: 3%;
 }
 .mr-5 {
@@ -315,12 +340,15 @@ body {
   -o-transition: 0.2s ease-in-out;
   -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
-  box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1), 0 2px 12px rgba(188, 191, 200, 0.2) !important;
+  box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1),
+    0 2px 12px rgba(188, 191, 200, 0.2) !important;
 }
 .timeline > li > .timeline-panel:hover {
   transform: translateY(-3px);
-  -webkit-box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
-  box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
+  -webkit-box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1),
+    0 3px 20px rgba(188, 191, 200, 0.3) !important;
+  box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1),
+    0 3px 20px rgba(188, 191, 200, 0.3) !important;
 }
 .timeline > li:not(.timeline-inverted) {
   padding-right: 50px;
