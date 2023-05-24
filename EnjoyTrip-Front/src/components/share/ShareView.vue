@@ -70,45 +70,97 @@
                   {{ plan.views }}
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="card-body text-left">
-            <div v-html="message" class="mt-3"></div>
-          </div>
-          <div class="travel-section">여행지들</div>
-          <div class="route-container">
-            <div class="center-bar"></div>
-            <div class="route-line"></div>
-            <div class="route-group">
-              <div
-                class="route"
-                v-for="(travel, index) in stravels"
-                :key="travel.no"
-                :class="index % 2 === 0 ? 'left-route' : 'right-route'"
-              >
-                <div class="card travel-card">
-                  <img
-                    :src="travel.travelInfo.firstImage"
-                    class="travel-image"
-                    alt="여행지 이미지"
-                  />
-                  <div class="travel-details">
-                    <div class="travel-title">
-                      {{ travel.travelInfo.title }}
-                    </div>
-                    <div class="travel-address">
-                      {{ travel.travelInfo.addr1 }}
-                    </div>
-                  </div>
-                </div>
+              <div class="card-body text-left">
+                <div v-html="message" class="mt-3" style="text-align: center"></div>
               </div>
             </div>
+          </div>
+
+          <!-- <div class="travel-section">여행지들</div> -->
+          <div class="container">
+            <div class="p-x-15 blur">
+              <div class="row" style="justify-content: center">
+                <!-- <div
+                    class="col-md-6 bg-img"
+                    style="
+                      background-image: url(https://www.bootdey.com/image/600x600/FFB6C1/000000);
+                      min-height: 320px;
+                    "
+                  >
+                    <p class="mb-0"></p>
+                  </div> -->
+                <!-- / box-bg-image -->
+                <div
+                  class="col-md-6 col-md-offset-6 p-30 text-center bg-white"
+                  style="max-width: 80%"
+                >
+                  <!-- <h4 class="mb-50 fw-bold" style="padding: 3%">여행일정</h4> -->
+
+                  <ul class="timeline" style="width: 700px">
+                    <li
+                      class="timeline"
+                      v-for="(travel, index) in stravels"
+                      :key="travel.no"
+                      :class="index % 2 === 0 ? 'timeline' : 'timeline-inverted'"
+                    >
+                      <div class="timeline-badge"></div>
+                      <div class="timeline-panel">
+                        <div class="timeline-heading">
+                          <h5 class="timeline-title">{{ travel.travelInfo.title }}</h5>
+                          <!-- <p class="text-sm">Web Development</p> -->
+                          <p class="timeline-meta text-xs">
+                            <i class="fas fa-map-marker-alt va-middle mr-5"></i>
+                            <span class="va-middle mr-5">{{ travel.travelInfo.addr1 }}</span>
+                          </p>
+                        </div>
+                        <!-- / time-line-heading -->
+                        <div class="timeline-body">
+                          <img
+                            :src="travel.travelInfo.firstImage"
+                            class="travel-image"
+                            alt="여행지 이미지"
+                          />
+                        </div>
+                        <!-- / timeline-body -->
+                      </div>
+                      <!-- / timeline-panel -->
+                    </li>
+                    <!-- timeline -->
+
+                    <!-- timeline-inverted -->
+                  </ul>
+                  <p class="timeline-meta text-xs" style="padding: 3%">
+                    <i class="fas fa-calendar-alt va-middle mr-5"></i>
+                    <span class="va-middle"
+                      >{{
+                        new Date(plan.startDate).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                      }}~{{
+                        new Date(plan.endDate).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                      }}</span
+                    >
+                  </p>
+                  <!-- / timeline -->
+                </div>
+                <!-- / column -->
+              </div>
+              <!-- / row -->
+            </div>
+            <!-- / p-15 -->
           </div>
         </div>
       </b-col>
     </b-row>
   </b-container>
 </template>
+
 <script>
 import { getPlan } from "@/api/share";
 import { mapState, mapMutations } from "vuex";
@@ -196,7 +248,156 @@ export default {
   },
 };
 </script>
+
 <style>
+body {
+  background-color: #f9f9f9;
+  margin-top: 20px;
+}
+.blur {
+  -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
+  box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
+  margin: 3%;
+}
+.mr-5 {
+  margin-right: 5px !important;
+}
+.va-middle {
+  vertical-align: middle !important;
+}
+.bg-img {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+}
+.timeline {
+  list-style: none;
+  padding: 20px 0;
+  position: relative;
+}
+.timeline:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 4px;
+  background-color: #dddfe6;
+  left: 50%;
+  margin-left: -2px;
+}
+.timeline.w-icons:before {
+  top: 0;
+  bottom: 0;
+  position: absolute;
+  content: " ";
+  width: 3px;
+  background-color: #dddfe6;
+  left: 50%;
+  margin-left: -1.5px;
+}
+.timeline > li {
+  margin-bottom: 20px;
+  position: relative;
+}
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+.timeline > li:after {
+  clear: both;
+}
+.timeline > li:before,
+.timeline > li:after {
+  content: " ";
+  display: table;
+}
+.timeline > li:after {
+  clear: both;
+}
+.timeline > li > .timeline-panel {
+  background-color: #fff;
+  width: 50%;
+  float: left;
+  border-radius: 5px;
+  padding: 20px;
+  position: relative;
+  -moz-transition: 0.2s ease-in-out;
+  -o-transition: 0.2s ease-in-out;
+  -webkit-transition: 0.2s ease-in-out;
+  transition: 0.2s ease-in-out;
+  box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1), 0 2px 12px rgba(188, 191, 200, 0.2) !important;
+}
+.timeline > li > .timeline-panel:hover {
+  transform: translateY(-3px);
+  -webkit-box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
+  box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
+}
+.timeline > li:not(.timeline-inverted) {
+  padding-right: 50px;
+}
+.timeline > li.timeline-inverted {
+  padding-left: 50px;
+}
+.timeline.w-icons > li:not(.timeline-inverted) {
+  padding-right: 85px;
+}
+.timeline.w-icons > li.timeline-inverted {
+  padding-left: 85px;
+}
+.timeline > li > .timeline-badge {
+  color: #fff;
+  background: #dddfe6;
+  width: 25px;
+  height: 25px;
+  line-height: 15px !important;
+  font-size: 0.75rem;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -12.5px;
+  z-index: 100;
+  border: 5px solid #fff;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+.timeline.w-icons > li > .timeline-badge {
+  color: #fff;
+  background: #5d3997;
+  width: 60px;
+  height: 60px;
+  line-height: 65px !important;
+  font-size: 1rem;
+  text-align: center;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  margin-left: -30px;
+  z-index: 100;
+  border: 0;
+  border-radius: 50%;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
+}
+.timeline.w-icons > li > .timeline-badge .material-icons {
+  line-height: 60px !important;
+}
+.timeline > li.timeline-inverted > .timeline-badge {
+  top: 0;
+}
+.timeline > li.timeline-inverted > .timeline-panel {
+  float: right;
+}
+ul.timeline {
+  margin-bottom: 0;
+}
+.timeline-body > p,
+.timeline-body > ul {
+  margin-bottom: 0;
+}
+.timeline-body > p + p {
+  margin-top: 5px;
+}
 .custom-btn {
   border: solid 2px #c2d6f0;
 }
@@ -253,6 +454,8 @@ export default {
 .route-group {
   display: flex;
   justify-content: space-between;
+  flex-direction: column;
+  flex-wrap: wrap;
 }
 
 .route {
@@ -265,10 +468,12 @@ export default {
 
 .left-route {
   justify-content: flex-start;
+  float: left;
 }
 
 .right-route {
   justify-content: flex-end;
+  float: right;
 }
 
 .travel-card {
