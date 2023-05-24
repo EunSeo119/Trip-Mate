@@ -53,7 +53,18 @@ export default {
       this.loadPlanMarker();
     },
   },
-  created() {},
+  created() {
+    console.log("여행계획의 정보정보!!!!");
+    console.log(this.planTravels);
+    this.planPositions = [];
+    this.planTravels.forEach((travel) => {
+      let obj = {};
+      obj.title = travel.title;
+      obj.latlng = new kakao.maps.LatLng(travel.lat, travel.lng);
+      this.planPositions.push(obj);
+    });
+    this.loadPlanMarker();
+  },
   mounted() {
     // api 스크립트 소스 불러오기 및 지도 출력
     if (window.kakao && window.kakao.maps) {
@@ -88,7 +99,10 @@ export default {
         };
       } else {
         options = {
-          center: new window.kakao.maps.LatLng(this.planTravels[0].lat, this.planTravels[0].lng),
+          center: new window.kakao.maps.LatLng(
+            this.planTravels[0].lat,
+            this.planTravels[0].lng
+          ),
           level: 3,
         };
       }
@@ -261,7 +275,8 @@ export default {
 
       // 계산한 도보 시간이 60분 보다 크면 시간으로 표시합니다
       if (walkkTime > 60) {
-        walkHour = '<span class="number">' + Math.floor(walkkTime / 60) + "</span>시간 ";
+        walkHour =
+          '<span class="number">' + Math.floor(walkkTime / 60) + "</span>시간 ";
       }
       walkMin = '<span class="number">' + (walkkTime % 60) + "</span>분";
 
@@ -272,7 +287,8 @@ export default {
 
       // 계산한 자동차 시간이 60분 보다 크면 시간으로 표출합니다
       if (carTime > 60) {
-        carHour = '<span class="number">' + Math.floor(carTime / 60) + "</span>시간 ";
+        carHour =
+          '<span class="number">' + Math.floor(carTime / 60) + "</span>시간 ";
       }
       carMin = '<span class="number">' + (carTime % 60) + "</span>분";
 
