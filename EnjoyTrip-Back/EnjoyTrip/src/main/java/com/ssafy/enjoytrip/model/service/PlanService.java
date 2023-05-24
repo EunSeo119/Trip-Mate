@@ -12,4 +12,6 @@ public interface PlanService {
 	Plan getPlanDetail(int planId) throws Exception;
 	
 	void deletePlan(int planId) throws Exception;
+
+	List<Plan> getPlanTop6() throws Exception;
 }
