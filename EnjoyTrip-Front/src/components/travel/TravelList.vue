@@ -4,13 +4,19 @@
       <!-- <hr style="border: double 3px #eee" /> -->
       <div class="total_check">
         <div class="left_section">
-          <strong>총<span id="totalCnt">38,876</span>건</strong>
+          <strong>총 <span id="totalCnt">{{totTravels}}</span>건</strong>
         </div>
         <div class="right_section">
           <div class="btn-group">
-            <button type="button" class="btn btn-primary">기본순</button>
-            <button type="button" class="btn btn-primary">인기순</button>
-            <button type="button" class="btn btn-primary">조회순</button>
+            <button type="button" class="btn" :class="activeButton === '기본순' ? 'btn-order active' : 'btn-order'" @click="setActiveButton('기본순')">
+            기본순
+            </button>
+            <button type="button" class="btn" :class="activeButton === '조회순' ? 'btn-order active' : 'btn-order'" @click="setActiveButton('조회순')">
+            조회순
+            </button>
+            <button type="button" class="btn" :class="activeButton === '인기순' ? 'btn-order active' : 'btn-order'" @click="setActiveButton('인기순')">
+            인기순
+            </button>
           </div>
         </div>
       </div>
@@ -68,10 +74,11 @@ export default {
       currentPage: 1, // Current page number
       itemsPerPage: 16, // Number of items to display per page
       selectedTravel: null,
+      activeButton: '기본순',
     };
   },
   computed: {
-    ...mapState(travelStore, ["travels"]),
+    ...mapState(travelStore, ["travels", "totTravels"]),
     paginatedTravels() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -84,6 +91,13 @@ export default {
   methods: {
     goToPage(page) {
       this.currentPage = page;
+    },
+    setActiveButton(button) {
+      this.activeButton = button;
+      if (button === "조회순") {
+        console.log("오니?")
+        this.travels.sort((a, b) => b.readcount - a.readcount);
+      }
     },
   },
 };
@@ -137,8 +151,11 @@ export default {
 .pagination li.active a {
   color: #fff;
 }
-.btn-primary {
-  background-color: #c2d6f0 !important;
-  border-color: #c2d6f0 !important;
+.btn-order {
+  background-color: #c2d6f0 ;
+  border-color: #c2d6f0 ;
+}
+.btn-order.active {
+  background-color: #467cc2;
 }
 </style>

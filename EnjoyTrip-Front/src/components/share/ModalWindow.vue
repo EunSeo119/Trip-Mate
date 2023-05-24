@@ -5,7 +5,7 @@
         <h2>{{ travel.title }}</h2>
         <p>{{ travel.addr1 }}</p>
         <img :src="travel.firstImage" class="travel-image" alt="여행지 이미지" />
-        <div class="description-container">
+        <div class="description-container mt-3">
           <p>{{ travel.overview }}</p>
         </div>
       </div>

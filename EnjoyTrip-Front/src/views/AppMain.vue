@@ -1,23 +1,23 @@
 <template>
   <section>
     <router-link v-if="slideIndex === 0" :to="{ name: 'planview' }">
-      <a
-        class="btn btn-outline-light mainpage-btn"
-        style = "padding: 0 300x;"
+      <a class="btn btn-outline-light mainpage-btn" style="padding: 0 300x"
         >Plannig a Trip</a
       >
     </router-link>
     <router-link v-else-if="slideIndex === 1" :to="{ name: 'boardlist' }">
-      <a
-        class="btn btn-outline-dark mainpage-btn2"
-        style = "padding: 0 300x;"
+      <a class="btn btn-outline-dark mainpage-btn2" style="padding: 0 300x"
         >View Announcement</a
       >
     </router-link>
     <div class="background mainpage-img" style="padding: 0% 1%">
       <div class="slider my-5">
         <div class="slide">
-          <img class="img-fluid" :src="slideImages[slideIndex]" alt="Slide Image" />
+          <img
+            class="img-fluid"
+            :src="slideImages[slideIndex]"
+            alt="Slide Image"
+          />
         </div>
       </div>
       <div class="controls">
@@ -26,23 +26,18 @@
       </div>
     </div>
 
-    <div class = "popular-plan">인기 여행일정</div>
+    <div class="popular-plan">인기 여행일정</div>
     <div>다른 여행자들의 일정을 참고하여 나만의 여행 계획을 세우세요.</div>
-    <b-container>
-      <div class = "plan-list">
-        <plan-list-item
-          v-for="plan in plans"
-          :key="plan.planId"
-          :plan="plan"
-        />
+    <b-container style="max-width: 1330px">
+      <div class="plan-list">
+        <plan-list-item v-for="plan in plans" :key="plan.planId" :plan="plan" />
       </div>
     </b-container>
-
   </section>
 </template>
 
 <script>
-import PlanListItem from "@/components/share/ShareListItem.vue"
+import PlanListItem from "@/components/share/ShareListItem.vue";
 import { listPlanTop6 } from "@/api/share";
 
 export default {
@@ -51,16 +46,19 @@ export default {
     return {
       plans: [],
       slideIndex: 0,
-      slideImages: [require("@/assets/mainpage1.png"), require("@/assets/mainpage2.png")]
-    }
+      slideImages: [
+        require("@/assets/mainpage1.png"),
+        require("@/assets/mainpage2.png"),
+      ],
+    };
   },
   props: {
     msg: String,
   },
-  components:{
-    PlanListItem
+  components: {
+    PlanListItem,
   },
-  created(){
+  created() {
     listPlanTop6(
       ({ data }) => {
         this.plans = data;
@@ -105,10 +103,10 @@ export default {
     rgba(72, 190, 233, 0.3) 30%
   );
 }
-.mainpage-img{
+.mainpage-img {
   position: relative;
 }
-.mainpage-btn{
+.mainpage-btn {
   position: absolute;
   top: 25%;
   left: 61%;
@@ -121,7 +119,7 @@ export default {
   border-radius: 0.3rem;
 }
 
-.mainpage-btn2{
+.mainpage-btn2 {
   position: absolute;
   top: 25%;
   left: 61%;
@@ -133,14 +131,14 @@ export default {
   line-height: 1.5;
   border-radius: 0.3rem;
 }
-.popular-plan{
+.popular-plan {
   color: #363636;
   font-size: 24px;
   font-weight: bold;
   width: 100%;
   text-align: center;
 }
-.plan-list{
+.plan-list {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   margin: 50px 24px;

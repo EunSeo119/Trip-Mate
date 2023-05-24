@@ -12,10 +12,10 @@ const travelStore = {
   state: {
     sidos: [{ value: null, text: "선택하세요" }],
     guguns: [{ value: null, text: "선택하세요" }],
-    // contentTypeId: 0,
     types: [],
     travels: [],
     stravels: [],
+    totTravels: 0,
   },
   getters: {
     getStravels(state) {
@@ -72,7 +72,7 @@ const travelStore = {
     },
     SET_TRAVEL_LIST(state, travels) {
       state.travels = travels;
-      console.log(state.travels);
+      state.totTravels = travels.length;
     },
     // SET_DETAIL_TRAVEL(state, travel) {
     //   state.travel = travel;

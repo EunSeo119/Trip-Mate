@@ -51,14 +51,16 @@
           <div class="card-header">
             <div class="card-header-title mt-3 mb-3">
               <h3>{{ plan.title }}</h3>
-              <div>
-                <h6>{{ plan.userId }}</h6>
+              <div style="display: flex; align-items: center; color: #838891">
+                작성자: {{ plan.userId }}
               </div>
+
               <div class="plan-info">
-                <div>
+                <div style="display: flex; align-items: center">
                   <font-awesome-icon
                     :icon="['far', 'calendar']"
                     style="color: #838891"
+                    class="mr-2"
                   />
                   {{
                     new Date(plan.createDate).toLocaleDateString("en-US", {
@@ -68,123 +70,24 @@
                     })
                   }}
                 </div>
-                <div>
+                <div style="display: flex; align-items: center" class="ml-3">
                   <font-awesome-icon
                     :icon="['far', 'eye']"
                     style="color: #838891"
+                    class="mr-2"
                   />
                   {{ plan.views }}
                 </div>
               </div>
-              <div class="card-body text-left">
-                <div v-html="message" class="mt-3" style="text-align: center"></div>
-              </div>
-            </div>
-          </div>
-<<<<<<< HEAD
-          <div class="card-body text-left">
-            <div v-html="message" class="mt-3"></div>
-          </div>
-          <div class="travel-section">여행지들</div>
-          <div class="container mt-5">
-            <div class="p-x-15 blur">
-              <div class="row">
+              <div class="text-left">
                 <div
-                  class="col-md-6 bg-img"
-                  style="
-                    background-image: url(https://www.bootdey.com/image/600x600/FFB6C1/000000);
-                    min-height: 320px;
-                  "
-                >
-                  <p class="mb-0"></p>
-                </div>
-                <!-- / box-bg-image -->
-                <div class="col-md-6 col-md-offset-6 p-30 text-center bg-white">
-                  <h4 class="mb-50 fw-bold">ACHIEVEMENTS</h4>
-                  <ul class="timeline">
-                    <li class="timeline">
-                      <div class="timeline-badge"></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h5 class="timeline-title">University</h5>
-                          <p class="text-sm">Web Development</p>
-                          <p class="timeline-meta text-xs">
-                            <i class="fas fa-map-marker-alt va-middle mr-5"></i>
-                            <span class="va-middle mr-5">Miami</span>
-                            <i class="fas fa-calendar-alt va-middle mr-5"></i>
-                            <span class="va-middle">2016-2020</span>
-                          </p>
-                        </div>
-                        <!-- / time-line-heading -->
-                        <div class="timeline-body">
-                          <p>
-                            Quisque sit amet urna et neque porttitor mattis.
-                          </p>
-                        </div>
-                        <!-- / timeline-body -->
-                      </div>
-                      <!-- / timeline-panel -->
-                    </li>
-                    <!-- timeline -->
-
-                    <li class="timeline-inverted">
-                      <div class="timeline-badge"></div>
-                      <div class="timeline-panel">
-                        <div class="timeline-heading">
-                          <h5 class="timeline-title">High School</h5>
-                          <p class="text-sm">Web Design</p>
-                          <p class="timeline-meta text-xs">
-                            <i class="fas fa-map-marker-alt va-middle mr-5"></i>
-                            <span class="va-middle mr-5">New York</span>
-                            <i class="fas fa-calendar-alt va-middle mr-5"></i>
-                            <span class="va-middle">2012-2016</span>
-                          </p>
-                        </div>
-                        <!-- / time-line-heading -->
-                        <div class="timeline-body">
-                          <p>
-                            Quisque sit amet urna et neque porttitor mattis.
-                          </p>
-                        </div>
-                        <!-- / timeline-body -->
-                      </div>
-                      <!-- / timeline-panel -->
-                    </li>
-                    <!-- timeline-inverted -->
-                  </ul>
-                  <!-- / timeline -->
-                </div>
-                <!-- / column -->
+                  v-html="message"
+                  class="mt-3"
+                  style="text-align: center"
+                ></div>
               </div>
-              <!-- / row -->
             </div>
-            <!-- / p-15 -->
           </div>
-          <div class="route-container">
-            <div class="center-bar"></div>
-            <div class="route-line"></div>
-            <div class="route-group">
-              <div
-                class="route"
-                v-for="(travel, index) in stravels"
-                :key="travel.no"
-                :class="index % 2 === 0 ? 'left-route' : 'right-route'"
-              >
-                <div class="card travel-card">
-                  <img
-                    :src="travel.travelInfo.firstImage"
-                    class="travel-image"
-                    alt="여행지 이미지"
-                  />
-                  <div class="travel-details">
-                    <div class="travel-title">
-                      {{ travel.travelInfo.title }}
-                    </div>
-                    <div class="travel-address">
-                      {{ travel.travelInfo.addr1 }}
-                    </div>
-                  </div>
-=======
 
           <div class="container">
             <div class="p-x-15 blur">
@@ -198,15 +101,24 @@
                       class="timeline"
                       v-for="(travel, index) in stravels"
                       :key="travel.no"
-                      :class="index % 2 === 0 ? 'timeline' : 'timeline-inverted'"
+                      :class="
+                        index % 2 === 0 ? 'timeline' : 'timeline-inverted'
+                      "
                     >
                       <div class="timeline-badge"></div>
-                      <div class="timeline-panel" @click="selectedTravel = travel.travelInfo">
+                      <div
+                        class="timeline-panel"
+                        @click="selectedTravel = travel.travelInfo"
+                      >
                         <div class="timeline-heading">
-                          <h5 class="timeline-title">{{ travel.travelInfo.title }}</h5>
+                          <h5 class="timeline-title">
+                            {{ travel.travelInfo.title }}
+                          </h5>
                           <p class="timeline-meta text-xs">
                             <i class="fas fa-map-marker-alt va-middle mr-5"></i>
-                            <span class="va-middle mr-5">{{ travel.travelInfo.addr1 }}</span>
+                            <span class="va-middle mr-5">{{
+                              travel.travelInfo.addr1
+                            }}</span>
                           </p>
                         </div>
                         <div class="timeline-body">
@@ -237,7 +149,6 @@
                       }}</span
                     >
                   </p>
->>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
                 </div>
               </div>
             </div>
@@ -266,7 +177,7 @@ const travelStore = "travelStore";
 export default {
   name: "ShareDetail",
   components: {
-    ModalWindow
+    ModalWindow,
   },
   data() {
     return {
@@ -356,16 +267,11 @@ body {
   margin-top: 20px;
 }
 .blur {
-<<<<<<< HEAD
   -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
     0 0 15px rgba(188, 191, 200, 0.2) !important;
   box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
     0 0 15px rgba(188, 191, 200, 0.2) !important;
-=======
-  -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
-  box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
   margin: 3%;
->>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
 }
 .mr-5 {
   margin-right: 5px !important;
@@ -434,7 +340,6 @@ body {
   -o-transition: 0.2s ease-in-out;
   -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
-<<<<<<< HEAD
   box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1),
     0 2px 12px rgba(188, 191, 200, 0.2) !important;
 }
@@ -444,14 +349,6 @@ body {
     0 3px 20px rgba(188, 191, 200, 0.3) !important;
   box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1),
     0 3px 20px rgba(188, 191, 200, 0.3) !important;
-=======
-  box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1), 0 2px 12px rgba(188, 191, 200, 0.2) !important;
-}
-.timeline > li > .timeline-panel:hover {
-  transform: translateY(-3px);
-  -webkit-box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
-  box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
->>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
 }
 .timeline > li:not(.timeline-inverted) {
   padding-right: 50px;
@@ -477,11 +374,7 @@ body {
   top: 20px;
   left: 50%;
   margin-left: -12.5px;
-<<<<<<< HEAD
-  z-index: 100;
-=======
   /* z-index: 100; */
->>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
   border: 5px solid #fff;
   border-radius: 50%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
