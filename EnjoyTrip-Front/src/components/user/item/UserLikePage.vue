@@ -7,7 +7,7 @@
               <p>좋아요 누른 관광지</p>
               <hr class="my-4" />
               
-              <div class = "grid-main">
+              <div class = "like-main">
                 <like-list-item
                   v-for="like in likes" 
                   :key="like.travelInfoId"
@@ -40,7 +40,7 @@ export default {
 </script>
 
 <style>
-.grid-main{
+.like-main{
   overflow-y: auto; /* 세로 스크롤을 표시하도록 설정 */
   max-height: 380px; /* 스크롤 가능한 최대 높이를 지정 (원하는 값으로 조정) */
   display: grid;

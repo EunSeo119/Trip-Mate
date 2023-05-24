@@ -2,7 +2,6 @@ import axios from "axios";
 
 // local vue api axios instance
 function apiInstance() {
-  console.log(process.env.VUE_APP_API_BASE_URL);
   const instance = axios.create({
     baseURL: process.env.VUE_APP_API_BASE_URL,
     headers: {

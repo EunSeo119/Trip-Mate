@@ -34,25 +34,8 @@ export default {
       ],
     };
   },
-  // computed: {
-  //   isAdminUser() {
-  //     const checkUserInfo = store.getters["memberStore/checkUserInfo"];
-  //     if (checkUserInfo != null && checkUserInfo.userId == "admin")
-  //       return 1;
-  //     else{
-  //       return 0;
-  //     }
-  //   },
-  // },
   created() {
-    let param = {
-      pg: 1,
-      spp: 20,
-      key: null,
-      word: null,
-    };
     listPlan(
-      param,
       ({ data }) => {
         this.plans = data;
         console.log(this.plans);

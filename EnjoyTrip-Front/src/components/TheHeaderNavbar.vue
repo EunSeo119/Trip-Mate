@@ -2,13 +2,12 @@
   <div>
     <nav
       class="navbar navbar-expand-lg navbar-dark"
-      style="background-color: #d5e2f5; padding: 0% 10% 0% 10%"
+      style="background-color: #d5e2f5; padding: 0.5% 10% 0.5% 10%"
     >
       <router-link :to="{ name: 'main' }" class="navbar-brand">
         <img
           :src="require('@/assets/logo.png')"
-          id="logo"
-          class="d-inline-block align-top"
+          class="d-inline-block align-top logo-img"
           alt="로고"
         />
       </router-link>
@@ -25,14 +24,8 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="nav-collapse">
+      <div class="collapse navbar-collapse" id="nav-collapse" style="margin-left: 15px;">
         <ul class="navbar-nav mr-auto">
-          <li class="nav-item">
-            <router-link :to="{ name: 'main' }" class="nav-link">
-              <i class="bi bi-house-door" style="font-size: 2rem; animation: fade"></i>
-              홈
-            </router-link>
-          </li>
           <li class="nav-item">
             <router-link :to="{ name: 'travel' }" class="nav-link">
               <i class="bi bi-travel-fill" style="font-size: 2rem; animation: fade"></i>
@@ -73,7 +66,7 @@
             </div>
           </li>
           <li class="nav-item align-self-center">
-            <span class="navbar-text" style="color: #333; font-family: 'Arial', sans-serif">
+            <span class="navbar-text" style="color: #333;">
               {{ userInfo.username }}({{ userInfo.userId }})님 환영합니다.
             </span>
           </li>
@@ -81,7 +74,7 @@
             <router-link
               :to="{ name: 'mypage' }"
               class="nav-link"
-              style="color: #333; font-family: 'Arial', sans-serif"
+              style="color: #333;"
             >
               내 정보 보기
             </router-link>
@@ -168,9 +161,12 @@ export default {
 </style>
 
 <style scoped>
+.logo-img{
+  width: 150px;
+}
 .navbar-dark .navbar-nav .nav-link {
   color: #333;
-  font-family: "Arial", sans-serif;
+  /* font-family: "Arial", sans-serif; */
 }
 
 /* .nav-link:hover {

@@ -58,5 +58,10 @@ public class PlanServiceImpl implements PlanService{
 	public void deletePlan(int planId) throws Exception {
 		planMapper.deletePlan(planId);
 	}
+
+	@Override
+	public List<Plan> getPlanTop6() throws Exception {
+		return planMapper.selectGetTop6();
+	}
 	
 }

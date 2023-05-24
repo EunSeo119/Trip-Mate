@@ -11,7 +11,7 @@
         <font-awesome-icon 
         :icon= "['far', 'trash-can']"
         class="trash-icon"
-        @click="toggleHeart"
+        @click="toggleTrash"
       />
         <h5 style = "text-align: left;">{{like.title}}</h5>
         <p class="small text-muted mb-0" style = "text-align: left;">{{like.addr1}}</p>
@@ -26,7 +26,7 @@ import { mapActions } from "vuex";
 import store from "@/store";
 import { modifyLike } from "@/api/travel";
 
-const travelStore = "travelStore";
+const memberStore = "memberStore";
 
 export default {
   name: "LikeListItem",
@@ -42,18 +42,17 @@ export default {
   },
 
   methods: {
-    ...mapActions(travelStore, ["likeTravel"]),
+    ...mapActions(memberStore, ["deleteLikeById"]),
     replaceByDefault(e) {
       e.target.src = require("@/assets/NoImage.png");
     },
-    toggleHeart() {
-      this.isHeartFilled = !this.isHeartFilled;
-      this.heartIcon = this.isHeartFilled ? ['fas', 'heart'] : ['far', 'heart'];
+    toggleTrash() {
       let params = {
-        "travelInfoId": this.travel.travelInfoId,
+        "travelInfoId": this.like.travelInfoId,
         "like" : 1,
         "userId": store.getters["memberStore/checkUserInfo"].userId,
       };
+      this.deleteLikeById(this.like.travelInfoId);
       modifyLike(
         params,
         ({ data }) => {

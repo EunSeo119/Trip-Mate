@@ -1,5 +1,4 @@
 import { apiInstance } from "./index.js";
-import axios from 'axios';
 
 const api = apiInstance();
 
@@ -38,6 +37,6 @@ function travelListByType (params, success, fail) {
 // }
 function modifyLike(params, success, fail){
   console.log(params);
-  axios.put('http://localhost:9999/travel/status/like', params).then(success).catch(fail);
+  api.put('/travel/status/like', params).then(success).catch(fail);
 }
 export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, modifyLike };

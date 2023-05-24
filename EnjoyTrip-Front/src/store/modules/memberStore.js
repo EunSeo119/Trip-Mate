@@ -184,11 +184,17 @@ const memberStore = {
               }
             );
           }
+          console.log(state.likes);
         },
         (error) => {
           console.log(error);
         }
       );
+    },
+    deleteLikeById: ({ state }, travelInfoId) => {
+      console.log(travelInfoId);
+      state.likes = state.likes.filter(like => like.travelInfoId != travelInfoId);
+      console.log(state.likes);
     },
   },
 };
