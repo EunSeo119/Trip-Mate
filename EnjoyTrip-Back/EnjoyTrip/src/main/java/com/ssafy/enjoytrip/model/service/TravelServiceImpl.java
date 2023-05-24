@@ -64,6 +64,7 @@ public class TravelServiceImpl implements TravelService {
 		System.out.println("이거 찍힘?"+travelInfoId);
 		TravelInfo t = travelMapper.selectGetDetail(travelInfoId);
 		System.out.println("이거 나옴?" + t.getTitle());
+		t.setOverview(travelMapper.selectGetDetailOverview(travelInfoId)); 
 		return t;
 //		return travelMapper.selectGetDetail(travelInfoId);
 	}

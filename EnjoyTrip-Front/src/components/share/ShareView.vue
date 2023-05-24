@@ -76,26 +76,13 @@
             </div>
           </div>
 
-          <!-- <div class="travel-section">여행지들</div> -->
           <div class="container">
             <div class="p-x-15 blur">
               <div class="row" style="justify-content: center">
-                <!-- <div
-                    class="col-md-6 bg-img"
-                    style="
-                      background-image: url(https://www.bootdey.com/image/600x600/FFB6C1/000000);
-                      min-height: 320px;
-                    "
-                  >
-                    <p class="mb-0"></p>
-                  </div> -->
-                <!-- / box-bg-image -->
                 <div
                   class="col-md-6 col-md-offset-6 p-30 text-center bg-white"
                   style="max-width: 80%"
                 >
-                  <!-- <h4 class="mb-50 fw-bold" style="padding: 3%">여행일정</h4> -->
-
                   <ul class="timeline" style="width: 700px">
                     <li
                       class="timeline"
@@ -104,16 +91,14 @@
                       :class="index % 2 === 0 ? 'timeline' : 'timeline-inverted'"
                     >
                       <div class="timeline-badge"></div>
-                      <div class="timeline-panel">
+                      <div class="timeline-panel" @click="selectedTravel = travel.travelInfo">
                         <div class="timeline-heading">
                           <h5 class="timeline-title">{{ travel.travelInfo.title }}</h5>
-                          <!-- <p class="text-sm">Web Development</p> -->
                           <p class="timeline-meta text-xs">
                             <i class="fas fa-map-marker-alt va-middle mr-5"></i>
                             <span class="va-middle mr-5">{{ travel.travelInfo.addr1 }}</span>
                           </p>
                         </div>
-                        <!-- / time-line-heading -->
                         <div class="timeline-body">
                           <img
                             :src="travel.travelInfo.firstImage"
@@ -121,13 +106,8 @@
                             alt="여행지 이미지"
                           />
                         </div>
-                        <!-- / timeline-body -->
                       </div>
-                      <!-- / timeline-panel -->
                     </li>
-                    <!-- timeline -->
-
-                    <!-- timeline-inverted -->
                   </ul>
                   <p class="timeline-meta text-xs" style="padding: 3%">
                     <i class="fas fa-calendar-alt va-middle mr-5"></i>
@@ -147,17 +127,19 @@
                       }}</span
                     >
                   </p>
-                  <!-- / timeline -->
                 </div>
-                <!-- / column -->
               </div>
-              <!-- / row -->
             </div>
-            <!-- / p-15 -->
           </div>
         </div>
       </b-col>
     </b-row>
+    <!-- 템플릿 내에 다음 코드를 추가합니다 -->
+    <modal-window
+      v-if="selectedTravel"
+      :travel="selectedTravel"
+      @close="selectedTravel = null"
+    ></modal-window>
   </b-container>
 </template>
 
@@ -165,16 +147,21 @@
 import { getPlan } from "@/api/share";
 import { mapState, mapMutations } from "vuex";
 import store from "@/store";
+import ModalWindow from "@/components/share/ModalWindow.vue";
 
 const memberStore = "memberStore";
 const travelStore = "travelStore";
 
 export default {
   name: "ShareDetail",
+  components: {
+    ModalWindow
+  },
   data() {
     return {
       plan: {},
       stravels: [],
+      selectedTravel: null,
     };
   },
   computed: {
@@ -201,6 +188,7 @@ export default {
         this.stravels = data.planTravels;
         console.log(this.plan);
         console.log("이거" + this.stravels[1].title);
+        console.log("요고요고 나옴?" + this.stravels[1].title);
       },
       (error) => {
         console.log(error);
@@ -357,7 +345,7 @@ body {
   top: 20px;
   left: 50%;
   margin-left: -12.5px;
-  z-index: 100;
+  /* z-index: 100; */
   border: 5px solid #fff;
   border-radius: 50%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
@@ -416,6 +404,7 @@ ul.timeline {
   justify-content: space-between;
   margin-top: 10px;
   color: #838891;
+  width: 15%;
 }
 
 .travel-section {

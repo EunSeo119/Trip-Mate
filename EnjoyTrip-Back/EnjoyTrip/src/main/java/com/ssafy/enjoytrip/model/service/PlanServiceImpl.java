@@ -50,7 +50,7 @@ public class PlanServiceImpl implements PlanService{
 		    plan.setPlanTravels(sortedTravels);
 		plan.setViews(plan.getViews()+1);
 		planMapper.updateViewCount(planId, plan.getViews());
-//		System.out.println(plan.getPlanTravels().get(0).getNo());
+		System.out.println(plan.getPlanTravels().get(0).getTravelInfo().getOverview());
 		return plan;
 	}
 

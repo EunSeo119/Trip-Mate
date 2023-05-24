@@ -95,4 +95,10 @@
     	from travel_info
     	where travel_info_id = #{travelInfoId}
     </select>
+    
+    <select id="selectGetDetailOverview" parameterType="int" resultType="String">
+    	select overview
+    	from travel_description
+    	where travel_description_id = #{travelInfoId}
+    </select>
 </mapper>
