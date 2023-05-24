@@ -3,8 +3,12 @@ import { apiInstance } from "./index.js";
 
 const api = apiInstance();
 
-function listPlan(param, success, fail) {
-  api.get(`/plan/list`, { params: param }).then(success).catch(fail);
+function listPlan(success, fail) {
+  api.get(`/plan/list`).then(success).catch(fail);
+}
+
+function listPlanTop6(success, fail) {
+  api.get(`/plan/list/top6`).then(success).catch(fail);
 }
 
 // function writeArticle(formData, success, fail) {
@@ -25,4 +29,4 @@ function getPlan(planId, success, fail) {
 //   api.delete(`/board/${noticeId}`).then(success).catch(fail);
 // }
 
-export { listPlan, getPlan };
+export { listPlan, getPlan, listPlanTop6 };

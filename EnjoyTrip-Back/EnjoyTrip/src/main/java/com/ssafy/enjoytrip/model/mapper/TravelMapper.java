@@ -28,4 +28,6 @@ public interface TravelMapper {
     List<Gugun> selectGugun(@Param("sidoCode") int sidoCode);
 
     TravelInfo selectGetDetail(int travelInfoId) throws SQLException;
+   
+    String selectGetDetailOverview(int travelInfoId) throws SQLException;
 }

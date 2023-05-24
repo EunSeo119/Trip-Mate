@@ -53,6 +53,13 @@ public class PlanController {
         return new ResponseEntity<>(planService.getPlanAll(), HttpStatus.OK);
     }
 	
+	@ApiOperation(value= "인기여행계획목록", notes = "여행계획의 인기 목록을 리턴합니다.")
+	@ApiResponses({@ApiResponse(code = 200, message = "인기여행계획목록 OK"), @ApiResponse(code = 500, message = "서버에러")})
+	@GetMapping("list/top6")
+    public ResponseEntity<List<Plan>> getPlanTop6() throws Exception {
+        return new ResponseEntity<>(planService.getPlanTop6(), HttpStatus.OK);
+    }
+	
 	@ApiOperation(value= "여행계획 상세정보", notes = "여행계획의 상세정보를 리턴합니다.")
 	@ApiResponses({@ApiResponse(code = 200, message = "여행계획 상세정보 OK"), @ApiResponse(code = 500, message = "서버에러")})
 	@GetMapping("/detail/{planId}")

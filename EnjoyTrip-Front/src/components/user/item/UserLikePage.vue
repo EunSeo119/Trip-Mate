@@ -1,20 +1,22 @@
 <template>
     <div>
-        <div class="my-row">
+      <div class="my-row">
         <div class="my-col">
             <div class="my-jumbotron">
-            <h2>Likes</h2>
-            <p>좋아요 누른 관광지</p>
-            <hr class="my-4" />
+              <h2>Likes</h2>
+              <p>좋아요 누른 관광지</p>
+              <hr class="my-4" />
+              
+              <div class = "like-main">
+                <like-list-item
+                  v-for="like in likes" 
+                  :key="like.travelInfoId"
+                  :like="like"
+                />  
+              </div>
             </div>
+          
         </div>
-        </div>
-        <div class = "grid-main">
-          <like-list-item
-            v-for="like in likes" 
-            :key="like.travelInfoId"
-            :like="like"
-          />  
         </div>
     </div>
 </template>
@@ -38,6 +40,12 @@ export default {
 </script>
 
 <style>
+.like-main{
+  overflow-y: auto; /* 세로 스크롤을 표시하도록 설정 */
+  max-height: 380px; /* 스크롤 가능한 최대 높이를 지정 (원하는 값으로 조정) */
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+}
 .custom-btn{
   border: solid 2px #467cc2;
 }

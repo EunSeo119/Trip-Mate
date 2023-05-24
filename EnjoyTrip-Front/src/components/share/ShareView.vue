@@ -76,8 +76,12 @@
                   {{ plan.views }}
                 </div>
               </div>
+              <div class="card-body text-left">
+                <div v-html="message" class="mt-3" style="text-align: center"></div>
+              </div>
             </div>
           </div>
+<<<<<<< HEAD
           <div class="card-body text-left">
             <div v-html="message" class="mt-3"></div>
           </div>
@@ -180,6 +184,60 @@
                       {{ travel.travelInfo.addr1 }}
                     </div>
                   </div>
+=======
+
+          <div class="container">
+            <div class="p-x-15 blur">
+              <div class="row" style="justify-content: center">
+                <div
+                  class="col-md-6 col-md-offset-6 p-30 text-center bg-white"
+                  style="max-width: 80%"
+                >
+                  <ul class="timeline" style="width: 700px">
+                    <li
+                      class="timeline"
+                      v-for="(travel, index) in stravels"
+                      :key="travel.no"
+                      :class="index % 2 === 0 ? 'timeline' : 'timeline-inverted'"
+                    >
+                      <div class="timeline-badge"></div>
+                      <div class="timeline-panel" @click="selectedTravel = travel.travelInfo">
+                        <div class="timeline-heading">
+                          <h5 class="timeline-title">{{ travel.travelInfo.title }}</h5>
+                          <p class="timeline-meta text-xs">
+                            <i class="fas fa-map-marker-alt va-middle mr-5"></i>
+                            <span class="va-middle mr-5">{{ travel.travelInfo.addr1 }}</span>
+                          </p>
+                        </div>
+                        <div class="timeline-body">
+                          <img
+                            :src="travel.travelInfo.firstImage"
+                            class="travel-image"
+                            alt="여행지 이미지"
+                          />
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <p class="timeline-meta text-xs" style="padding: 3%">
+                    <i class="fas fa-calendar-alt va-middle mr-5"></i>
+                    <span class="va-middle"
+                      >{{
+                        new Date(plan.startDate).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                      }}~{{
+                        new Date(plan.endDate).toLocaleDateString("ko-KR", {
+                          year: "numeric",
+                          month: "2-digit",
+                          day: "2-digit",
+                        })
+                      }}</span
+                    >
+                  </p>
+>>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
                 </div>
               </div>
             </div>
@@ -187,22 +245,34 @@
         </div>
       </b-col>
     </b-row>
+    <!-- 템플릿 내에 다음 코드를 추가합니다 -->
+    <modal-window
+      v-if="selectedTravel"
+      :travel="selectedTravel"
+      @close="selectedTravel = null"
+    ></modal-window>
   </b-container>
 </template>
+
 <script>
 import { getPlan } from "@/api/share";
 import { mapState, mapMutations } from "vuex";
 import store from "@/store";
+import ModalWindow from "@/components/share/ModalWindow.vue";
 
 const memberStore = "memberStore";
 const travelStore = "travelStore";
 
 export default {
   name: "ShareDetail",
+  components: {
+    ModalWindow
+  },
   data() {
     return {
       plan: {},
       stravels: [],
+      selectedTravel: null,
     };
   },
   computed: {
@@ -231,6 +301,7 @@ export default {
         this.stravels = data.planTravels;
         console.log(this.plan);
         console.log("이거" + this.stravels[1].title);
+        console.log("요고요고 나옴?" + this.stravels[1].title);
       },
       (error) => {
         console.log(error);
@@ -278,16 +349,23 @@ export default {
   },
 };
 </script>
+
 <style>
 body {
   background-color: #f9f9f9;
   margin-top: 20px;
 }
 .blur {
+<<<<<<< HEAD
   -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
     0 0 15px rgba(188, 191, 200, 0.2) !important;
   box-shadow: 0 0 15px rgba(188, 191, 200, 0.1),
     0 0 15px rgba(188, 191, 200, 0.2) !important;
+=======
+  -webkit-box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
+  box-shadow: 0 0 15px rgba(188, 191, 200, 0.1), 0 0 15px rgba(188, 191, 200, 0.2) !important;
+  margin: 3%;
+>>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
 }
 .mr-5 {
   margin-right: 5px !important;
@@ -356,6 +434,7 @@ body {
   -o-transition: 0.2s ease-in-out;
   -webkit-transition: 0.2s ease-in-out;
   transition: 0.2s ease-in-out;
+<<<<<<< HEAD
   box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1),
     0 2px 12px rgba(188, 191, 200, 0.2) !important;
 }
@@ -365,6 +444,14 @@ body {
     0 3px 20px rgba(188, 191, 200, 0.3) !important;
   box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1),
     0 3px 20px rgba(188, 191, 200, 0.3) !important;
+=======
+  box-shadow: 0 2px 12px rgba(188, 191, 200, 0.1), 0 2px 12px rgba(188, 191, 200, 0.2) !important;
+}
+.timeline > li > .timeline-panel:hover {
+  transform: translateY(-3px);
+  -webkit-box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
+  box-shadow: 0 3px 20px rgba(188, 191, 200, 0.1), 0 3px 20px rgba(188, 191, 200, 0.3) !important;
+>>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
 }
 .timeline > li:not(.timeline-inverted) {
   padding-right: 50px;
@@ -390,7 +477,11 @@ body {
   top: 20px;
   left: 50%;
   margin-left: -12.5px;
+<<<<<<< HEAD
   z-index: 100;
+=======
+  /* z-index: 100; */
+>>>>>>> bd481a0407f1ef20a54fbfb340380a1431ef2ce1
   border: 5px solid #fff;
   border-radius: 50%;
   box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15);
@@ -449,6 +540,7 @@ ul.timeline {
   justify-content: space-between;
   margin-top: 10px;
   color: #838891;
+  width: 15%;
 }
 
 .travel-section {

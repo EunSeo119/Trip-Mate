@@ -1,20 +1,33 @@
 <template>
-  <b-row class="mt-4 mb-4 text-center">
-    <b-col class="sm-3">
-      <b-form-select v-model="sidoCode" :options="sidos" @change="gugunList"></b-form-select>
-    </b-col>
-    <b-col class="sm-3">
-      <b-form-select v-model="gugunCode" :options="guguns"></b-form-select>
-    </b-col>
-    <b-col class="sm-3">
-      <b-form-select v-model="typeCode" :options="types" ></b-form-select>
-    </b-col>
-    <b-col class="sm-3">
-      <button type="button" id="list-btn" class="btn custom-backgroud" @click="searchTravel" @mouseover="changeButtonColor" @mouseout="resetButtonColor" style = "border: solid 2px #c2d6f0;">
-        조회하기
-      </button>
-    </b-col>
-  </b-row>
+  <div>
+    <div style="display: flex; justify-content: space-between; align-items: center" class="mt-5">
+      <h3 style="text-align: center; flex-grow: 1">여행지 검색</h3>
+    </div>
+    <b-row class="mt-4 mb-4 text-center">
+      <b-col class="sm-3">
+        <b-form-select v-model="sidoCode" :options="sidos" @change="gugunList"></b-form-select>
+      </b-col>
+      <b-col class="sm-3">
+        <b-form-select v-model="gugunCode" :options="guguns"></b-form-select>
+      </b-col>
+      <b-col class="sm-3">
+        <b-form-select v-model="typeCode" :options="types"></b-form-select>
+      </b-col>
+      <b-col class="sm-3">
+        <button
+          type="button"
+          id="list-btn"
+          class="btn custom-backgroud"
+          @click="searchTravel"
+          @mouseover="changeButtonColor"
+          @mouseout="resetButtonColor"
+          style="border: solid 2px #c2d6f0"
+        >
+          조회하기
+        </button>
+      </b-col>
+    </b-row>
+  </div>
 </template>
 
 <script>
@@ -41,8 +54,20 @@ export default {
     this.CLEAR_TRAVELS_LIST();
   },
   methods: {
-    ...mapActions(travelStore, ["getSido", "getGugun", "getTravelListBySido", "getTravelListByGugun", "getTravelListByType"]),
-    ...mapMutations(travelStore, ["CLEAR_SIDO_LIST", "CLEAR_GUGUN_LIST", "CLEAR_TYPE_LIST", "CLEAR_TRAVELS_LIST", "CLEAR_APT_LIST"]),
+    ...mapActions(travelStore, [
+      "getSido",
+      "getGugun",
+      "getTravelListBySido",
+      "getTravelListByGugun",
+      "getTravelListByType",
+    ]),
+    ...mapMutations(travelStore, [
+      "CLEAR_SIDO_LIST",
+      "CLEAR_GUGUN_LIST",
+      "CLEAR_TYPE_LIST",
+      "CLEAR_TRAVELS_LIST",
+      "CLEAR_APT_LIST",
+    ]),
     // 시도에 따라 구군 설정하기
     gugunList() {
       console.log(this.sidoCode);
@@ -52,25 +77,25 @@ export default {
     },
     // 관광지 정보 검색하기
     searchTravel() {
-      if (this.sidoCode && this.gugunCode == null)
-        this.getTravelListBySido(this.sidoCode);
-      else if(this.sidoCode && this.gugunCode && this.typeCode == null)
+      if (this.sidoCode && this.gugunCode == null) this.getTravelListBySido(this.sidoCode);
+      else if (this.sidoCode && this.gugunCode && this.typeCode == null)
         this.getTravelListByGugun({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
-      else{
-        this.getTravelListByType({ sidoCode: this.sidoCode, gugunCode: this.gugunCode,  typeCode: this.typeCode});
+      else {
+        this.getTravelListByType({
+          sidoCode: this.sidoCode,
+          gugunCode: this.gugunCode,
+          typeCode: this.typeCode,
+        });
       }
-
     },
     changeButtonColor(event) {
-      event.target.style.backgroundColor = '#c2d6f0'; 
+      event.target.style.backgroundColor = "#c2d6f0";
     },
     resetButtonColor(event) {
-      event.target.style.backgroundColor = '#fff';
+      event.target.style.backgroundColor = "#fff";
     },
   },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
