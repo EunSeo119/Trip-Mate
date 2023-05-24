@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+// import axios from "axios";
+=======
+>>>>>>> 561d08d813a9cb7bf78c843b8b0d207c2401e275
 import { apiInstance } from "./index.js";
 
 const api = apiInstance();

@@ -1,5 +1,8 @@
 <template>
   <div id="main">
+    <div style="display: flex; justify-content: space-between; align-items: center" class="mt-5">
+      <h3 style="text-align: center; flex-grow: 1">여행계획 세우기</h3>
+    </div>
     <b-row id="mainrow" class="justify-content-center">
       <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
         <div class="choice">

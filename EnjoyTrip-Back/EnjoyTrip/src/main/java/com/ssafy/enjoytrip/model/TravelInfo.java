@@ -35,6 +35,8 @@ public class TravelInfo {
     private double longitude;
     @ApiModelProperty(value = "여행지 레벨")
     private int mlevel;
+    @ApiModelProperty(value = "여행지 소개")
+    private String overview;
 
     public int getTravelInfoId() {
         return travelInfoId;
@@ -155,5 +157,13 @@ public class TravelInfo {
     public void setMlevel(int mlevel) {
         this.mlevel = mlevel;
     }
+
+	public String getOverview() {
+		return overview;
+	}
+
+	public void setOverview(String overview) {
+		this.overview = overview;
+	}
 
 }
