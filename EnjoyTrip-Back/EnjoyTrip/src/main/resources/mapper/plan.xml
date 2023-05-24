@@ -67,6 +67,14 @@
 		where shared = 1
     </select>
     
+    <select id="selectGetTop6" resultType="Plan">
+		select plan_id, title, start_date, end_date, image, user_id, views, create_date
+		from plan
+		where shared = 1
+		order by views DESC
+		limit 6
+    </select>
+	
 	<delete id="deletePlan" parameterType="int">
 		delete from plan
 		where plan_id = #{planId}

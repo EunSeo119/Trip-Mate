@@ -168,6 +168,7 @@ const memberStore = {
       );
     },
     getLikeListById: ({ state }) => {
+      state.likes = [];
       const params = { userId: state.userInfo.userId };
       likeListById(
         params,
@@ -177,18 +178,23 @@ const memberStore = {
               data[i].travelInfoId,
               ({ data }) => {
                 state.likes.push(data);
-                console.log("likes를 하나씩 추가", state.likes);
               },
               (error) => {
                 console.log(error);
               }
             );
           }
+          console.log(state.likes);
         },
         (error) => {
           console.log(error);
         }
       );
+    },
+    deleteLikeById: ({ state }, travelInfoId) => {
+      console.log(travelInfoId);
+      state.likes = state.likes.filter(like => like.travelInfoId != travelInfoId);
+      console.log(state.likes);
     },
   },
 };
