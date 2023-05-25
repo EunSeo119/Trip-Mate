@@ -7,7 +7,7 @@
       <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
         <div class="choice">
           <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
-          <h3 class="pt-4">""위치에서</h3>
+          <h3 class="pt-4">{{ selectedSido }}</h3>
           <h3>ㅇㅇ카테고리에서</h3>
           <div class="search-input">
             <input type="text" placeholder="검색어를 입력하세요" class="form-control" />
@@ -53,7 +53,7 @@
         <b-row>
           <b-container style="padding-top: 30px">
             <!-- <plan-option-bar @makeMarker="makeMapMarkers"></plan-option-bar> -->
-            <plan-option-bar></plan-option-bar>
+            <plan-option-bar @cchange="sidoCode"></plan-option-bar>
             <!-- <the-kakao-map :chargers="this.travels"></the-kakao-map> -->
             <the-kakao-map
               :travels="this.travels"
@@ -158,6 +158,8 @@ export default {
       startDate: null, // 시작 날짜를 저장하는 변수
       endDate: null, // 마감 날짜를 저장하는 변수
       shared: false, // 공유 여부를 저장하는 변수
+      selectedSido: "",
+      sidoCode: "",
     };
   },
   components: {
@@ -167,7 +169,7 @@ export default {
     // FontAwesomeIcon,
   },
   computed: {
-    ...mapState(travelStore, ["travels"]),
+    ...mapState(travelStore, ["travels", "sidos"]),
     ...mapState(memberStore, ["userInfo"]),
     // ...mapGetters("travelStore", ["getStravels"]),
   },
@@ -204,6 +206,12 @@ export default {
     // this.updatePlanTravels();
   },
   methods: {
+    cchange(sidoCode) {
+      console.log("이거이거=============나옴?");
+      console.log("Selected sidoCode:", sidoCode);
+      this.selectedSido = sidoCode;
+      // 부모 컴포넌트에서 선택된 sidoCode 값을 활용하여 원하는 동작 수행
+    },
     showModal() {
       // 모달 표시 여부를 true로 설정하여 모달을 엽니다.
       this.modalVisible = true;
