@@ -8,10 +8,10 @@
           <hr class="my-4" />
 
           <div class="like-main">
-            <like-list-item
-              v-for="like in likes"
-              :key="like.travelInfoId"
-              :like="like"
+            <plan-list-item
+              v-for="plan in plans"
+              :key="plan.planId"
+              :plan="plan"
             />
           </div>
         </div>
@@ -20,18 +20,32 @@
   </div>
 </template>
 <script>
-import LikeListItem from "@/components/user/item/LikeListItem.vue";
+import PlanListItem from "@/components/user/item/PlanListItem.vue";
 import { mapState } from "vuex";
+import { apiInstance } from "@/api/index.js";
 
+const api = apiInstance();
 const memberStore = "memberStore";
 
 export default {
-  name: "UserLikePage",
+  name: "UserPlanPage",
+  data() {
+    return {
+      plans: [],
+    };
+  },
   components: {
-    LikeListItem,
+    PlanListItem,
+  },
+  created() {
+    console.log(this.userInfo);
+    api.get(`/user/plan/${this.userInfo.userId}`).then((response) => {
+      this.plans = response.data;
+      console.log(this.plans);
+    });
   },
   computed: {
-    ...mapState(memberStore, ["likes"]),
+    ...mapState(memberStore, ["likes", "userInfo"]),
   },
   methods: {},
 };

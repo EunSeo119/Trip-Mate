@@ -45,6 +45,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import UserLikePageVue from "./item/UserLikePage.vue";
+import UserPlanPageVue from "./item/UserPlanPage.vue";
 import UserModifyPageVue from "./item/UserModifyPage.vue";
 
 const memberStore = "memberStore";
@@ -59,6 +60,7 @@ export default {
   components: {
     UserModifyPageVue,
     UserLikePageVue,
+    UserPlanPageVue,
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),

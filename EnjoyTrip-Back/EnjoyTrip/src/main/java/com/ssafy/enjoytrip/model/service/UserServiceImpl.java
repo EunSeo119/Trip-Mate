@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.enjoytrip.controller.UserController;
+import com.ssafy.enjoytrip.model.Plan;
 import com.ssafy.enjoytrip.model.TravelStatus;
 import com.ssafy.enjoytrip.model.User;
 import com.ssafy.enjoytrip.model.mapper.UserMapper;
@@ -69,5 +70,10 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public List<TravelStatus> selectUserLikes(String userId) throws SQLException {
 		return userMapper.selectLikeUser(userId);
+	}
+	
+	@Override
+	public List<Plan> selectUserPlans(String userId) throws SQLException {
+		return userMapper.selectPlanUser(userId);
 	}
 }
