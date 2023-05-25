@@ -13,7 +13,7 @@ import java.util.List;
 public interface TravelMapper {
     List<TravelInfo> selectGetAll() throws SQLException;
 
-    List<TravelInfo> selectBySidoCodeGugunCode(@Param("sidoCode") Integer sidoCode, @Param("gugunCode") Integer gugunCode, @Param("travelTypeId") Integer travelTypeId) throws SQLException;
+    List<TravelInfo> selectBySidoCodeGugunCode(@Param("sidoCode") Integer sidoCode, @Param("gugunCode") Integer gugunCode, @Param("travelTypeId") Integer travelTypeId, @Param("searchString") String searchString) throws SQLException;
 
     int updateLike(@Param("userId") String userId, @Param("travelInfoId") Integer travelInfoId, @Param("like") Integer like);
 

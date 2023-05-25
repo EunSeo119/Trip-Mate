@@ -29,8 +29,13 @@ public class TravelServiceImpl implements TravelService {
     }
 
     @Override
-    public List<TravelInfo> getTravel(Integer sidoCode, Integer gugunCode, Integer travelTypeId) throws Exception {
-        return travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId).subList(0, 30);
+    public List<TravelInfo> getTravel(Integer sidoCode, Integer gugunCode, Integer travelTypeId, String searchString) throws Exception {
+    	List<TravelInfo> temp = travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId, searchString);
+    	System.out.println(searchString);
+    	if(temp.size()>30) {
+    		return temp.subList(0, 30);
+    	}
+        return travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId, searchString);
     }
 
     @Override

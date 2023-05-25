@@ -8,21 +8,39 @@ function listArticle(param, success, fail) {
 }
 
 function writeArticle(formData, success, fail) {
-  axios.post('http://192.168.212.76:9999/board/regist', formData).then(success).catch(fail);
+  axios
+    .post("http://192.168.0.2:9999/board/regist", formData)
+    .then(success)
+    .catch(fail);
 }
 
 function getArticle(noticeId, success, fail) {
   api.get(`/board/detail/${noticeId}`).then(success).catch(fail);
 }
 function getArticleImg(article, success, fail) {
-  api.get(`/board/detailImg/${article.saveFolder}/${article.originalFile}/${article.saveFile}`).then(success).catch(fail);
+  api
+    .get(
+      `/board/detailImg/${article.saveFolder}/${article.originalFile}/${article.saveFile}`
+    )
+    .then(success)
+    .catch(fail);
 }
 function modifyArticle(formData, success, fail) {
-  axios.put('http://192.168.212.76:9999/board/modify', formData).then(success).catch(fail);
+  axios
+    .put("http://192.168.0.2:9999/board/modify", formData)
+    .then(success)
+    .catch(fail);
 }
 
 function deleteArticle(noticeId, success, fail) {
   api.delete(`/board/${noticeId}`).then(success).catch(fail);
 }
 
-export { listArticle, writeArticle, getArticle, modifyArticle, deleteArticle, getArticleImg };
+export {
+  listArticle,
+  writeArticle,
+  getArticle,
+  modifyArticle,
+  deleteArticle,
+  getArticleImg,
+};

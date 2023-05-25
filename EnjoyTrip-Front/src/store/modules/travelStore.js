@@ -5,7 +5,7 @@ import {
   travelListByGugun,
   travelListByType,
   travelLike,
-  travelDetailById
+  travelDetailById,
 } from "@/api/travel.js";
 
 const travelStore = {
@@ -139,13 +139,16 @@ const travelStore = {
         }
       );
     },
-    getTravelListByType: ({ commit }, { sidoCode, gugunCode, typeCode }) => {
+    getTravelListByType: (
+      { commit },
+      { sidoCode, gugunCode, typeCode, searchWord }
+    ) => {
       const params = {
         sido: sidoCode,
         gugun: gugunCode,
         type: typeCode,
+        word: searchWord,
       };
-
       // api
       //   .get(`/travel/list/${sidoCode}/${gugunCode}/${typeCode}`)
       //   .then((response) => {
@@ -196,7 +199,6 @@ const travelStore = {
           console.log(error);
         }
       );
-     
     },
   },
 };

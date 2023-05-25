@@ -3,7 +3,11 @@
     <b-row class="mb-4 text-center justify-content-md-center">
       <!-- <h5>여행계획</h5> -->
       <b-col md="3">
-        <b-form-select v-model="sidoCode" :options="sidos" @change="this.gugunList"></b-form-select>
+        <b-form-select
+          v-model="sidoCode"
+          :options="sidos"
+          @change="this.gugunList"
+        ></b-form-select>
       </b-col>
       <b-col md="3">
         <b-form-select
@@ -42,6 +46,7 @@ export default {
       typeCode: null,
       tabInit: 0,
       selectedSido: "",
+      searchWord: "",
     };
   },
   computed: {
@@ -72,7 +77,7 @@ export default {
     // 시도에 따라 구군 설정하기
     gugunList() {
       // let selectedSido = "''위치에서";
-      console.log("이건나옴");  
+      console.log("이건나옴");
       console.log(this.sidoCode);
       this.gugunCode = null;
       this.CLEAR_GUGUN_LIST();
@@ -83,21 +88,36 @@ export default {
     },
     // 관광지 정보 검색하기
     searchTravel() {
-      if (this.sidoCode && this.gugunCode == null) this.getTravelListBySido(this.sidoCode);
+      console.log("메롱============");
+      console.log(this.searchWord);
+      if (this.sidoCode && this.gugunCode == null)
+        this.getTravelListBySido(this.sidoCode);
       else if (this.sidoCode && this.gugunCode && this.typeCode == null)
-        this.getTravelListByGugun({ sidoCode: this.sidoCode, gugunCode: this.gugunCode });
+        this.getTravelListByGugun({
+          sidoCode: this.sidoCode,
+          gugunCode: this.gugunCode,
+        });
       else {
         this.getTravelListByType({
           sidoCode: this.sidoCode,
           gugunCode: this.gugunCode,
           typeCode: this.typeCode,
+          searchWord: this.searchWord,
         });
       }
     },
     setContentTypeId(inputId) {
       console.log("실행");
+      console.log(this.searchWord);
       this.typeCode = inputId;
       // this.SET_CONTENT_TYPE_ID(inputId);
+      this.searchTravel();
+    },
+    searchString(word) {
+      console.log("자식" + word);
+      console.log(this.gugunCode);
+      console.log(this.sidoCode);
+      this.searchWord = word;
       this.searchTravel();
     },
   },

@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ssafy.enjoytrip.model.Gugun;
-import com.ssafy.enjoytrip.model.Plan;
 import com.ssafy.enjoytrip.model.TravelInfo;
 import com.ssafy.enjoytrip.model.TravelStatus;
 import com.ssafy.enjoytrip.model.service.TravelService;
@@ -52,22 +52,25 @@ public class TravelController {
     @GetMapping({"/list/{sidoCode}/{gugunCode}/{travelTypeId}"})
     @ApiOperation(value = "여행지 정보 조회", notes = "여행지 정보를 조회한다.")
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "OK"), @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request"), @io.swagger.annotations.ApiResponse(code = 500, message = "Internal Server Error")})
-    public ResponseEntity<List<TravelInfo>> getAttractionByAreaGugun(@Nullable @PathVariable(value = "sidoCode", required = false) Integer sidoCode, @PathVariable("gugunCode") Integer gugunCode, @PathVariable("travelTypeId") Integer travelTypeId) throws Exception {
-        return new ResponseEntity<>(travelService.getTravel(sidoCode, gugunCode, travelTypeId), HttpStatus.OK);
+    public ResponseEntity<List<TravelInfo>> getAttractionByAreaGugun(@Nullable @PathVariable(value = "sidoCode", required = false) Integer sidoCode,
+															    	@PathVariable("gugunCode") Integer gugunCode, 
+															    	@PathVariable("travelTypeId") Integer travelTypeId,
+															    	@RequestParam(name = "searchString", required = false) String searchString) throws Exception {
+        return new ResponseEntity<>(travelService.getTravel(sidoCode, gugunCode, travelTypeId, searchString), HttpStatus.OK);
     }
 
     @GetMapping({"/list/{sidoCode}/{gugunCode}"})
     @ApiOperation(value = "여행지 정보 조회", notes = "여행지 정보를 조회한다.")
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "OK"), @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request"), @io.swagger.annotations.ApiResponse(code = 500, message = "Internal Server Error")})
     public ResponseEntity<List<TravelInfo>> getAttractionByAreaGugun(@PathVariable(value = "sidoCode", required = false) Integer sidoCode, @PathVariable(value = "gugunCode", required = false) Integer gugunCode) throws Exception {
-        return new ResponseEntity<>(travelService.getTravel(sidoCode, gugunCode, null), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.getTravel(sidoCode, gugunCode, null, null), HttpStatus.OK);
     }
 
     @GetMapping("/list/{sidoCode}")
     @ApiOperation(value = "여행지 정보 조회", notes = "여행지 정보를 조회한다.")
     @ApiResponses({@io.swagger.annotations.ApiResponse(code = 200, message = "OK"), @io.swagger.annotations.ApiResponse(code = 400, message = "Bad Request"), @io.swagger.annotations.ApiResponse(code = 500, message = "Internal Server Error")})
     public ResponseEntity<List<TravelInfo>> getAttractionByAreaGugun(@PathVariable(value = "sidoCode", required = false) Integer sidoCode) throws Exception {
-        return new ResponseEntity<>(travelService.getTravel(sidoCode, null, null), HttpStatus.OK);
+        return new ResponseEntity<>(travelService.getTravel(sidoCode, null, null, null), HttpStatus.OK);
     }
 
     @GetMapping("/list")
