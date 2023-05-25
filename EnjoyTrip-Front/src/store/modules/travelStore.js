@@ -5,6 +5,7 @@ import {
   travelListByGugun,
   travelListByType,
   travelLike,
+  travelDetailById
 } from "@/api/travel.js";
 
 const travelStore = {
@@ -16,6 +17,7 @@ const travelStore = {
     travels: [],
     stravels: [],
     totTravels: 0,
+    travelDetail: [],
   },
   getters: {
     getStravels(state) {
@@ -74,12 +76,12 @@ const travelStore = {
       state.travels = travels;
       state.totTravels = travels.length;
     },
-    // SET_DETAIL_TRAVEL(state, travel) {
-    //   state.travel = travel;
-    // },
-    // CLEAR_CONTENT_TYPE_ID(state) {
-    //   state.contentTypeId = 0;
-    // },
+    SET_DETAIL_TRAVEL(state, data) {
+      state.travelDetail = data;
+    },
+    CLEAR_DETAIL_TRAVEL(state) {
+      state.travelDetail = [];
+    },
     // SET_CONTENT_TYPE_ID(state, inputId) {
     //   state.contentTypeId = inputId;
     // },
@@ -184,9 +186,17 @@ const travelStore = {
           console.error(error);
         });
     },
-    detailTravel: ({ commit }, travel) => {
-      // 나중에 travel.일련번호를 이용하여 API 호출
-      commit("SET_DETAIL_TRAVEL", travel);
+    detailTravel: ({ commit }, travelInfoId) => {
+      travelDetailById(
+        travelInfoId,
+        ({ data }) => {
+          commit("SET_DETAIL_TRAVEL", data);
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+     
     },
   },
 };

@@ -1,35 +1,37 @@
 <template>
   <!-- Gallery item -->
   <div class="bg-blue rounded shadow-sm child-container">
-    <img
-      :src="travel.firstImage"
-      class="img-fluid card-img-top img-height mt-3"
-      @error="replaceByDefault"
-      @click="selectedTravel = travel.travelInfoId"
-    />
-    <div class="p-4" style="position: relative">
-      <font-awesome-icon
-        :icon="heartIcon"
-        :style="fillHeartIcon"
-        class="heart-icon"
-        @mouseenter="fillHeart"
-        @mouseleave="unfillHeart"
-        @click="toggleHeart"
+    <div @click="clickModal">
+      <img
+        :src="travel.firstImage"
+        class="img-fluid card-img-top img-height mt-3"
+        @error="replaceByDefault"
       />
-      <h5 style="text-align: left">{{ travel.title }}</h5>
-      <p class="small text-muted mb-0" style="text-align: left">{{ travel.addr1 }}</p>
+      <div class="p-4" style="position: relative">
+        <font-awesome-icon
+          :icon="heartIcon"
+          :style="fillHeartIcon"
+          class="heart-icon"
+          @mouseenter="fillHeart"
+          @mouseleave="unfillHeart"
+          @click="toggleHeart"
+        />
+        <h5 style="text-align: left">{{ travel.title }}</h5>
+        <p class="small text-muted mb-0" style="text-align: left">{{ travel.addr1 }}</p>
+      </div>
+      
     </div>
     <modal-window2
-      v-if="selectedTravel"
-      :mtravel="selectedTravel"
-      @close="selectedTravel = null"
+        v-if="isSelected === true"
+        :travel ="travel"
+        @close="closeModeal"
     ></modal-window2>
   </div>
   <!-- End -->
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import store from "@/store";
 import { modifyLike } from "@/api/travel";
 // import { apiInstance } from "@/api/index.js";
@@ -49,7 +51,7 @@ export default {
       isHeartFilled: false,
       heartIcon: ["far", "heart"],
       fillHeartIcon: { color: "#de1717" },
-      selectedTravel: null,
+      isSelected: false,
     };
   },
   props: {
@@ -64,9 +66,8 @@ export default {
   // },
   methods: {
     ...mapActions(travelStore, ["detailTravel", "likeTravel"]),
-    selectTravel() {
-      this.detailTravel(this.travel);
-    },
+    ...mapMutations(travelStore, ["CLEAR_DETAIL_TRAVEL"]),
+    
     replaceByDefault(e) {
       e.target.src = require("@/assets/NoImage.png");
     },
@@ -102,6 +103,14 @@ export default {
         }
       );
     },
+    clickModal(){
+      this.isSelected = true;
+      this.detailTravel(this.travel.travelInfoId);
+    },
+    closeModeal(){
+      this.isSelected = false;
+      this.CLEAR_DETAIL_TRAVEL();
+    }
   },
 };
 </script>

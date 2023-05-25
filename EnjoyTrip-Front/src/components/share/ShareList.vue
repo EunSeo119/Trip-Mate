@@ -50,7 +50,7 @@ export default {
     //   this.$router.push({ name: "boardwrite" });
     // },
     viewSharePlan(plan) {
-      console.log(plan.planId )
+      console.log(plan.planId)
       this.$router.push({
         name: "shareview",
         params: { planId: plan.planId },
