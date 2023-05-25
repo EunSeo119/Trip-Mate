@@ -39,4 +39,7 @@ function modifyLike(params, success, fail){
   console.log(params);
   api.put('/travel/status/like', params).then(success).catch(fail);
 }
-export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, modifyLike };
+function travelDetailById(params, success, fail){
+  api.get(`/travel/detail/${params}`).then(success).catch(fail);
+}
+export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, modifyLike, travelDetailById };

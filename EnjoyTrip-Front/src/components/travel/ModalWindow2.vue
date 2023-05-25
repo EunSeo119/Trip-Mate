@@ -4,9 +4,9 @@
       <div class="modal-content-container" style="max-width: 500px">
         <h2>{{ travel.title }}</h2>
         <p>{{ travel.addr1 }}</p>
-        <img :src="mtravel.firstImage" class="travel-image" alt="여행지 이미지" />
-        <div class="description-container">
-          <!-- <p>{{ travel.overview }}</p> -->
+        <img :src="travel.firstImage" class="travel-image" alt="여행지 이미지" />
+        <div class="description-container mt-3">
+          <p>{{ travelDetail.overview }}</p>
         </div>
       </div>
       <div class="close-button" @click="$emit('close')">
@@ -17,20 +17,15 @@
 </template>
 
 <script>
-import { apiInstance } from "@/api/index.js";
-const api = apiInstance();
+import { mapState } from "vuex";
+const travelStore = "travelStore";
+
 export default {
   props: {
-    mtravel: {
-      type: Object,
-      required: true,
-    },
+    travel: Object,
   },
-  created() {
-    api.get(`/travel/detail/${this.travel.travelInfoId}`).then((response) => {
-      console.log("이거??????????????????");
-      console.log(response.data);
-    });
+  computed: {
+    ...mapState(travelStore, ["travelDetail"]),
   },
 };
 </script>
@@ -46,6 +41,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 9999;
 }
 
 .modal-container {
@@ -54,6 +50,7 @@ export default {
   border-radius: 4px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   position: relative;
+  width: 500px;
   max-height: 80vh; /* 최대 높이 설정 */
   overflow-y: auto; /* 세로 스크롤 생성 */
 }
@@ -85,5 +82,12 @@ export default {
 .description-container {
   max-height: 200px; /* 내용이 넘칠 경우 최대 높이 설정 */
   overflow-y: auto; /* 세로 스크롤 생성 */
+}
+.travel-image{
+  width: 400px;
+  height: 100%;
+  -o-object-fit: cover;
+  object-fit: cover;
+  border-radius: 4px 4px 0 0;
 }
 </style>
