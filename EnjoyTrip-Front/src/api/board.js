@@ -1,3 +1,4 @@
+import axios from "axios";
 import { apiInstance } from "./index.js";
 
 const api = apiInstance();
@@ -7,7 +8,7 @@ function listArticle(param, success, fail) {
 }
 
 function writeArticle(formData, success, fail) {
-  api.post('/board/regist', formData).then(success).catch(fail);
+  axios.post('http://192.168.212.76:9999/board/regist', formData).then(success).catch(fail);
 }
 
 function getArticle(noticeId, success, fail) {
@@ -17,7 +18,7 @@ function getArticleImg(article, success, fail) {
   api.get(`/board/detailImg/${article.saveFolder}/${article.originalFile}/${article.saveFile}`).then(success).catch(fail);
 }
 function modifyArticle(formData, success, fail) {
-  api.put('/board/modify', formData).then(success).catch(fail);
+  axios.put('http://192.168.212.76:9999/board/modify', formData).then(success).catch(fail);
 }
 
 function deleteArticle(noticeId, success, fail) {

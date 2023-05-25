@@ -41,6 +41,7 @@ export default {
       gugunCode: null,
       typeCode: null,
       tabInit: 0,
+      selectedSido: "",
     };
   },
   computed: {
@@ -70,11 +71,15 @@ export default {
     ]),
     // 시도에 따라 구군 설정하기
     gugunList() {
+      // let selectedSido = "''위치에서";
+      console.log("이건나옴");  
       console.log(this.sidoCode);
       this.gugunCode = null;
       this.CLEAR_GUGUN_LIST();
       if (this.sidoCode) this.getGugun(this.sidoCode);
       this.searchTravel();
+
+      this.$emit("sidoCode", this.sidoCode);
     },
     // 관광지 정보 검색하기
     searchTravel() {
@@ -97,7 +102,6 @@ export default {
     },
   },
 };
-
 </script>
 
 <style scoped>

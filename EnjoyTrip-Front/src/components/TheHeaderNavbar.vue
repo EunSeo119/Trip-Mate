@@ -24,7 +24,7 @@
         <span class="navbar-toggler-icon"></span>
       </button>
 
-      <div class="collapse navbar-collapse" id="nav-collapse" style="margin-left: 15px;">
+      <div class="collapse navbar-collapse" id="nav-collapse" style="margin-left: 15px">
         <ul class="navbar-nav mr-auto">
           <li class="nav-item">
             <router-link :to="{ name: 'travel' }" class="nav-link">
@@ -41,13 +41,7 @@
           <li class="nav-item">
             <router-link :to="{ name: 'share' }" class="nav-link">
               <i class="bi bi-journal" style="font-size: 2rem; animation: fade"></i>
-              여행지 공유
-            </router-link>
-          </li>
-          <li class="nav-item">
-            <router-link :to="{ name: 'insta' }" class="nav-link">
-              <i class="bi bi-instagram" style="font-size: 2rem; animation: fade"></i>
-              핫 플레이스
+              여행계획 공유
             </router-link>
           </li>
           <li class="nav-item">
@@ -66,16 +60,12 @@
             </div>
           </li>
           <li class="nav-item align-self-center">
-            <span class="navbar-text" style="color: #333;">
+            <span class="navbar-text" style="color: #333">
               {{ userInfo.username }}({{ userInfo.userId }})님 환영합니다.
             </span>
           </li>
           <li class="nav-item align-self-center">
-            <router-link
-              :to="{ name: 'mypage' }"
-              class="nav-link"
-              style="color: #333;"
-            >
+            <router-link :to="{ name: 'mypage' }" class="nav-link" style="color: #333">
               내 정보 보기
             </router-link>
           </li>
@@ -161,7 +151,7 @@ export default {
 </style>
 
 <style scoped>
-.logo-img{
+.logo-img {
   width: 150px;
 }
 .navbar-dark .navbar-nav .nav-link {

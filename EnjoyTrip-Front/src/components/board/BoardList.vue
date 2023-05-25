@@ -1,7 +1,7 @@
 <template>
   <b-container class="bv-example-row mt-3">
     <div style="display: flex; justify-content: space-between; align-items: center" class="mt-5">
-      <h3 style="text-align: center; flex-grow: 1">글목록</h3>
+      <h3 style="text-align: center; flex-grow: 1">공지사항</h3>
       <button
         v-if="isAdminUser"
         class="btn custom-btn"

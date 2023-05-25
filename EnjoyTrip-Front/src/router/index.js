@@ -1,7 +1,6 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import AppMain from "@/views/AppMain";
-import AppInstagram from "@/views/AppInstagram";
 import AppTravel from "@/views/AppTravel";
 
 import store from "@/store";
@@ -36,20 +35,10 @@ const routes = [
     component: AppMain,
   },
   {
-    path: "/instagram",
-    name: "insta",
-    component: AppInstagram,
-  },
-  {
     path: "/travel",
     name: "travel",
     // beforeEnter: onlyAuthUser,
     component: AppTravel,
-  },
-  {
-    path: "/todo",
-    name: "todo",
-    component: () => import("@/views/AppTodo"),
   },
   {
     path: "/user",
