@@ -15,7 +15,7 @@
         <div class="choice">
           <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
           <h3 class="pt-4">{{ selectedSido }}</h3>
-          <h3>ㅇㅇ카테고리에서</h3>
+          <h3>여행지</h3>
           <div class="search-input">
             <input
               id="searchString"

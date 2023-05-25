@@ -4,7 +4,7 @@
       <div class="my-col">
         <div class="my-jumbotron">
           <h2>Plans</h2>
-          <p>내 여행계획들</p>
+          <p>내가 만든 여행계획들</p>
           <hr class="my-4" />
 
           <div class="like-main">

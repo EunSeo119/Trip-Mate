@@ -33,9 +33,9 @@ public class TravelServiceImpl implements TravelService {
     	List<TravelInfo> temp = travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId, searchString);
     	System.out.println(searchString);
     	if(temp.size()>30) {
-    		return temp.subList(0, 30);
+    		return temp.subList(0, 33);
     	}
-        return travelMapper.selectBySidoCodeGugunCode(sidoCode, gugunCode, travelTypeId, searchString);
+        return temp;
     }
 
     @Override
