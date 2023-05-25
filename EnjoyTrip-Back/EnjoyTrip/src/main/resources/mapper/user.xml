@@ -54,4 +54,10 @@
         where user_id = #{userId} and `like` = 1
     </select>
     
+    <select id = "selectPlanUser" resultType="Plan">
+	    select plan_id, title, start_date, end_date, description
+        from plan
+        where user_id = #{userId}
+    </select>
+    
 </mapper>

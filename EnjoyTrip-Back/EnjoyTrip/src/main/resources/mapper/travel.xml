@@ -46,6 +46,9 @@
         <if test="travelTypeId != null">
             and travel_type_id = #{travelTypeId}
         </if>
+        <if test="searchString != null and !searchString.equals('')">
+            and title LIKE CONCAT('%', #{searchString}, '%') 
+        </if>
         order by readcount desc
     </select>
 

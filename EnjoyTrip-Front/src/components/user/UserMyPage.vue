@@ -5,7 +5,9 @@
         <ul class="nav">
           <li
             @click="changePage('UserModifyPageVue')"
-            :class="{ 'sidebar-item-active': currentPage === 'UserModifyPageVue' }"
+            :class="{
+              'sidebar-item-active': currentPage === 'UserModifyPageVue',
+            }"
             class="sidebar-item"
           >
             <font-awesome-icon :icon="['far', 'user']" />
@@ -13,18 +15,22 @@
           </li>
           <li
             @click="changePage('UserLikePageVue')"
-            :class="{ 'sidebar-item-active': currentPage === 'UserLikePageVue' }"
+            :class="{
+              'sidebar-item-active': currentPage === 'UserLikePageVue',
+            }"
             class="sidebar-item"
           >
             <font-awesome-icon :icon="['far', 'heart']" />
             <span>관광지</span>
           </li>
           <li
-            @click="changePage('UserLikePageVue')"
-            :class="{ 'sidebar-item-active': currentPage === 'UserLikePageVue' }"
+            @click="changePage2('UserPlanPageVue')"
+            :class="{
+              'sidebar-item-active': currentPage === 'UserPlanPageVue',
+            }"
             class="sidebar-item"
           >
-            <font-awesome-icon :icon="['far', 'star']" />
+            <font-awesome-icon :icon="['far', 'map']" />
             <span>내여행계획</span>
           </li>
         </ul>
@@ -39,6 +45,7 @@
 <script>
 import { mapState, mapActions } from "vuex";
 import UserLikePageVue from "./item/UserLikePage.vue";
+import UserPlanPageVue from "./item/UserPlanPage.vue";
 import UserModifyPageVue from "./item/UserModifyPage.vue";
 
 const memberStore = "memberStore";
@@ -53,14 +60,19 @@ export default {
   components: {
     UserModifyPageVue,
     UserLikePageVue,
+    UserPlanPageVue,
   },
   computed: {
     ...mapState(memberStore, ["userInfo"]),
   },
   methods: {
-    ...mapActions(memberStore, ["getLikeListById"]),
+    ...mapActions(memberStore, ["getLikeListById", "getPlanListById"]),
     changePage(page) {
       this.getLikeListById();
+      this.currentPage = page;
+    },
+    changePage2(page) {
+      this.getPlanListById();
       this.currentPage = page;
     },
   },

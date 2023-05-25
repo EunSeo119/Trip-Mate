@@ -1,18 +1,30 @@
 <template>
   <div id="main">
-    <div style="display: flex; justify-content: space-between; align-items: center" class="mt-5">
+    <div
+      style="display: flex; justify-content: space-between; align-items: center"
+      class="mt-5"
+    >
       <h3 style="text-align: center; flex-grow: 1">여행계획 세우기</h3>
     </div>
     <b-row id="mainrow" class="justify-content-center">
-      <b-col md="2" class="shadow p-3 bg-body rounded text-center" style="height: 868px">
+      <b-col
+        md="2"
+        class="shadow p-3 bg-body rounded text-center"
+        style="height: 868px"
+      >
         <div class="choice">
           <!-- <h3 :v-bind="place" class="pt-4">"{{ place }}"위치에서</h3> -->
           <h3 class="pt-4">{{ selectedSido }}</h3>
           <h3>ㅇㅇ카테고리에서</h3>
           <div class="search-input">
-            <input type="text" placeholder="검색어를 입력하세요" class="form-control" />
+            <input
+              id="searchString"
+              type="text"
+              placeholder="검색어를 입력하세요"
+              class="form-control"
+            />
             <!-- <button class="search-btn" @click="search">검색</button> -->
-            <button class="search-btn">검색</button>
+            <button class="search-btn" @click="searchTravel()">검색</button>
           </div>
         </div>
         <hr />
@@ -53,7 +65,10 @@
         <b-row>
           <b-container style="padding-top: 30px">
             <!-- <plan-option-bar @makeMarker="makeMapMarkers"></plan-option-bar> -->
-            <plan-option-bar @cchange="sidoCode"></plan-option-bar>
+            <plan-option-bar
+              @cchange="sidoCode"
+              ref="plan_option_bar"
+            ></plan-option-bar>
             <!-- <the-kakao-map :chargers="this.travels"></the-kakao-map> -->
             <the-kakao-map
               :travels="this.travels"
@@ -63,7 +78,11 @@
           </b-container>
         </b-row>
       </b-col>
-      <b-col md="2" class="shadow" style="padding-top: 10px; max-height: 950px; text-align: center">
+      <b-col
+        md="2"
+        class="shadow"
+        style="padding-top: 10px; max-height: 950px; text-align: center"
+      >
         <h3 style="font-weight: bold; padding: 43px 0px 43px 0px">내 계획</h3>
 
         <hr />
@@ -83,7 +102,10 @@
                   style="max-width: 13rem; min-width: 15rem"
                   @click="mouseClickMarker(choice.lat, choice.lng)"
                 >
-                  <button class="planbtn delete-btn" @click="deleteChoice(choice.name)">
+                  <button
+                    class="planbtn delete-btn"
+                    @click="deleteChoice(choice.name)"
+                  >
                     <i class="fa-solid fa-circle-minus" />
                   </button>
                   <b-card-text>
@@ -96,7 +118,9 @@
         </div>
         <b-row style="display: flex; justify-content: center">
           <!-- <b-button size="lg" @click="completePlan()" id="btncomplete">저장하기</b-button> -->
-          <b-button size="lg" @click="showModal" id="btncomplete">저장하기</b-button>
+          <b-button size="lg" @click="showModal" id="btncomplete"
+            >저장하기</b-button
+          >
         </b-row>
       </b-col>
     </b-row>
@@ -118,10 +142,18 @@
           ></b-form-textarea>
         </b-form-group>
         <b-form-group label="시작 날짜" label-for="start-date">
-          <b-form-datepicker id="start-date" v-model="startDate" locale="ko"></b-form-datepicker>
+          <b-form-datepicker
+            id="start-date"
+            v-model="startDate"
+            locale="ko"
+          ></b-form-datepicker>
         </b-form-group>
         <b-form-group label="끝 날짜" label-for="end-date">
-          <b-form-datepicker id="end-date" v-model="endDate" locale="ko"></b-form-datepicker>
+          <b-form-datepicker
+            id="end-date"
+            v-model="endDate"
+            locale="ko"
+          ></b-form-datepicker>
         </b-form-group>
         <b-form-group>
           <b-form-checkbox v-model="shared">공유하기</b-form-checkbox>
@@ -206,6 +238,11 @@ export default {
     // this.updatePlanTravels();
   },
   methods: {
+    searchTravel() {
+      var word = document.getElementById("searchString").value;
+      console.log(word);
+      this.$refs.plan_option_bar.searchString(word);
+    },
     cchange(sidoCode) {
       console.log("이거이거=============나옴?");
       console.log("Selected sidoCode:", sidoCode);
@@ -303,7 +340,9 @@ export default {
       // }
       // this.myChoices = temp;
       // console.log(this.myChoices);
-      this.myChoices = this.myChoices.filter((choice) => choice.name !== delete_name);
+      this.myChoices = this.myChoices.filter(
+        (choice) => choice.name !== delete_name
+      );
       this.updatePlanTravels();
     },
   },

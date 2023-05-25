@@ -12,7 +12,7 @@ public interface TravelService {
 
     List<Gugun> getGugun(int sidoCode) throws Exception;
 
-    List<TravelInfo> getTravel(Integer sidoCode, Integer gugunCode, Integer travelTypeId) throws Exception;
+    List<TravelInfo> getTravel(Integer sidoCode, Integer gugunCode, Integer travelTypeId, String searchString) throws Exception;
 
     int updateLike(String userId, Integer travelInfoId, Integer like);
 

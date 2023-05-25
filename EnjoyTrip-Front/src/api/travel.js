@@ -23,23 +23,36 @@ function travelListByGugun(params, success, fail) {
   api.get(`/travel/list/${sidoCode}/${gugunCode}`).then(success).catch(fail);
 }
 
-function travelListByType (params, success, fail) {
+function travelListByType(params, success, fail) {
   const sidoCode = params.sido;
   const gugunCode = params.gugun;
   const typeCode = params.type;
+  const word = params.word;
   console.log(sidoCode, gugunCode, typeCode);
-  api.get(`/travel/list/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
+  var urlString = `/travel/list/${sidoCode}/${gugunCode}/${typeCode}`;
+  if (word != "") {
+    urlString += `?searchString=${word}`;
+  }
+  api.get(urlString).then(success).catch(fail);
 }
 // function travelLike (params, success, fail) {
 //   const travelInfoID = params.id;
 //   console.log(travelInfoID);
 //   // api.get(`/travel/status/${sidoCode}/${gugunCode}/${typeCode}`).then(success).catch(fail);
 // }
-function modifyLike(params, success, fail){
+function modifyLike(params, success, fail) {
   console.log(params);
-  api.put('/travel/status/like', params).then(success).catch(fail);
+  api.put("/travel/status/like", params).then(success).catch(fail);
 }
-function travelDetailById(params, success, fail){
+function travelDetailById(params, success, fail) {
   api.get(`/travel/detail/${params}`).then(success).catch(fail);
 }
-export { sidoList, gugunList, travelListBySido, travelListByGugun, travelListByType, modifyLike, travelDetailById };
+export {
+  sidoList,
+  gugunList,
+  travelListBySido,
+  travelListByGugun,
+  travelListByType,
+  modifyLike,
+  travelDetailById,
+};
