@@ -1,5 +1,5 @@
 # Trip-Mate
-국내 관광지 정보와 여행 계획 제작 및 공유하는 서비스
+국내 관광지 정보와 지도를 이용한 여행 계획 제작 및 공유하는 서비스
 
 ## 결과물
 - 프로젝트 소개 : [결과물.pptx](https://github.com/EunSeo119/Trip-Mate/files/11706589/default.pptx)
